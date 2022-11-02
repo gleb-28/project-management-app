@@ -9,7 +9,7 @@
 		"test": "ng test",
 		"prepare": "husky install",
 		"lint": "ng lint",
-    "lint-staged": "ng lint --fix && prettier --write --ignore-unknown"
+		"lint-staged": "ng lint --fix && prettier --write --ignore-unknown"
 	},
 	"private": true,
 	"dependencies": {
