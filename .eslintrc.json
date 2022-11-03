@@ -8,7 +8,8 @@
 				"project": ["tsconfig.json"],
 				"createDefaultProgram": true
 			},
-			"extends": [
+      "plugins": ["import"],
+      "extends": [
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates",
         "airbnb-typescript/base"
