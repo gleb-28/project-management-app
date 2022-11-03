@@ -1,1 +1,40 @@
-<p>sign-up-page works!</p>
+<form class="login-form" [formGroup]="signUpForm" (ngSubmit)="signUp()">
+  <h2 class="login-form__title">Signup</h2>
+
+  <span class="p-float-label">
+    <input pInputText class="login-form__field" type="text" formControlName="name">
+    <label for="float-input">Name</label>
+  </span>
+  <div class="login-form__error-name">
+    <p *ngIf="isRequired('name') && isTouched('name')">Please enter a name</p>
+    <p *ngIf="isValid('minlength', 'name')">At least 3 characters</p>
+  </div>
+
+  <span class="p-float-label">
+    <input pInputText class="login-form__field" type="text" formControlName="login">
+    <label for="float-input">Login</label>
+  </span>
+  <div class="login-form__error-name">
+    <p *ngIf="isRequired('login') && isTouched('login')">Please enter a login</p>
+    <p *ngIf="isValid('minlength', 'login')">At least 3 characters</p>
+  </div>
+
+  <span class="p-float-label">
+    <input id="float-input" pInputText type="password" formControlName="password" >
+    <label for="float-input">Password</label>
+  </span>
+  <div class="login-form__error-pass">
+    <p *ngIf="isTouched('password')" >
+      <li *ngIf="isRequired('password')">Please enter a password</li>
+      <li *ngIf="isValid('minlength')">At least 8 characters</li>
+      <li *ngIf="isValid('isValidRegister') && isPasswordStrong">At least one lowercase or at least one uppercase</li>
+      <li *ngIf="isValid('isValidNumber') && isPasswordStrong">At least one numeric or one letters</li>
+      <li *ngIf="isValid('isValidSymbol') && isPasswordStrong">At least one special character, e.g., ! @ # ? ]</li>
+    </p>
+  </div>
+
+  <button class="login-form__btn" type="submit" [disabled]="signUpForm.invalid">Singup</button>
+  <div class="login-form__info">Already have an account?<span class="login-form__signup">Login</span></div>
+</form>
+
+
