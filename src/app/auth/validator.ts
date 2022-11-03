@@ -24,12 +24,4 @@ export class ValidatorPassDate {
 		}
 		return null;
 	}
-
-	static ofDate(control: AbstractControl): { [key: string]: boolean } | null {
-		const enteredDate = +new Date(control.value);
-		if (Date.now() < enteredDate) {
-			return { isValidDate: true };
-		}
-		return null;
-	}
 }

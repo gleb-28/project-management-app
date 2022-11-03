@@ -29,17 +29,17 @@ export class SignUpPageComponent {
 		return invalid && (touched || dirty) && errors?.['required'];
 	}
 
-	get isPasswordStrong() {
-		const { touched, errors, dirty } = this.signUpForm.controls['password'];
-		return (touched || dirty) && errors?.['pattern'];
-	}
-
 	isTouched(type: string) {
 		return this.signUpForm.controls[type].touched;
 	}
 
 	isValid(error: string, type:string = 'password') {
 		return this.signUpForm.controls[type].errors?.[error];
+	}
+  
+	get isPasswordStrong() {
+		const { touched, errors, dirty } = this.signUpForm.controls['password'];
+		return (touched || dirty) && errors?.['pattern'];
 	}
 
 

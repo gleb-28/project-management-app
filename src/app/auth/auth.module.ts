@@ -5,11 +5,12 @@ import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
+import { UserSettingsPageComponent } from './pages/user-settings-page/user-settings-page.component';
 
-const COMPONENTS = [SignUpPageComponent,  LoginPageComponent];
+const COMPONENTS = [SignUpPageComponent,  LoginPageComponent, UserSettingsPageComponent];
 
 @NgModule({
-	declarations: [...COMPONENTS],
+	declarations: [...COMPONENTS, UserSettingsPageComponent],
 	imports: [CommonModule, FormsModule, ReactiveFormsModule, InputTextModule, PasswordModule],
 	exports: [...COMPONENTS],
 })
