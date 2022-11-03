@@ -1,0 +1,30 @@
+<form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
+  <h2 class="login-form__title">Login</h2>
+
+  <span class="p-float-label">
+    <input pInputText class="login-form__field" type="text" formControlName="login">
+    <label for="float-input">Username</label>
+  </span>
+  <div class="login-form__error-name">
+    <p *ngIf="isRequired('login') && isTouched('login')">Please enter a login</p>
+    <p *ngIf="isValid('minlength', 'login')">At least 3 characters</p>
+  </div>
+
+  <span class="p-float-label">
+    <input id="float-input" pInputText type="password" formControlName="password" >
+    <label for="float-input">Password</label>
+  </span>
+  <div class="login-form__error-pass">
+    <p *ngIf="isTouched('password')" >
+      <li *ngIf="isRequired('password')">Please enter a password</li>
+      <li *ngIf="isValid('minlength')">At least 8 characters</li>
+      <li *ngIf="isValid('isValidRegister') && isPasswordStrong">At least one lowercase or at least one uppercase</li>
+      <li *ngIf="isValid('isValidNumber') && isPasswordStrong">At least one numeric or one letters</li>
+      <li *ngIf="isValid('isValidSymbol') && isPasswordStrong">At least one special character, e.g., ! @ # ? ]</li>
+    </p>
+  </div>
+
+  <button class="login-form__btn" type="submit" [disabled]="loginForm.invalid">Login</button>
+  <div class="login-form__info">Don't have an account?<span class="login-form__signup">Signup</span></div>
+</form>
+
