@@ -1,0 +1,26 @@
+@forward 'src/styles';
+
+:host {
+  @extend %place-center;
+  height: 100%;
+  min-height: 80vh;
+
+  .body {
+    padding: 1rem 0 3rem;
+    text-align: center;
+  }
+
+  .code {
+    font-size: 6rem;
+    @media (max-width: 476px ) {
+      font-size: 5rem;
+    }
+  }
+
+  .text {
+    font-size: 4rem;
+    @media (max-width: 476px ) {
+      font-size: 2rem;
+    }
+  }
+}

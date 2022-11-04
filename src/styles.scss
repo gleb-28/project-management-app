@@ -26,6 +26,29 @@ body {
 
 .container {
 	margin: 0 auto;
-	max-width: 1400px;
 	padding: 0 1rem;
+}
+
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: auto;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+}
+
+%place-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.logo {
+  width: 3rem;
+  height: 3rem;
 }
