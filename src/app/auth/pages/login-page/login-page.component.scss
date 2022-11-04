@@ -24,19 +24,8 @@
   }
 
   &__btn{
-    align-self: center;
     margin-top: 4px;
-    width: 100%;
-    height: 40px;
-    font-size: 14px;
-    color: #FFFFFF;
-    background: #2fd0ed;
-    border-radius: 5px;
     border:none;
-    cursor: pointer;
-    &:hover{
-      background: #09aad6;
-    }
     &[disabled]{
       background:#465160;
     }
@@ -61,11 +50,11 @@
     font-size: 10px;
   }
   input:focus {
-    border: none;
+    border: solid transparent 1px;
   }
 
   input.ng-touched.ng-invalid {
-    border: solid red 2px;
+    border: solid red 1px;
   }
 
   li {
@@ -76,18 +65,16 @@
 
   &__info{
     font-size: 12px;
-    padding: 10px 0;
+    padding: 5px 0;
     margin: 0 auto;
-    & span{
-      padding: 0 6px;
-      color: #2fd0ed;
-      cursor: pointer;
-      &:hover{
-        color: #09aad6;
-      }
+    & button{
+      font-size: 12px;
+      padding: 0 4px;
+      margin: 0 0 -2px 4px;
     }
   }
 }
 .p-inputtext{
   width: 320px;
 }
+

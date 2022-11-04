@@ -4,14 +4,14 @@ import { SignUpPageComponent } from './pages/sign-up-page/sign-up-page.component
 import { LoginPageComponent } from './pages/login-page/login-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
-import { PasswordModule } from 'primeng/password';
 import { UserSettingsPageComponent } from './pages/user-settings-page/user-settings-page.component';
+import { ButtonModule } from 'primeng/button';
 
-const COMPONENTS = [SignUpPageComponent,  LoginPageComponent, UserSettingsPageComponent];
+const COMPONENTS = [SignUpPageComponent,  LoginPageComponent, UserSettingsPageComponent, UserSettingsPageComponent];
 
 @NgModule({
-	declarations: [...COMPONENTS, UserSettingsPageComponent],
-	imports: [CommonModule, FormsModule, ReactiveFormsModule, InputTextModule, PasswordModule],
+	declarations: [...COMPONENTS],
+	imports: [CommonModule, FormsModule, ReactiveFormsModule, InputTextModule, ButtonModule],
 	exports: [...COMPONENTS],
 })
 export class AuthModule {}

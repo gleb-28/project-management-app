@@ -32,9 +32,10 @@
       <li *ngIf="isValid('isValidSymbol') && isPasswordStrong">At least one special character, e.g., ! @ # ? ]</li>
     </p>
   </div>
-
-  <button class="login-form__btn" type="submit" [disabled]="signUpForm.invalid">Singup</button>
-  <div class="login-form__info">Already have an account?<span class="login-form__signup">Login</span></div>
+  <button pButton class="login-form__btn" type="submit" [disabled]="signUpForm.invalid" label="Singup"></button>
+  <div class="login-form__info">Already have an account?
+    <button pButton label="Login" class="login-form__signup" class="p-button-text"></button>
+  </div>
 </form>
 
 

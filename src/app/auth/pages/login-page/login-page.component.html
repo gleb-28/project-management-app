@@ -24,7 +24,9 @@
     </p>
   </div>
 
-  <button class="login-form__btn" type="submit" [disabled]="loginForm.invalid">Login</button>
-  <div class="login-form__info">Don't have an account?<span class="login-form__signup">Signup</span></div>
+  <button pButton class="login-form__btn" type="submit" [disabled]="loginForm.invalid" label="Login"></button>
+  <div class="login-form__info">Don't have an account?
+    <button pButton label="Signup" class="login-form__signup" class="p-button-text"></button>
+  </div>
 </form>
 

@@ -1,7 +1,7 @@
 <form class="login-form" [formGroup]="updateForm" (ngSubmit)="update()">
   <div class="login-form__title_content">
     <h2 class="login-form__title">Edit profile</h2>
-    <button class="login-form__delete">Delete profile</button>
+    <button pButton label="Delete profile" icon="pi pi-trash" class="login-form__delete"></button>
   </div>
 
   <span class="p-float-label">
@@ -35,8 +35,7 @@
       <li *ngIf="isValid('isValidSymbol') && isPasswordStrong">At least one special character, e.g., ! @ # ? ]</li>
     </p>
   </div>
-
-  <button class="login-form__btn" type="submit" [disabled]="updateForm.invalid">Update</button>
+  <button pButton class="login-form__btn" type="submit" [disabled]="updateForm.invalid" label="Save"></button>
 </form>
 
 
