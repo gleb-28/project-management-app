@@ -1,5 +1,7 @@
+import { UserId } from "./userId.model";
+
 export interface PointsRequest {
-  _id?: string;
+  _id?: UserId;
   title?: string;
   taskId?: string;
   boardId?: string;
@@ -7,7 +9,7 @@ export interface PointsRequest {
 }
 
 export interface PointsResponse {
-  _id: string;
+  _id: UserId;
   name?: string;
   title?: string;
   order?: number;

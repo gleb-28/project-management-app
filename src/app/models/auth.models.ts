@@ -1,3 +1,5 @@
+import { UserId } from "./userId.model";
+
 export interface SignInRequest {
   login: string;
   password: string;
@@ -8,7 +10,7 @@ export interface SignInResponse {
 }
 
 export interface SignUpResponse {
-  _id: string;
+  _id: UserId;
   name: string;
   login: string;
 }

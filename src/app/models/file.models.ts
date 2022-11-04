@@ -1,5 +1,7 @@
+import { UserId } from "./userId.model";
+
 export interface FileResponse {
-  _id: string;
+  _id: UserId;
   name: string;
   taskId: string;
   boardId: string;
