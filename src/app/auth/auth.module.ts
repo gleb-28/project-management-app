@@ -6,12 +6,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { UserSettingsPageComponent } from './pages/user-settings-page/user-settings-page.component';
 import { ButtonModule } from 'primeng/button';
+import { TemplateFormComponent } from './components/template-form/template-form.component';
 
 const COMPONENTS = [SignUpPageComponent,  LoginPageComponent, UserSettingsPageComponent, UserSettingsPageComponent];
-
+const PrimeNgModules = [InputTextModule, ButtonModule];
 @NgModule({
-	declarations: [...COMPONENTS],
-	imports: [CommonModule, FormsModule, ReactiveFormsModule, InputTextModule, ButtonModule],
+	declarations: [...COMPONENTS, TemplateFormComponent],
+	imports: [CommonModule, FormsModule, ReactiveFormsModule, ...PrimeNgModules],
 	exports: [...COMPONENTS],
 })
 export class AuthModule {}

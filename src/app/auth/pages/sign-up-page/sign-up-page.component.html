@@ -6,33 +6,36 @@
     <label for="float-input">Name</label>
   </span>
   <div class="login-form__error-name">
-    <p *ngIf="isRequired('name') && isTouched('name')">Please enter a name</p>
-    <p *ngIf="isValid('minlength', 'name')">At least 3 characters</p>
+    <p *ngIf="isValid('name', 'required')">Please enter a login</p>
+    <p *ngIf="isValid('name', 'minlength')">At least 3 characters</p>
   </div>
 
+
+<div >
   <span class="p-float-label">
     <input pInputText class="login-form__field" type="text" formControlName="login">
     <label for="float-input">Login</label>
   </span>
   <div class="login-form__error-name">
-    <p *ngIf="isRequired('login') && isTouched('login')">Please enter a login</p>
-    <p *ngIf="isValid('minlength', 'login')">At least 3 characters</p>
+    <p *ngIf="isValid('login', 'required')">Please enter a login</p>
+    <p *ngIf="isValid('login', 'minlength')">At least 3 characters</p>
   </div>
 
   <span class="p-float-label">
     <input id="float-input" pInputText type="password" formControlName="password" >
     <label for="float-input">Password</label>
   </span>
-  <div class="login-form__error-pass">
-    <p *ngIf="isTouched('password')" >
-      <li *ngIf="isRequired('password')">Please enter a password</li>
-      <li *ngIf="isValid('minlength')">At least 8 characters</li>
-      <li *ngIf="isValid('isValidRegister') && isPasswordStrong">At least one lowercase or at least one uppercase</li>
-      <li *ngIf="isValid('isValidNumber') && isPasswordStrong">At least one numeric or one letters</li>
-      <li *ngIf="isValid('isValidSymbol') && isPasswordStrong">At least one special character, e.g., ! @ # ? ]</li>
-    </p>
-  </div>
-  <button pButton class="login-form__btn" type="submit" [disabled]="signUpForm.invalid" label="Singup"></button>
+  <ul class="login-form__error-pass">
+    <li *ngIf="isValid('password', 'required')">Please enter a password</li>
+    <li *ngIf="isValid('password', 'minlength')">At least 8 characters</li>
+    <li *ngIf="isValid('password', 'isValidRegister')">At least one lowercase or at least one uppercase</li>
+    <li *ngIf="isValid('password', 'isValidNumber')">At least one numeric or one letters</li>
+    <li *ngIf="isValid('password', 'isValidSymbol')">At least one special character, e.g., ! @ # ? ]</li>
+  </ul>
+</div>
+
+
+  <button pButton class="login-form__btn" type="submit" label="Singup"></button>
   <div class="login-form__info">Already have an account?
     <button pButton label="Login" class="login-form__signup" class="p-button-text"></button>
   </div>

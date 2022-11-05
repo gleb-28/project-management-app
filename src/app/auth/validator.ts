@@ -1,7 +1,7 @@
 import { AbstractControl } from '@angular/forms';
 
-export class ValidatorPassDate {
-	static ofRegister(control: AbstractControl): { [key: string]: boolean } | null {
+export class CustomValidator {
+	static hasRegister(control: AbstractControl): { [key: string]: boolean } | null {
 		const regExp = /(?=.*[a-z])(?=.*[A-Z])/;
 		if (!regExp.test(control.value)) {
 			return { isValidRegister: true };
@@ -9,16 +9,16 @@ export class ValidatorPassDate {
 		return null;
 	}
 
-	static ofNumber(control: AbstractControl): { [key: string]: boolean } | null {
-		const regExp = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/;
+	static hasNumber(control: AbstractControl): { [key: string]: boolean } | null {
+		const regExp = /(?=.*[0-9])/;
 		if (!regExp.test(control.value)) {
 			return { isValidNumber: true };
 		}
 		return null;
 	}
 
-	static ofSymbol(control: AbstractControl): { [key: string]: boolean } | null {
-		const regExp = /(?=.*[$@$!%*?&])/;
+	static hasSymbol(control: AbstractControl): { [key: string]: boolean } | null {
+		const regExp = /\W+/;
 		if (!regExp.test(control.value)) {
 			return { isValidSymbol: true };
 		}

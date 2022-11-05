@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ValidatorPassDate } from '../../validator';
+import { CustomValidator } from '../../validator';
 
 @Component({
 	selector: 'app-user-settings-page',
@@ -9,37 +9,21 @@ import { ValidatorPassDate } from '../../validator';
 })
 export class UserSettingsPageComponent  {
 	updateForm: FormGroup = new FormGroup({
-		name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-		login: new FormControl('', [Validators.required, Validators.minLength(3)]),
-		password: new FormControl('', [
+		name: new FormControl('nadya', [Validators.required, Validators.minLength(3)]),
+		login: new FormControl('nadya@mail.ru', [Validators.required, Validators.minLength(3)]),
+		password: new FormControl('45381FDVhyh?', [
 			Validators.required,
 			Validators.minLength(8),
-			Validators.pattern(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{7,}/),
-			ValidatorPassDate.ofRegister,
-			ValidatorPassDate.ofNumber,
-			ValidatorPassDate.ofSymbol,
+			CustomValidator.hasRegister,
+			CustomValidator.hasNumber,
+			CustomValidator.hasSymbol,
 		]),
 	});
 
-	update() {}
+	public save() {}
 
-	isRequired(type: string) {
-		const { invalid, touched, errors, dirty } = this.updateForm.controls[type];
-		return invalid && (touched || dirty) && errors?.['required'];
+
+	isValid(type:string, error: string ) {
+		return this.updateForm.controls[type].errors?.[error] && this.updateForm.controls[type].touched;
 	}
-
-	isTouched(type: string) {
-		return this.updateForm.controls[type].touched;
-	}
-
-	isValid(error: string, type:string = 'password') {
-		return this.updateForm.controls[type].errors?.[error];
-	}
-
-	get isPasswordStrong() {
-		const { touched, errors, dirty } = this.updateForm.controls['password'];
-		return (touched || dirty) && errors?.['pattern'];
-	}
-
-
 }

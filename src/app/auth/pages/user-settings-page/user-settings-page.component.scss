@@ -5,80 +5,88 @@
   left: 0;
 }
 .login-form{
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
-display: flex;
-flex-direction: column;
-max-width: 360px;
-padding: 30px 20px;
-background-color: #f5f3f3;
-border-radius: 5px;
-
-&__title{
-  margin: 0 0 35px;
-  font-size: 24px;
-  color: #000000;
-}
-
-&__title_content{
   display: flex;
-  justify-content: space-between;
-}
-&__delete{
-  height: 40px;
-  width: 155px;
-  font-size: 14px;
-  &:hover{
-    background: #09aad6;
+  flex-direction: column;
+  max-width: 360px;
+  padding: 30px 20px;
+  background-color: #f5f3f3;
+  border-radius: 5px;
+
+  &__title{
+    margin: 0 0 5px;
+    font-size: 24px;
+    color: #000000;
   }
-}
+  &__inform{
+    font-size: 10px;
+    margin: 0 0 45px;
 
-&__btn{
-  margin-top: 4px;
-  background: #2fd0ed;
-  border:none;
-  &[disabled]{
-    background:#465160;
   }
-}
 
-&__error-name {
-  width: 100%;
-  height: 30px;
-  color: red;
-  margin: 0 0 5px 0;
-  padding: 5px 0;
-  font-size: 10px;
-}
+  &__btn{
+    margin-top: 4px;
+    border:none;
+    width: 320px;
+  }
 
-&__error-pass {
-  width: 100%;
-  height: 60px;
-  display: flex;
-  padding: 5px 0;
-  color: red;
-  margin: 0;
-  font-size: 10px;
-}
-input:focus {
-  border: solid transparent 1px;
-}
+  &__error-name {
+    width: 100%;
+    height: 30px;
+    color: red;
+    margin: 0 0 5px 0;
+    padding: 5px 0;
+    font-size: 10px;
+  }
 
-input.ng-touched.ng-invalid {
-  border: solid red 1px;
-}
+  &__error-pass {
+    width: 100%;
+    height: 53px;
+    padding: 5px 0;
+    color: red;
+    margin: 0;
+    font-size: 10px;
+  }
+  input:focus {
+    border: solid transparent 1px;
+  }
 
-li {
-  font-size: 10px;
-  list-style: none;
+  input.ng-touched.ng-invalid {
+    border: solid red 1px;
+  }
 
-}
+  li {
+    font-size: 10px;
+    list-style: none;
+  }
+  .line {
+    position: relative;
+    margin: 10px 0;
+    padding: 10px 0;
+  }
+  .text {
+    position: absolute;
+    left: 43%;
+    top: 16%;
+    padding: 0 10px;
+    background:  #f5f3f3;
+  }
 
 }
 
 .p-inputtext{
   width: 320px;
 }
+.p-button{
+  height: 40px;
+}
+
+.p-float-label > .ng-invalid.ng-dirty + label{
+  color: #6c757d;
+}
+
+

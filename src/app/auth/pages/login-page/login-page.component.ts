@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ValidatorPassDate } from '../../validator';
+import { CustomValidator } from '../../validator';
 
 
 @Component({
@@ -14,31 +14,21 @@ export class LoginPageComponent {
 		password: new FormControl('', [
 			Validators.required,
 			Validators.minLength(8),
-			Validators.pattern(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{7,}/),
-			ValidatorPassDate.ofRegister,
-			ValidatorPassDate.ofNumber,
-			ValidatorPassDate.ofSymbol,
+			CustomValidator.hasRegister,
+			CustomValidator.hasNumber,
+			CustomValidator.hasSymbol,
 		]),
-	});
+	}
+		,
+	);
 
-	login() {}
-
-	isRequired(type: string) {
-		const { invalid, touched, errors, dirty } = this.loginForm.controls[type];
-		return invalid && (touched || dirty) && errors?.['required'];
+	public login() {
+		if (this.loginForm.invalid) {}
 	}
 
-	isTouched(type: string) {
-		return this.loginForm.controls[type].touched;
-	}
 
-	isValid(error: string, type:string = 'password') {
-		return this.loginForm.controls[type].errors?.[error];
-	}
-
-	get isPasswordStrong() {
-		const { touched, errors, dirty } = this.loginForm.controls['password'];
-		return (touched || dirty) && errors?.['pattern'];
+	isValid(type:string, error: string ) {
+		return this.loginForm.controls[type].errors?.[error] && this.loginForm.controls[type].touched;
 	}
 
 }

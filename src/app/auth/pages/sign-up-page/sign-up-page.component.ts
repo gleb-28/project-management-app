@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ValidatorPassDate } from '../../validator';
+import { CustomValidator } from '../../validator';
 
 @Component({
 	selector: 'app-sign-up-page',
@@ -15,31 +15,33 @@ export class SignUpPageComponent {
 		password: new FormControl('', [
 			Validators.required,
 			Validators.minLength(8),
-			Validators.pattern(/(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{7,}/),
-			ValidatorPassDate.ofRegister,
-			ValidatorPassDate.ofNumber,
-			ValidatorPassDate.ofSymbol,
+			CustomValidator.hasRegister,
+			CustomValidator.hasNumber,
+			CustomValidator.hasSymbol,
 		]),
 	});
 
-	signUp() {}
+	// constructor(private fb: FormBuilder) {}
+	// signUpForm: FormGroup = this.fb.group({
+	//   name: ['', [Validators.required, Validators.minLength(3)]],
+	//   basicInfo: this.fb.group({
+	//     login: ['', [Validators.required, Validators.minLength(3)]],
+	// 	  password:['', [
+	// 		Validators.required,
+	// 		Validators.minLength(8),
+	//     CustomValidator.hasRegister,
+	// 		CustomValidator.hasNumber,
+	// 		CustomValidator.hasSymbol,
+	// 	]],
+	//   },
+	//   )}
 
-	isRequired(type: string) {
-		const { invalid, touched, errors, dirty } = this.signUpForm.controls[type];
-		return invalid && (touched || dirty) && errors?.['required'];
-	}
+	// );
 
-	isTouched(type: string) {
-		return this.signUpForm.controls[type].touched;
-	}
+	public signUp() {}
 
-	isValid(error: string, type:string = 'password') {
-		return this.signUpForm.controls[type].errors?.[error];
-	}
-  
-	get isPasswordStrong() {
-		const { touched, errors, dirty } = this.signUpForm.controls['password'];
-		return (touched || dirty) && errors?.['pattern'];
+	isValid(type:string, error: string ) {
+		return this.signUpForm.controls[type].errors?.[error] && this.signUpForm.controls[type].touched;
 	}
 
 
