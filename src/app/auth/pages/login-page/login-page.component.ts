@@ -27,7 +27,7 @@ export class LoginPageComponent {
 	}
 
 
-	isValid(type:string, error: string ) {
+	public isValid(type:string, error: string ) {
 		return this.loginForm.controls[type].errors?.[error] && this.loginForm.controls[type].touched;
 	}
 

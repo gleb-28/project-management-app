@@ -20,10 +20,12 @@ export class UserSettingsPageComponent  {
 		]),
 	});
 
-	public save() {}
+	public save() {
+		if (this.updateForm.valid) {}
+	}
 
 
-	isValid(type:string, error: string ) {
+	public isValid(type:string, error: string ) {
 		return this.updateForm.controls[type].errors?.[error] && this.updateForm.controls[type].touched;
 	}
 }

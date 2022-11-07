@@ -1,11 +1,11 @@
-<form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
-  <h2 class="login-form__title">Login</h2>
+<form class="form-card" [formGroup]="loginForm" (ngSubmit)="login()">
+  <h2 class="form-card__title">Login</h2>
 
   <span class="p-float-label">
-    <input pInputText class="login-form__field" type="text" formControlName="login">
+    <input pInputText class="form-card__field" type="text" formControlName="login">
     <label for="float-input">Login</label>
   </span>
-  <div class="login-form__error-name">
+  <div class="form-card__error-name">
     <p *ngIf="isValid('login', 'required')">Please enter a login</p>
     <p *ngIf="isValid('login', 'minlength')">At least 3 characters</p>
   </div>
@@ -14,7 +14,7 @@
     <input id="float-input" pInputText type="password" formControlName="password" >
     <label for="float-input">Password</label>
   </span>
-  <ul class="login-form__error-pass">
+  <ul class="form-card__error-pass">
       <li *ngIf="isValid('password', 'required')">Please enter a password</li>
       <li *ngIf="isValid('password', 'minlength')">At least 8 characters</li>
       <li *ngIf="isValid('password', 'isValidRegister')">At least one lowercase or at least one uppercase</li>
@@ -22,9 +22,9 @@
       <li *ngIf="isValid('password', 'isValidSymbol')">At least one special character, e.g., ! @ # ? ]</li>
   </ul>
 
-  <button pButton class="login-form__btn" type="submit" label="Login"></button>
-  <div class="login-form__info">Don't have an account?
-    <button pButton label="Signup" class="login-form__signup" class="p-button-text"></button>
+  <button pButton class="form-card__btn" type="submit" label="Login"></button>
+  <div class="form-card__info">Don't have an account?
+    <button pButton label="Signup" class="form-card__signup" class="p-button-text"></button>
   </div>
 </form>
 

@@ -4,7 +4,7 @@
     top: 0;
     left: 0;
 }
-.login-form{
+.form-card{
   position: absolute;
   top: 50%;
   left: 50%;
@@ -14,7 +14,7 @@
   flex-direction: column;
   max-width: 360px;
   padding: 30px 20px;
-  background-color: #f5f3f3;
+  border: 1px solid #6f6f6f;
   border-radius: 5px;
 
   &__title{
@@ -73,7 +73,6 @@
 .p-inputtext{
   width: 320px;
 }
-
 .p-float-label > .ng-invalid.ng-dirty + label{
   color: #6c757d;
 }

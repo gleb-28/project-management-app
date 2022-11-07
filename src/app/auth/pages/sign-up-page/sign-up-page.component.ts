@@ -21,26 +21,13 @@ export class SignUpPageComponent {
 		]),
 	});
 
-	// constructor(private fb: FormBuilder) {}
-	// signUpForm: FormGroup = this.fb.group({
-	//   name: ['', [Validators.required, Validators.minLength(3)]],
-	//   basicInfo: this.fb.group({
-	//     login: ['', [Validators.required, Validators.minLength(3)]],
-	// 	  password:['', [
-	// 		Validators.required,
-	// 		Validators.minLength(8),
-	//     CustomValidator.hasRegister,
-	// 		CustomValidator.hasNumber,
-	// 		CustomValidator.hasSymbol,
-	// 	]],
-	//   },
-	//   )}
+	public onSubmit() {
+		if (this.signUpForm.valid) {
+			//this.store.dispatch(signUp({ req: this.signUpForm.value }));
+		}
+	}
 
-	// );
-
-	public signUp() {}
-
-	isValid(type:string, error: string ) {
+	public isValid(type:string, error: string ) {
 		return this.signUpForm.controls[type].errors?.[error] && this.signUpForm.controls[type].touched;
 	}
 

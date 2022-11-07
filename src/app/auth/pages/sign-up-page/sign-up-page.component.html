@@ -1,11 +1,11 @@
-<form class="login-form" [formGroup]="signUpForm" (ngSubmit)="signUp()">
-  <h2 class="login-form__title">Signup</h2>
+<form class="form-card" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+  <h2 class="form-card__title">Signup</h2>
 
   <span class="p-float-label">
-    <input pInputText class="login-form__field" type="text" formControlName="name">
+    <input pInputText class="form-card__field" type="text" formControlName="name">
     <label for="float-input">Name</label>
   </span>
-  <div class="login-form__error-name">
+  <div class="form-card__error-name">
     <p *ngIf="isValid('name', 'required')">Please enter a login</p>
     <p *ngIf="isValid('name', 'minlength')">At least 3 characters</p>
   </div>
@@ -13,10 +13,10 @@
 
 <div >
   <span class="p-float-label">
-    <input pInputText class="login-form__field" type="text" formControlName="login">
+    <input pInputText class="form-card__field" type="text" formControlName="login">
     <label for="float-input">Login</label>
   </span>
-  <div class="login-form__error-name">
+  <div class="form-card__error-name">
     <p *ngIf="isValid('login', 'required')">Please enter a login</p>
     <p *ngIf="isValid('login', 'minlength')">At least 3 characters</p>
   </div>
@@ -25,7 +25,7 @@
     <input id="float-input" pInputText type="password" formControlName="password" >
     <label for="float-input">Password</label>
   </span>
-  <ul class="login-form__error-pass">
+  <ul class="form-card__error-pass">
     <li *ngIf="isValid('password', 'required')">Please enter a password</li>
     <li *ngIf="isValid('password', 'minlength')">At least 8 characters</li>
     <li *ngIf="isValid('password', 'isValidRegister')">At least one lowercase or at least one uppercase</li>
@@ -35,9 +35,9 @@
 </div>
 
 
-  <button pButton class="login-form__btn" type="submit" label="Singup"></button>
-  <div class="login-form__info">Already have an account?
-    <button pButton label="Login" class="login-form__signup" class="p-button-text"></button>
+  <button pButton class="form-card__btn" type="submit" label="Singup"></button>
+  <div class="form-card__info">Already have an account?
+    <button pButton label="Login" class="form-card__signup" class="p-button-text"></button>
   </div>
 </form>
 
