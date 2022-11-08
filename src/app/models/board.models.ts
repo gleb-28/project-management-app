@@ -1,14 +1,14 @@
-import { UserId } from "./userId.model";
+import { UserId } from './userId.model';
 
 export interface BoardRequest {
-  title: string;
-  owner: string;
-  users: UserId[];
+	title: string;
+	owner: string;
+	users: UserId[];
 }
 
 export interface BoardResponse {
-  _id: UserId;
-  title: string;
-  owner: string;
-  users: UserId[];
+	_id: UserId;
+	title: string;
+	owner: string;
+	users: UserId[];
 }

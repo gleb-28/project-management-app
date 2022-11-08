@@ -1,0 +1,93 @@
+:host{
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.form-card{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: column;
+  max-width: 360px;
+  padding: 30px 20px;
+  border: 1px solid #6f6f6f;
+  border-radius: 5px;
+
+  &__title{
+    margin: 0 0 5px;
+    font-size: 24px;
+    color: #000000;
+  }
+  &__inform{
+    font-size: 10px;
+    margin: 0 0 40px;
+    font-style: oblique;
+
+  }
+
+  &__btn{
+    margin-top: 4px;
+    border:none;
+    width: 320px;
+  }
+
+  &__error-name {
+    width: 100%;
+    height: 30px;
+    color: red;
+    margin: 0 0 5px 0;
+    padding: 5px 0;
+    font-size: 10px;
+  }
+
+  &__error-pass {
+    width: 100%;
+    height: 53px;
+    padding: 5px 0;
+    color: red;
+    margin: 0;
+    font-size: 10px;
+  }
+  input:focus {
+    border: solid transparent 1px;
+  }
+
+  input.ng-touched.ng-invalid {
+    border: solid red 1px;
+  }
+
+  li {
+    font-size: 10px;
+    list-style: none;
+  }
+  .line {
+    position: relative;
+    margin: 10px 0;
+    padding: 10px 0;
+  }
+  .text {
+    position: absolute;
+    left: 43%;
+    top: 16%;
+    padding: 0 10px;
+    background:  #ffffff;
+  }
+
+}
+
+.p-inputtext{
+  width: 320px;
+}
+.p-button{
+  height: 40px;
+}
+
+.p-float-label > .ng-invalid.ng-dirty + label{
+  color: #6c757d;
+}
+
+

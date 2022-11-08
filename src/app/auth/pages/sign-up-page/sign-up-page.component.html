@@ -1,0 +1,44 @@
+<form class="form-card" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+  <h2 class="form-card__title">Signup</h2>
+
+  <span class="p-float-label">
+    <input pInputText class="form-card__field" type="text" formControlName="name">
+    <label for="float-input">Name</label>
+  </span>
+  <div class="form-card__error-name">
+    <p *ngIf="isValid('name', 'required')">Please enter a login</p>
+    <p *ngIf="isValid('name', 'minlength')">At least 3 characters</p>
+  </div>
+
+
+<div >
+  <span class="p-float-label">
+    <input pInputText class="form-card__field" type="text" formControlName="login">
+    <label for="float-input">Login</label>
+  </span>
+  <div class="form-card__error-name">
+    <p *ngIf="isValid('login', 'required')">Please enter a login</p>
+    <p *ngIf="isValid('login', 'minlength')">At least 3 characters</p>
+  </div>
+
+  <span class="p-float-label">
+    <input id="float-input" pInputText type="password" formControlName="password" >
+    <label for="float-input">Password</label>
+  </span>
+  <ul class="form-card__error-pass">
+    <li *ngIf="isValid('password', 'required')">Please enter a password</li>
+    <li *ngIf="isValid('password', 'minlength')">At least 8 characters</li>
+    <li *ngIf="isValid('password', 'isValidRegister')">At least one lowercase or at least one uppercase</li>
+    <li *ngIf="isValid('password', 'isValidNumber')">At least one numeric or one letters</li>
+    <li *ngIf="isValid('password', 'isValidSymbol')">At least one special character, e.g., ! @ # ? ]</li>
+  </ul>
+</div>
+
+
+  <button pButton class="form-card__btn" type="submit" label="Singup"></button>
+  <div class="form-card__info">Already have an account?
+    <button pButton label="Login" class="form-card__signup" class="p-button-text"></button>
+  </div>
+</form>
+
+
