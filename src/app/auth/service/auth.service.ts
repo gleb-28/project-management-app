@@ -1,18 +1,8 @@
 import { Injectable } from '@angular/core';
 import { SignInRequest, SignInResponse, SignUpRequest, SignUpResponse } from 'src/app/models/auth.models';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {  Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
-
-
-// remove after add interceptor
-const httpOptions = {
-	headers: new HttpHeaders({
-		'accept': 'application/json',
-		'Content-Type': 'application/json',
-	}),
-};
 
 
 @Injectable({
@@ -22,31 +12,19 @@ const httpOptions = {
 
 export class AuthService {
 
-	private _tokenLifeTime: number = 24;
 
-	constructor(private http: HttpClient, private storage: LocalStorageService) { }
+	constructor(private http: HttpClient, private LocalStorage: LocalStorageService) { }
 
-	public signUp(user: SignUpRequest): Observable<SignUpResponse> {
-		return this.http.post<SignUpResponse>(`${environment.API_BASE_URL}/auth/signup`, user, httpOptions);
-
+	public signUp(userData: SignUpRequest): Observable<SignUpResponse> {
+		return this.http.post<SignUpResponse>('/auth/signup', userData);
 	}
 
 	public login(userData: SignInRequest): Observable<SignInResponse> {
-		return this.http.post<SignInResponse>(`${environment.API_BASE_URL}/auth/signin`, userData, httpOptions);
-	}
-
-	public checkToken(tokenCreateDate: string): void {
-		const dateNow = Date.now();
-		const tokenDate = new Date(tokenCreateDate);
-		const tokenAge = (dateNow - tokenDate.getTime());
-
-		if (tokenAge > this._tokenLifeTime) {
-			this.logout();
-		}
+		return this.http.post<SignInResponse>('/auth/signin', userData);
 	}
 
 	logout() {
-		this.storage.remove('user');
+		this.LocalStorage.remove('token');
 		//this.router.navigateByUrl('/welcom')
 	}
 

@@ -9,9 +9,9 @@ import { CustomValidator } from '../../validator';
 })
 export class UserSettingsPageComponent  {
 	updateForm: FormGroup = new FormGroup({
-		name: new FormControl('nadya', [Validators.required, Validators.minLength(3)]),
-		login: new FormControl('nadya@mail.ru', [Validators.required, Validators.minLength(3)]),
-		password: new FormControl('45381FDVhyh?', [
+		name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+		login: new FormControl('', [Validators.required, Validators.minLength(3)]),
+		password: new FormControl('', [
 			Validators.required,
 			Validators.minLength(8),
 			CustomValidator.hasRegister,

@@ -23,7 +23,7 @@ export class LoginPageComponent {
 	);
 
 	public login() {
-		if (this.loginForm.invalid) {}
+		if (this.loginForm.valid) {}
 	}
 
 
