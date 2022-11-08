@@ -1,0 +1,34 @@
+@forward 'src/styles';
+
+:host{
+  @extend %place-center;
+  height: 100%;
+  min-height: 80vh;
+
+  .body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0 3rem;
+  }
+
+  .welcome-image {
+    width: 100%;
+    max-width: 34rem;
+    height: auto;
+  }
+
+  .text {
+    margin-bottom: 1rem;
+  }
+
+  ul {
+    list-style-type: none;
+
+    li {
+      margin-top: 0.5rem;
+    }
+  }
+}
