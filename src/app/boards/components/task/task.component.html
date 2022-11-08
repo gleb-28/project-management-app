@@ -1,1 +1,13 @@
-<p>task works!</p>
+<div class="card-wrapper">
+    <p-card [style]="{height: '30px'}">
+        <ng-template pTemplate="header">
+            <div class="card-header">
+                <p-checkbox name="groupname" value="taskValue"></p-checkbox>
+                <p>{{taskTitle}}</p>
+            </div>
+        </ng-template>
+        <ng-template [ngIf]="false">
+            <p>{{taskDescription}}</p>
+        </ng-template>
+    </p-card>
+</div>

@@ -1,22 +1,22 @@
-import { UserId } from "./userId.model";
+import { UserId } from './userId.model';
 
 export interface SignInRequest {
-  login: string;
-  password: string;
+	login: string;
+	password: string;
 }
 
 export interface SignInResponse {
-  token: string;
+	token: string;
 }
 
 export interface SignUpResponse {
-  _id: UserId;
-  name: string;
-  login: string;
+	_id: UserId;
+	name: string;
+	login: string;
 }
 
 export interface SignUpRequest {
-  name: string;
-  login: string;
-  password: string;
+	name: string;
+	login: string;
+	password: string;
 }

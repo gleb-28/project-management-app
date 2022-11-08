@@ -1,10 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { ColumnResponse } from 'src/app/models/column.models';
 
+const mockItems: Array<ColumnResponse> = [
+	{
+		_id: '15',
+		title: 'string',
+		order: 2,
+		boardId: 'string',
+	},
+	{
+		_id: '18',
+		title: 'string22',
+		order: 1,
+		boardId: 'string22',
+	},
+];
 @Component({
-  selector: 'app-board',
-  templateUrl: './board.component.html',
-  styleUrls: ['./board.component.scss']
+	selector: 'app-board',
+	templateUrl: './board.component.html',
+	styleUrls: ['./board.component.scss'],
 })
+
 export class BoardComponent {
+	items: Array<ColumnResponse>;
+
+	constructor() {
+
+		this.items = mockItems;
+	}
 
 }
