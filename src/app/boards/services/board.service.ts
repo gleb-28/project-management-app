@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ColumnRequest, ColumnResponse } from 'src/app/models/column.models';
 import { TaskRequest, TaskResponse } from 'src/app/models/task.models';
+import { FileResponse } from 'src/app/models/file.models';
 
 
 @Injectable({
@@ -67,7 +68,7 @@ export class BoardService {
 		return this.http.delete<TaskResponse>(`/boards/${boardId}/columns/${columnId}/tasks/${taskId}`);
 	}
 
-	public getTaskByIdUserIdOrSearch(ids: [string], userId: string, search: string): Observable<TaskResponse[]> {
+	public getTaskByIdsUserIdOrSearch(ids: [string], userId: string, search: string): Observable<TaskResponse[]> {
 		const params = new HttpParams()
 			.set('ids', JSON.stringify(ids))
 			.set('userId', userId)
@@ -81,6 +82,30 @@ export class BoardService {
 
 	public getTaskByBoardId(boardId: string): Observable<TaskResponse[]> {
 		return this.http.get<TaskResponse[]>(`/tasksSet/${boardId}`);
+	}
+
+	public getFilesByIdsUserIdOrTaskId(ids: [string], userId: string, taskId: string): Observable<FileResponse[]> {
+		const params = new HttpParams()
+			.set('ids', JSON.stringify(ids))
+			.set('userId', userId)
+			.set('taskId', taskId);
+		return this.http.get<FileResponse[]>('/file', { params: params });
+	}
+
+	public uploadFile(boardId: string, taskId: string, file: FileResponse): Observable<FileResponse[]> {
+		const formData = new FormData();
+		formData.append('boardId', boardId);
+		formData.append('taskId', taskId);
+		formData.append('file', JSON.stringify(file));
+		return this.http.post<FileResponse[]>('/file', formData);
+	}
+
+	public getFilesByBoardId(boardId: string): Observable<FileResponse[]> {
+		return this.http.get<FileResponse[]>(`/file/${boardId}`);
+	}
+
+	public deleteFileById(fileId: string): Observable<FileResponse> {
+		return this.http.delete<FileResponse>(`/file/${fileId}`);
 	}
 
 }
