@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PointsRequest, PointsResponse } from 'src/app/models/points.models';
-import { BoardsModule } from '../boards.module';
+import { BoardsModule } from '../../boards.module';
 
 @Injectable({
 	providedIn: BoardsModule,

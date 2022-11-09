@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ColumnRequest, ColumnResponse } from 'src/app/models/column.models';
-import { BoardsModule } from '../boards.module';
+import { BoardsModule } from '../../boards.module';
 
 
 @Injectable({
