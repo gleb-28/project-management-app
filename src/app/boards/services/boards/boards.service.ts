@@ -1,16 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { BoardRequest, BoardResponse } from 'src/app/models/board.models';
+import { BoardRequest, BoardResponse } from 'src/app/models/board.model';
 import { BoardsModule } from '../../boards.module';
-
 
 @Injectable({
 	providedIn: BoardsModule,
 })
-
 export class BoardsService {
-
 	constructor(private http: HttpClient) {}
 
 	public getAllBoards(): Observable<BoardResponse[]> {

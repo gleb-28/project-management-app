@@ -1,15 +1,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TaskRequest, TaskResponse } from 'src/app/models/task.models';
+import { TaskRequest, TaskResponse } from 'src/app/models/task.model';
 import { BoardsModule } from '../../boards.module';
 
 @Injectable({
 	providedIn: BoardsModule,
 })
 export class TasksService {
-
-	constructor(private http: HttpClient) { }
+	constructor(private http: HttpClient) {}
 
 	public getTasksInColumn(boardId: string, columnId: string): Observable<TaskResponse[]> {
 		return this.http.get<TaskResponse[]>(`/boards/${boardId}/columns/${columnId}/tasks`);
@@ -23,7 +22,12 @@ export class TasksService {
 		return this.http.get<TaskResponse>(`/boards/${boardId}/columns/${columnId}/tasks/${taskId}`);
 	}
 
-	public updateTaskById(boardId: string, columnId: string, taskId: string, taskData: TaskRequest): Observable<TaskResponse> {
+	public updateTaskById(
+		boardId: string,
+		columnId: string,
+		taskId: string,
+		taskData: TaskRequest,
+	): Observable<TaskResponse> {
 		return this.http.put<TaskResponse>(`/boards/${boardId}/columns/${columnId}/tasks/${taskId}`, taskData);
 	}
 
@@ -32,10 +36,7 @@ export class TasksService {
 	}
 
 	public getTaskByIdsUserIdOrSearch(ids: string[], userId: string, search: string): Observable<TaskResponse[]> {
-		const params = new HttpParams()
-			.set('ids', ids.join(','))
-			.set('userId', userId)
-			.set('search', search);
+		const params = new HttpParams().set('ids', ids.join(',')).set('userId', userId).set('search', search);
 		return this.http.get<TaskResponse[]>('/tasksSet', { params: params });
 	}
 

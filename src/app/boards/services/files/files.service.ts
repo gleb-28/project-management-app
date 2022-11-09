@@ -1,21 +1,17 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { FileResponse } from 'src/app/models/file.models';
+import { FileResponse } from 'src/app/models/file.model';
 import { BoardsModule } from '../../boards.module';
 
 @Injectable({
 	providedIn: BoardsModule,
 })
 export class FilesService {
-
-	constructor(private http: HttpClient) { }
+	constructor(private http: HttpClient) {}
 
 	public getFilesByIdsUserIdOrTaskId(ids: string[], userId: string, taskId: string): Observable<FileResponse[]> {
-		const params = new HttpParams()
-			.set('ids', ids.join(','))
-			.set('userId', userId)
-			.set('taskId', taskId);
+		const params = new HttpParams().set('ids', ids.join(',')).set('userId', userId).set('taskId', taskId);
 		return this.http.get<FileResponse[]>('/file', { params: params });
 	}
 
