@@ -1,15 +1,13 @@
-import { HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SignInRequest, SignUpResponse } from 'src/app/models/auth.models';
-
+import { SignInRequest, SignUpResponse } from 'src/app/models/auth.model';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class UserService {
-
-	constructor(private http: HttpClient) { }
+	constructor(private http: HttpClient) {}
 
 	public getUsers(): Observable<SignUpResponse[]> {
 		return this.http.get<SignUpResponse[]>('/users');

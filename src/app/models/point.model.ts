@@ -1,6 +1,6 @@
 import { UserId } from './userId.model';
 
-export interface PointsRequest {
+export interface PointRequest {
 	_id?: UserId;
 	title?: string;
 	taskId?: string;
@@ -8,7 +8,7 @@ export interface PointsRequest {
 	done: boolean;
 }
 
-export interface PointsResponse {
+export interface PointResponse {
 	_id: UserId;
 	name?: string;
 	title?: string;
