@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { signUpPending } from 'src/app/store/actions/user.actions';
 import { CustomValidator } from '../../validator';
 
 @Component({
@@ -8,6 +10,8 @@ import { CustomValidator } from '../../validator';
 	styleUrls: ['./sign-up-page.component.scss'],
 })
 export class SignUpPageComponent {
+
+	constructor(private store: Store) {}
 
 	signUpForm: FormGroup = new FormGroup({
 		name: new FormControl('', [Validators.required, Validators.minLength(3)]),
@@ -21,9 +25,10 @@ export class SignUpPageComponent {
 		]),
 	});
 
+
 	public onSubmit() {
 		if (this.signUpForm.valid) {
-			//this.store.dispatch(signUp({ req: this.signUpForm.value }));
+			this.store.dispatch(signUpPending({ request: this.signUpForm.value }));
 		}
 	}
 
