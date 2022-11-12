@@ -9,12 +9,10 @@
     </div>
     <div class="card-content">
         <div>
-            <ng-template ngFor let-taskItem [ngForOf]="taskItems" let-i="index">
-                <app-task pDraggable="cardItems" pDroppable="cardItems" [taskId]="taskItem._id"
-                    [taskTitle]="taskItem.title" [taskDescription]="taskItem.description"
-                    (onDragStart)="dragStart(taskItem)" (onDragEnd)="dragEnd()" (onDrop)="drop()">
-                </app-task>
-            </ng-template>
+            <app-task *ngFor="let taskItem of taskItems" pDraggable="cardItems" pDroppable="cardItems"
+                [taskId]="taskItem._id" [taskTitle]="taskItem.title" [taskDescription]="taskItem.description"
+                (onDragStart)="dragStart(taskItem)" (onDragEnd)="dragEnd()" (onDrop)="drop()">
+            </app-task>
         </div>
 
         <span class="p-input-icon-right">

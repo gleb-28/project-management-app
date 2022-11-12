@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ColumnResponse } from 'src/app/models/column.models';
 
-const mockItems: Array<ColumnResponse> = [
+const mockColumns: Array<ColumnResponse> = [
 	{
 		_id: '15',
 		title: 'string',
@@ -22,11 +22,11 @@ const mockItems: Array<ColumnResponse> = [
 })
 
 export class BoardComponent {
-	items: Array<ColumnResponse>;
+	columns: Array<ColumnResponse>;
 
 	constructor() {
 
-		this.items = mockItems;
+		this.columns = mockColumns;
 	}
 
 }

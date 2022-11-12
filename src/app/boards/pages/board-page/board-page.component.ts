@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 
 @Component({
 	selector: 'app-board-page',
-	templateUrl: './board.component.html',
-	styleUrls: ['./board.component.scss'],
+	templateUrl: './board-page.component.html',
+	styleUrls: ['./board-page.component.scss'],
 })
 export class BoardPageComponent {
+	public createColumn() {
 
+	}
 }

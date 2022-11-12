@@ -1,6 +1,4 @@
 <div class="board-wrapper">
-    <ng-template ngFor let-columnItem [ngForOf]="items" let-i="index">
-        <app-column [columnId]="columnItem._id" [columnTitle]="columnItem.title">
-        </app-column>
-    </ng-template>
+    <app-column *ngFor="let column of columns" [columnId]="column._id" [columnTitle]="column.title">
+    </app-column>
 </div>

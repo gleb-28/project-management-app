@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MainPageComponent } from './pages/main/main.component';
-import { BoardPageComponent } from './pages/board/board.component';
+import { MainPageComponent } from './pages/main-page/main-page.component';
+import { BoardPageComponent } from './pages/board-page/board-page.component';
 import { BoardsComponent } from './components/boards/boards.component';
 import { ColumnComponent } from './components/column/column.component';
 import { TaskComponent } from './components/task/task.component';

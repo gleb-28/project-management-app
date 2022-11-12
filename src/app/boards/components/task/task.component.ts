@@ -12,4 +12,6 @@ export class TaskComponent {
 
 	@Input() taskDescription = '';
 
+	@Input() isDone = false;
+
 }
