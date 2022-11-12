@@ -31,8 +31,9 @@
 						"style": "kebab-case"
 					}
 				],
-        "@typescript-eslint/indent": [2, "tab"]
-			}
+        "@typescript-eslint/indent": [2, "tab"],
+        "@typescript-eslint/lines-between-class-members": 0
+      }
 		},
 		{
 			"files": ["*.html"],
