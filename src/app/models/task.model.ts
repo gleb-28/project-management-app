@@ -1,22 +1,22 @@
-import { UserId } from './userId.model';
+import { BoardId, ColumnId, TaskId, UserId } from './ids.model';
 
 export interface TaskRequest {
-	_id?: UserId;
+	_id?: TaskId;
 	title?: string;
 	order: number;
 	description?: string;
-	columnId?: string;
-	userId?: number;
+	columnId?: ColumnId;
+	userId?: UserId;
 	users?: UserId[];
 }
 
 export interface TaskResponse {
-	_id: UserId;
+	_id: TaskId;
 	title: string;
 	order: number;
-	boardId: string;
-	columnId: string;
+	boardId: BoardId;
+	columnId: ColumnId;
 	description: string;
-	userId: string;
+	userId: UserId;
 	users: UserId[];
 }
