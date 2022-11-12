@@ -7,14 +7,14 @@ export interface UserState extends State {
 }
 
 export interface User {
-	id: UserId;
+	_id: UserId;
 	login: string;
 	name: string;
 }
 
 export const defaultUserState: UserState = {
 	user: {
-		id: '',
+		_id: '',
 		login: '',
 		name: '',
 	},

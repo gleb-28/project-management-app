@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { loginPending } from 'src/app/store/actions/user.actions';
 import { CustomValidator } from '../../validator';
 
 
@@ -9,6 +11,9 @@ import { CustomValidator } from '../../validator';
 	styleUrls: ['./login-page.component.scss'],
 })
 export class LoginPageComponent {
+
+	constructor(private store: Store) {}
+
 	loginForm: FormGroup = new FormGroup({
 		login: new FormControl('', [Validators.required, Validators.minLength(3)]),
 		password: new FormControl('', [
@@ -23,7 +28,9 @@ export class LoginPageComponent {
 	);
 
 	public login() {
-		if (this.loginForm.valid) {}
+		if (this.loginForm.valid) {
+			this.store.dispatch(loginPending({ request: this.loginForm.value }));
+		}
 	}
 
 
