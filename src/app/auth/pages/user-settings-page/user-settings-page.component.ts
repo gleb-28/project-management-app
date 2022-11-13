@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { take, tap } from 'rxjs';
-import { editUserPending } from 'src/app/store/actions/user.actions';
-import { selectIsUser } from 'src/app/store/selectors/user.selectors';
+import { deleteUserPending, editUserPending } from 'src/app/store/actions/user.actions';
+import { User } from 'src/app/store/models/user.state';
+import { selectUser } from 'src/app/store/selectors/user.selectors';
 import { CustomValidator } from '../../validator';
 
 @Component({
@@ -12,28 +12,17 @@ import { CustomValidator } from '../../validator';
 	styleUrls: ['./user-settings-page.component.scss'],
 })
 export class UserSettingsPageComponent implements OnInit {
-	name!: string;
-
-	login!: string;
+	user!: User;
 
 	public updateForm!: FormGroup;
 
 	constructor(private store: Store) { }
 
 	public ngOnInit(): void {
-		this.store.select(selectIsUser).pipe(
-			take(1),
-			tap((user) => {
-				if (user) {
-					const { name, login } = user;
-					this.name = name;
-					this.login = login;
-				}
-
-			}));
+		this.store.select(selectUser).subscribe((userData) => (this.user = userData));
 		this.updateForm = new FormGroup({
-			name: new FormControl(this.name, [Validators.required, Validators.minLength(3)]),
-			login: new FormControl(this.login, [Validators.required, Validators.minLength(3)]),
+			name: new FormControl(this.user.name, [Validators.required, Validators.minLength(3)]),
+			login: new FormControl(this.user.login, [Validators.required, Validators.minLength(3)]),
 			password: new FormControl('', [
 				Validators.required,
 				Validators.minLength(8),
@@ -45,12 +34,15 @@ export class UserSettingsPageComponent implements OnInit {
 	}
 
 
-	public save() {
+	public onSubmit() {
 		if (this.updateForm.valid) {
 			this.store.dispatch(editUserPending({ request: this.updateForm.value }));
 		}
 	}
 
+	public deleteUser() {
+		this.store.dispatch(deleteUserPending());
+	}
 
 	public isValid(type:string, error: string ) {
 		return this.updateForm.controls[type].errors?.[error] && this.updateForm.controls[type].touched;

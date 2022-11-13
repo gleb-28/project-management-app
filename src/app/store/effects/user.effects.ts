@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
+import { Actions, concatLatestFrom, createEffect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { catchError, map, of, switchMap, tap } from 'rxjs';
+import { catchError, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { AuthService } from 'src/app/auth/service/auth.service';
 import { UserService } from 'src/app/auth/service/user.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
@@ -16,11 +16,24 @@ export default class UserEffects {
 	constructor(
 		private actions$: Actions,
 		private authService: AuthService,
-		private localStorage: LocalStorageService,
+		private LocalStorage: LocalStorageService,
 		private userService: UserService,
 		private store: Store,
 	) {}
 
+	getUser$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(ROOT_EFFECTS_INIT, userAction.getUserData),
+			mergeMap(() => {
+				let id = this.authService.getIdFromToken();
+				return this.userService.getUser(id).pipe(
+					map((response)=> userAction.getUser({ response })),
+					catchError(() => of(userAction.deleteUserSuccess())
+					),
+				);
+			}),
+		);
+	});
 
 	signUpPending$ = createEffect(() => {
 		return this.actions$.pipe(
@@ -37,7 +50,9 @@ export default class UserEffects {
 	signUpSuccess$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(userAction.signUpSuccess),
-			//TODO: return action signInPending or this.router.navigateByUrl('/auth/sign-in')
+			tap(() => {
+				//TODO: this.router.navigateByUrl('/auth/sign-in')
+			}),
 		);
 	},
 	{ dispatch: false },
@@ -48,14 +63,27 @@ export default class UserEffects {
 			ofType(userAction.loginPending),
 			switchMap(({ request }) => {
 				return this.authService.login(request).pipe(
-					map((response) => this.localStorage.set('token', response)),
+					map((response) => {
+						this.LocalStorage.set('token', response);
+						return userAction.loginSuccess();
+					}),
 					catchError((error: ErrorResponse) => of(userAction.loginFailure({ error }))),
 				);
 			}),
 		);
-	},
-	{ dispatch: false },
+	 },
 	);
+
+	loginSuccess$ = createEffect(()=>{
+		return this.actions$.pipe(
+			ofType(userAction.loginSuccess),
+			map(() => {
+				//TODO: this.router.navigateByUrl('main')
+				return userAction.getUserData();
+			},
+			),
+		);
+	});
 
 
 	updateUserPending$ = createEffect(() => {
@@ -77,7 +105,7 @@ export default class UserEffects {
 			ofType(userAction.deleteUserPending),
 			concatLatestFrom(() => this.store.select(selectUserId)),
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
-			switchMap(([req, id]) => this.userService.deleteUser(id).pipe(map(() => userAction.deleteUserSuccess()))),
+			switchMap(([_, id]) => this.userService.deleteUser(id).pipe(map(() => userAction.deleteUserSuccess()))),
 		);
 	});
 
@@ -86,8 +114,8 @@ export default class UserEffects {
 			return this.actions$.pipe(
 				ofType(userAction.deleteUserSuccess),
 				tap(() => {
-					return this.localStorage.clear;
-					//TODO: this.router.navigateByUrl('/auth/sign-in');
+					return this.LocalStorage.remove('token');
+					//TODO: this.router.navigateByUrl('/welcome');
 				}),
 			);
 		},

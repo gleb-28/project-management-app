@@ -3,7 +3,7 @@ import { UserId } from '../../models/userId.model';
 import { ReqStatus } from '../enums/req-status';
 
 export interface UserState extends State {
-	user: User | null;
+	user: User;
 }
 
 export interface User {
