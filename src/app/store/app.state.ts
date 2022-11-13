@@ -7,9 +7,9 @@ import { PointsState } from './models/points.state';
 
 export interface AppState {
 	user: UserState;
-	boards?: BoardsState;
-	columns?: ColumnsState;
-	tasks?: TasksState;
-	files?: FilesState;
-	points?: PointsState;
+	boards: BoardsState;
+	columns: ColumnsState;
+	tasks: TasksState;
+	files: FilesState;
+	points: PointsState;
 }

@@ -12,8 +12,6 @@ import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
 import { BoardsModule } from './boards/boards.module';
 import { InterceptorProviders } from './core/interceptors/InterceptorProviders';
-import UserEffects from './store/effects/user.effects';
-import reducers from './store/reducers';
 
 
 @NgModule({
@@ -25,8 +23,8 @@ import reducers from './store/reducers';
 		CoreModule,
 		AuthModule,
 		BoardsModule,
-		StoreModule.forRoot(reducers),
-		EffectsModule.forRoot([UserEffects]),
+		StoreModule.forRoot([]),
+		EffectsModule.forRoot([]),
 		StoreDevtoolsModule.instrument({
 			maxAge: 25,
 			logOnly: environment.production,
