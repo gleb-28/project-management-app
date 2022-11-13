@@ -28,7 +28,7 @@ export default class UserEffects {
 				let id = this.authService.getIdFromToken();
 				return this.userService.getUser(id).pipe(
 					map((response)=> userAction.getUser({ response })),
-					catchError(() => of(userAction.deleteUserSuccess())
+					catchError(() => of(userAction.deleteUserSuccess()),
 					),
 				);
 			}),
@@ -64,7 +64,7 @@ export default class UserEffects {
 			switchMap(({ request }) => {
 				return this.authService.login(request).pipe(
 					map((response) => {
-						this.LocalStorage.set('token', response);
+						this.LocalStorage.set('token', response.token);
 						return userAction.loginSuccess();
 					}),
 					catchError((error: ErrorResponse) => of(userAction.loginFailure({ error }))),
