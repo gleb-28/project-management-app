@@ -3,21 +3,22 @@
         <p>
             {{columnTitle}}
         </p>
-        <p-button title="New" icon="pi pi-plus" class="p-button-sm" [style]="{height: '10px', width: '30px'}">
+        <p-button title="New" icon="pi pi-plus" class="p-button-sm" [style]="{height: '10px', width: '30px'}"
+            onclick="addColumn()">
         </p-button>
 
     </div>
     <div class="card-content">
-        <div>
-            <app-task *ngFor="let taskItem of taskItems" pDraggable="cardItems" pDroppable="cardItems"
-                [taskId]="taskItem._id" [taskTitle]="taskItem.title" [taskDescription]="taskItem.description"
+        <div pDroppable="cardItems">
+            <app-task *ngFor="let taskItem of taskItems" pDraggable="cardItems" [taskId]="taskItem._id"
+                [taskTitle]="taskItem.title" [taskDescription]="taskItem.description"
                 (onDragStart)="dragStart(taskItem)" (onDragEnd)="dragEnd()" (onDrop)="drop()">
             </app-task>
         </div>
 
-        <span class="p-input-icon-right">
-            <i class="pi pi-plus"></i>
+        <div class="p-input-icon-right">
+            <i class="pi pi-plus" style="color: blue" onclick="addTask()"></i>
             <input type="text" pInputText />
-        </span>
+        </div>
     </div>
 </div>

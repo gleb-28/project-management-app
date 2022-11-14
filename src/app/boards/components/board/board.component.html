@@ -1,4 +1,6 @@
 <div class="board-wrapper">
-    <app-column *ngFor="let column of columns" [columnId]="column._id" [columnTitle]="column.title">
+    <app-column *ngFor="let column of columns | sortByPipe:'order'" [columnId]="column._id" [pDraggable]="column.title"
+        [pDroppable]='columnTitles' (onDragStart)="dragStart(column)" (onDragEnd)="dragEnd()" (onDrop)="drop()"
+        [columnTitle]="column.title" dragHandle=".column-header">
     </app-column>
 </div>

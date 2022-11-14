@@ -1,1 +1,5 @@
-<p>main works!</p>
+<div class="board-wrapper">
+    <app-boards *ngFor="let board of boards" [boardTitle]="board.title" [boardUsers]="board.users"
+        pDraggable="boardsCard" (onDragStart)="dragStart(board)" (onDragEnd)="dragEnd()" (onDrop)="drop()">
+    </app-boards>
+</div>

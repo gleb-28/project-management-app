@@ -24,9 +24,26 @@ const mockColumns: Array<ColumnResponse> = [
 export class BoardComponent {
 	columns: Array<ColumnResponse>;
 
-	constructor() {
+	draggedColumn: ColumnResponse | null = null;
 
+	columnTitles: Array<string> = [];
+
+	constructor() {
 		this.columns = mockColumns;
+		this.columnTitles = this.columns?.map((column) => column?.title);
 	}
 
+	dragStart(column: ColumnResponse) {
+		this.draggedColumn = column;
+	}
+
+	drop() {
+		if (this.draggedColumn) {
+			this.draggedColumn = null;
+		}
+	}
+
+	dragEnd() {
+		this.draggedColumn = null;
+	}
 }

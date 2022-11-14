@@ -66,4 +66,12 @@ export class ColumnComponent {
 	dragEnd() {
 		this.draggedTask = null;
 	}
+
+	addColumn() {
+
+	}
+
+	addTask() {
+
+	}
 }

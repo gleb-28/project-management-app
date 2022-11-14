@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
 	selector: 'app-boards',
@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
 	styleUrls: ['./boards.component.scss'],
 })
 export class BoardsComponent {
+	@Input() boardTitle = '';
+
+	@Input() boardUsers: Array<string> = [];
 
 }

@@ -15,6 +15,7 @@ import { BoardComponent } from './components/board/board.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { FilterByPipe } from './pipes/filter-by-pipe/filter-by.pipe';
+import { SortByPipePipe } from './pipes/sort-by-pipe/sort-by-pipe.pipe';
 
 const PrimeNgModules = [
 	ButtonModule,
@@ -35,6 +36,7 @@ const PrimeNgModules = [
 		ColumnComponent,
 		TaskComponent,
 		FilterByPipe,
+		SortByPipePipe,
 	],
 	imports: [
 		CommonModule,
