@@ -1,0 +1,44 @@
+<div class="form-card">
+  <form [formGroup]="updateForm" (ngSubmit)="save()">
+      <h2 class="form-card__title">Edit profile</h2>
+      <p class="form-card__inform">edit the data you want to change</p>
+
+    <span class="p-float-label">
+      <input pInputText class="form-card__field" type="text" formControlName="name">
+      <label for="float-input">Name</label>
+    </span>
+    <div class="form-card__error-name">
+      <p *ngIf="isValid('name', 'required')">Please enter a name</p>
+      <p *ngIf="isValid('name', 'minlength')">At least 3 characters</p>
+    </div>
+
+    <span class="p-float-label">
+      <input pInputText class="form-card__field" type="text" formControlName="login">
+      <label for="float-input">Login</label>
+    </span>
+    <div class="form-card__error-name">
+      <p *ngIf="isValid('login', 'required')">Please enter a login</p>
+      <p *ngIf="isValid('login', 'minlength')">At least 3 characters</p>
+    </div>
+
+    <span class="p-float-label">
+      <input id="float-input" pInputText type="password" formControlName="password" >
+      <label for="float-input">Password</label>
+    </span>
+    <ul class="form-card__error-pass">
+      <li *ngIf="isValid('password', 'required')">Please enter a password</li>
+      <li *ngIf="isValid('password', 'minlength')">At least 8 characters</li>
+      <li *ngIf="isValid('password', 'isValidRegister')">At least one lowercase or at least one uppercase</li>
+      <li *ngIf="isValid('password', 'isValidNumber')">At least one numeric or one letters</li>
+      <li *ngIf="isValid('password', 'isValidSymbol')">At least one special character, e.g., ! @ # ? ]</li>
+    </ul>
+    <button pButton class="form-card__btn" type="submit" label="Save"></button>
+  </form>
+  <div class="line">
+    <hr/>
+    <div class="text">Or</div>
+  </div>
+  <button pButton label="Delete profile" icon="pi pi-trash" class="form-card__delete"></button>
+</div>
+
+
