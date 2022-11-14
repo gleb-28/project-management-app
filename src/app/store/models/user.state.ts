@@ -2,11 +2,11 @@ import { State } from './state.model';
 import { UserId } from '../../models/ids.model';
 
 export interface UserState extends State {
-	user: User | null;
+	user: User;
 }
 
 export interface User {
-	id: UserId;
+	_id: UserId;
 	login: string;
 	name: string;
 }
