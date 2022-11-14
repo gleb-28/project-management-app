@@ -1,15 +1,15 @@
-import { UserId } from './userId.model';
+import { BoardId, ColumnId } from './ids.model';
 
 export interface ColumnRequest {
-	_id?: UserId;
+	_id?: ColumnId;
 	title?: string;
 	order: number;
-	boardId?: string;
+	boardId?: BoardId;
 }
 
 export interface ColumnResponse {
-	_id: UserId;
+	_id: ColumnId;
 	title: string;
 	order: number;
-	boardId: string;
+	boardId: BoardId;
 }

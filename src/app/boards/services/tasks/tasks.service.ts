@@ -1,15 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TaskRequest, TaskResponse } from 'src/app/models/task.models';
-import { BoardsModule } from '../../boards.module';
+import { TaskRequest, TaskResponse } from 'src/app/models/task.model';
 
-@Injectable({
-	providedIn: BoardsModule,
-})
+@Injectable()
 export class TasksService {
-
-	constructor(private http: HttpClient) { }
+	constructor(private http: HttpClient) {}
 
 	public getTasksInColumn(boardId: string, columnId: string): Observable<TaskResponse[]> {
 		return this.http.get<TaskResponse[]>(`/boards/${boardId}/columns/${columnId}/tasks`);
@@ -23,7 +19,12 @@ export class TasksService {
 		return this.http.get<TaskResponse>(`/boards/${boardId}/columns/${columnId}/tasks/${taskId}`);
 	}
 
-	public updateTaskById(boardId: string, columnId: string, taskId: string, taskData: TaskRequest): Observable<TaskResponse> {
+	public updateTaskById(
+		boardId: string,
+		columnId: string,
+		taskId: string,
+		taskData: TaskRequest,
+	): Observable<TaskResponse> {
 		return this.http.put<TaskResponse>(`/boards/${boardId}/columns/${columnId}/tasks/${taskId}`, taskData);
 	}
 
@@ -31,11 +32,8 @@ export class TasksService {
 		return this.http.delete<TaskResponse>(`/boards/${boardId}/columns/${columnId}/tasks/${taskId}`);
 	}
 
-	public getTaskByIdsUserIdOrSearch(ids: string[], userId: string, search: string): Observable<TaskResponse[]> {
-		const params = new HttpParams()
-			.set('ids', ids.join(','))
-			.set('userId', userId)
-			.set('search', search);
+	public getTasksByIdsUserIdOrSearch(ids: string[], userId: string, search: string): Observable<TaskResponse[]> {
+		const params = new HttpParams().set('ids', ids.join(',')).set('userId', userId).set('search', search);
 		return this.http.get<TaskResponse[]>('/tasksSet', { params: params });
 	}
 
@@ -43,7 +41,7 @@ export class TasksService {
 		return this.http.patch<TaskResponse[]>('/tasksSet', tasks);
 	}
 
-	public getTaskByBoardId(boardId: string): Observable<TaskResponse[]> {
+	public getTasksByBoardId(boardId: string): Observable<TaskResponse[]> {
 		return this.http.get<TaskResponse[]>(`/tasksSet/${boardId}`);
 	}
 }
