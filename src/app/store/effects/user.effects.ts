@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { catchError, map, mergeMap, of, switchMap, tap } from 'rxjs';
+import { catchError, exhaustMap, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { AuthService } from 'src/app/auth/service/auth.service';
 import { UserService } from 'src/app/auth/service/user.service';
 import { LocalStorageService } from 'src/app/core/services/local-storage.service';
@@ -35,13 +35,13 @@ export default class UserEffects {
 		);
 	});
 
-	signUpPending$ = createEffect(() => {
+	signUp$ = createEffect(() => {
 		return this.actions$.pipe(
-			ofType(userAction.signUpPending),
-			switchMap(({ request }) => {
+			ofType(userAction.signUp),
+			exhaustMap(({ request }) => {
 				return this.authService.signUp(request).pipe(
 					map((response) => userAction.signUpSuccess({ response })),
-					catchError((error: ErrorResponse) => of(userAction.signUpFailure({ error }))),
+					catchError((error: ErrorResponse) => of(userAction.signUpError({ error }))),
 				);
 			}),
 		);
@@ -58,16 +58,16 @@ export default class UserEffects {
 	{ dispatch: false },
 	);
 
-	loginPending$ = createEffect(() => {
+	login$ = createEffect(() => {
 		return this.actions$.pipe(
-			ofType(userAction.loginPending),
+			ofType(userAction.login),
 			switchMap(({ request }) => {
 				return this.authService.login(request).pipe(
 					map((response) => {
 						this.LocalStorage.set('token', response.token);
 						return userAction.loginSuccess();
 					}),
-					catchError((error: ErrorResponse) => of(userAction.loginFailure({ error }))),
+					catchError((error: ErrorResponse) => of(userAction.loginError({ error }))),
 				);
 			}),
 		);
@@ -86,23 +86,23 @@ export default class UserEffects {
 	});
 
 
-	updateUserPending$ = createEffect(() => {
+	updateUser$ = createEffect(() => {
 		return this.actions$.pipe(
-			ofType(userAction.editUserPending),
+			ofType(userAction.editUser),
 			concatLatestFrom(() => this.store.select(selectUserId)),
 			switchMap(( [{ request }, id]) => {
 				return this.userService.updateUser(id, request).pipe(
 					map((response) =>  userAction.editUserSuccess({ response })),
-					catchError((error: ErrorResponse) => of(userAction.editUserFailure({ error }))),
+					catchError((error: ErrorResponse) => of(userAction.editUserError({ error }))),
 				);
 			}),
 		);
 	});
 
 
-	deleteUserPending$ = createEffect(() => {
+	deleteUser$ = createEffect(() => {
 		return this.actions$.pipe(
-			ofType(userAction.deleteUserPending),
+			ofType(userAction.deleteUser),
 			concatLatestFrom(() => this.store.select(selectUserId)),
 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
 			switchMap(([_, id]) => this.userService.deleteUser(id).pipe(map(() => userAction.deleteUserSuccess()))),

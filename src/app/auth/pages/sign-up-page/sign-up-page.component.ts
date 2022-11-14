@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { signUpPending } from 'src/app/store/actions/user.actions';
+import { signUp } from 'src/app/store/actions/user.actions';
 import { CustomValidator } from '../../validator';
 
 @Component({
@@ -28,7 +28,7 @@ export class SignUpPageComponent {
 
 	public onSubmit() {
 		if (this.signUpForm.valid) {
-			this.store.dispatch(signUpPending({ request: this.signUpForm.value }));
+			this.store.dispatch(signUp({ request: this.signUpForm.value }));
 		}
 	}
 

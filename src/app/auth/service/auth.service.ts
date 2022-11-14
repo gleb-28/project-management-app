@@ -35,9 +35,9 @@ export class AuthService {
 
 	// get idea from  https://stackoverflow.com/questions/38552003/how-to-decode-jwt-token-in-javascript-without-using-a-library
 	getIdFromToken(): string  {
-		const res: SignInResponse | null = this.LocalStorage.get('token');
-		if (res) {
-			let base64Url = res.token.split('.')[1];
+		const token: string | null = this.LocalStorage.get('token');
+		if (token) {
+			let base64Url = token.split('.')[1];
 			let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
 			let jsonPayload: DecoderToken = JSON.parse(decodeURIComponent(window.atob(base64).split('').map(function (c) {
 				return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);

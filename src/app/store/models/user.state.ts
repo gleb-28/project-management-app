@@ -19,7 +19,7 @@ export const defaultUserState: UserState = {
 		name: '',
 	},
 	status: ReqStatus.Loading,
-	error: '',
+	error: null,
 
 
 };

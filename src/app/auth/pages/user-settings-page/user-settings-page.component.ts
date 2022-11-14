@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { deleteUserPending, editUserPending } from 'src/app/store/actions/user.actions';
+import { deleteUser, editUser } from 'src/app/store/actions/user.actions';
 import { User } from 'src/app/store/models/user.state';
 import { selectUser } from 'src/app/store/selectors/user.selectors';
 import { CustomValidator } from '../../validator';
@@ -36,12 +36,12 @@ export class UserSettingsPageComponent implements OnInit {
 
 	public onSubmit() {
 		if (this.updateForm.valid) {
-			this.store.dispatch(editUserPending({ request: this.updateForm.value }));
+			this.store.dispatch(editUser({ request: this.updateForm.value }));
 		}
 	}
 
 	public deleteUser() {
-		this.store.dispatch(deleteUserPending());
+		this.store.dispatch(deleteUser());
 	}
 
 	public isValid(type:string, error: string ) {

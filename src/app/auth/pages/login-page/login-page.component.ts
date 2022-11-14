@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { loginPending } from 'src/app/store/actions/user.actions';
+import { login } from 'src/app/store/actions/user.actions';
 import { CustomValidator } from '../../validator';
 
 
@@ -29,7 +29,7 @@ export class LoginPageComponent {
 
 	public login() {
 		if (this.loginForm.valid) {
-			this.store.dispatch(loginPending({ request: this.loginForm.value }));
+			this.store.dispatch(login({ request: this.loginForm.value }));
 		}
 	}
 
