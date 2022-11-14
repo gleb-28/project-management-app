@@ -11,16 +11,19 @@ const routes: Routes = [
 		path: 'welcome',
 		component: WelcomePageComponent,
 		canLoad: [LoggedAuthGuard],
+		canActivate: [LoggedAuthGuard],
 	},
 	{
 		path: 'boards',
 		loadChildren: () => import('./boards/boards.module').then((m) => m.BoardsModule),
 		canLoad: [AuthGuard],
+		canActivate: [AuthGuard],
 	},
 	{
 		path: 'auth',
 		loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
 		canLoad: [LoggedAuthGuard],
+		canActivate: [LoggedAuthGuard],
 	},
 	{ path: '**', component: NotFoundPageComponent },
 ];
