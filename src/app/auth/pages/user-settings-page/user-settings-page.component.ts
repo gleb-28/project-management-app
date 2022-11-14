@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { deleteUser, editUser } from 'src/app/store/actions/user.actions';
+import { deleteUser, editUser } from 'src/app/store/actions/user-action/user.action';
 import { User } from 'src/app/store/models/user.state';
-import { selectUser } from 'src/app/store/selectors/user.selectors';
+import { selectUser } from 'src/app/store/selectors/user-selector/user.selector';
 import { CustomValidator } from '../../validator';
 
 @Component({
@@ -16,7 +16,7 @@ export class UserSettingsPageComponent implements OnInit {
 
 	public updateForm!: FormGroup;
 
-	constructor(private store: Store) { }
+	constructor(private store: Store) {}
 
 	public ngOnInit(): void {
 		this.store.select(selectUser).subscribe((userData) => (this.user = userData));
@@ -33,7 +33,6 @@ export class UserSettingsPageComponent implements OnInit {
 		});
 	}
 
-
 	public onSubmit() {
 		if (this.updateForm.valid) {
 			this.store.dispatch(editUser({ request: this.updateForm.value }));
@@ -44,7 +43,7 @@ export class UserSettingsPageComponent implements OnInit {
 		this.store.dispatch(deleteUser());
 	}
 
-	public isValid(type:string, error: string ) {
+	public isValid(type: string, error: string) {
 		return this.updateForm.controls[type].errors?.[error] && this.updateForm.controls[type].touched;
 	}
 }

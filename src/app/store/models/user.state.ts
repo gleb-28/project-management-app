@@ -1,6 +1,5 @@
 import { State } from './state.model';
 import { UserId } from '../../models/userId.model';
-import { ReqStatus } from '../enums/req-status';
 
 export interface UserState extends State {
 	user: User;
@@ -11,15 +10,3 @@ export interface User {
 	login: string;
 	name: string;
 }
-
-export const defaultUserState: UserState = {
-	user: {
-		_id: '',
-		login: '',
-		name: '',
-	},
-	status: ReqStatus.Loading,
-	error: null,
-
-
-};
