@@ -11,6 +11,7 @@ import { environment } from '../environments/environment';
 import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
 import { BoardsModule } from './boards/boards.module';
+import { InterceptorProviders } from './core/interceptors/InterceptorProviders';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -28,7 +29,7 @@ import { BoardsModule } from './boards/boards.module';
 			logOnly: environment.production,
 		}),
 	],
-	providers: [],
+	providers: [InterceptorProviders],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

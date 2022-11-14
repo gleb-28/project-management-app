@@ -14,6 +14,7 @@ import { CardModule } from 'primeng/card';
 import { BoardComponent } from './components/board/board.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
+import { FilterByPipe } from './pipes/filter-by-pipe/filter-by.pipe';
 
 const PrimeNgModules = [
 	ButtonModule,
@@ -33,10 +34,12 @@ const PrimeNgModules = [
 		BoardsComponent,
 		ColumnComponent,
 		TaskComponent,
+		FilterByPipe,
 	],
 	imports: [
 		CommonModule,
 		...PrimeNgModules,
 	],
+	providers: [FilterByPipe],
 })
 export class BoardsModule { }
