@@ -1,4 +1,4 @@
-import { UserId } from './userId.model';
+import { BoardId, UserId } from './ids.model';
 
 export interface BoardRequest {
 	title: string;
@@ -6,9 +6,6 @@ export interface BoardRequest {
 	users: UserId[];
 }
 
-export interface BoardResponse {
-	_id: UserId;
-	title: string;
-	owner: string;
-	users: UserId[];
+export interface BoardResponse extends BoardRequest {
+	_id: BoardId;
 }

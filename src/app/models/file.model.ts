@@ -1,9 +1,9 @@
-import { UserId } from './userId.model';
+import { BoardId, FileId, TaskId } from './ids.model';
 
 export interface FileResponse {
-	_id: UserId;
+	_id: FileId;
 	name: string;
-	taskId: string;
-	boardId: string;
+	taskId: TaskId;
+	boardId: BoardId;
 	path: string;
 }

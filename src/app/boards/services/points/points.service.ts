@@ -2,11 +2,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { PointRequest, PointResponse } from 'src/app/models/point.model';
-import { BoardsModule } from '../../boards.module';
 
-@Injectable({
-	providedIn: BoardsModule,
-})
+@Injectable()
 export class PointsService {
 	constructor(private http: HttpClient) {}
 

@@ -1,4 +1,4 @@
-import { UserId } from './userId.model';
+import { UserId } from './ids.model';
 
 export interface UserRequest {
 	name: string;
@@ -11,5 +11,3 @@ export interface UserResponse {
 	name: string;
 	login: string;
 }
-
-
