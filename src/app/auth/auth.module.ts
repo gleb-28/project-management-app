@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { AuthRoutingModule } from './auth-routing.module';
 import { SignUpPageComponent } from './pages/sign-up-page/sign-up-page.component';
 import { LoginPageComponent } from './pages/login-page/login-page.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { InputTextModule } from 'primeng/inputtext';
 import { UserSettingsPageComponent } from './pages/user-settings-page/user-settings-page.component';
-import { ButtonModule } from 'primeng/button';
 import { HttpClientModule } from '@angular/common/http';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+const COMPONENTS = [SignUpPageComponent, LoginPageComponent, UserSettingsPageComponent];
+const PrimeNgModules = [InputTextModule, ButtonModule, HttpClientModule];
 
-const COMPONENTS = [SignUpPageComponent,  LoginPageComponent, UserSettingsPageComponent, UserSettingsPageComponent];
-const PrimeNgModules = [InputTextModule, ButtonModule,  HttpClientModule];
 @NgModule({
 	declarations: [...COMPONENTS],
-	imports: [CommonModule, FormsModule, ReactiveFormsModule, ...PrimeNgModules],
-	exports: [...COMPONENTS],
+	imports: [CommonModule, AuthRoutingModule, FormsModule, ReactiveFormsModule, ...PrimeNgModules],
 })
 export class AuthModule {}
