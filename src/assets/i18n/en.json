@@ -1,0 +1,58 @@
+{
+  "HEADER": {
+    "BUTTONS": {
+      "BOARDS": "My Boards",
+      "CREATE": "Create new board",
+      "LOGOUT": "Logout",
+      "LOGIN": "Login",
+      "SIGN-UP": "Registration",
+      "SETTINGS": "User setting"
+    }
+  },
+  "ERROR_INPUTS": {
+    "NAME_REQUIRED": "Please enter a name",
+    "MIN_LENGTH": "At least 3 characters",
+    "LOGIN_REQUIRED": "Please enter a login",
+    "PASSWORD_REQUIRED": "Please enter a password",
+    "PASSWORD_LENGTH": "At least 8 characters",
+    "PASSWORD_REGISTER": "At least one lowercase or at least one uppercase",
+    "PASSWORD_NUMBER": "At least one numeric or one letters",
+    "PASSWORD_SYMBOL": "At least one special character, e.g., ! @ # ? ]"
+  },
+  "INPUTS_AUTH": {
+    "NAME": "Name",
+    "LOGIN": "Login",
+    "PASSWORD": "Password"
+  },
+  "LOGIN-PAGE": {
+    "TITLE": "Login",
+    "ACCOUNT": "Don't have an account?",
+    "BUTTONS": {
+      "SIGN-UP": "Sign Up"
+    }
+  },
+  "SIGN-UP-PAGE": {
+    "TITLE": "SignUp",
+    "ACCOUNT": "Already have an account?",
+    "BUTTONS": {
+      "SIGN-UP": "Sign Up",
+      "LOGIN": "Login"
+    }
+  },
+  "WELCOME_PAGE": {
+    "ABOUT": "about this project",
+    "PROJECT": "This project was made during the Angular Course in ",
+    "TEAM": "Our Team:"
+  },
+  "USER_SETTINGS_PAGE": {
+    "TITLE": "Edit profile",
+    "INFORM": "edit the data you want to change",
+    "OR": "Or",
+    "BUTTONS": {
+      "UPDATE": "Update ",
+      "DELETE": "Delete profile"
+    }
+  }
+
+
+}

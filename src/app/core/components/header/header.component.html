@@ -5,9 +5,9 @@
   <!--    board control buttons-->
   <ng-template [ngIf]='true'>
     <div class='board-controls-header'>
-      <button pButton class='p-button-text p-button-sm' type='button' label='My boards'></button>
+      <button pButton class='p-button-text p-button-sm' type='button' label="{{ 'HEADER.BUTTONS.BOARDS' | translate }}"></button>
       <button pButton class='p-button-secondary p-button-text p-button-sm' type='button'
-              label='Create new board'></button>
+              label="{{ 'HEADER.BUTTONS.CREATE' | translate }}"></button>
     </div>
   </ng-template>
 </div>
@@ -15,15 +15,15 @@
 <div class='header-right'>
   <!--    login buttons-->
   <ng-template [ngIf]='false'>
-    <button pButton class='p-button-secondary p-button-text p-button-sm' type='button' label='Registration'></button>
-    <button pButton class='p-button-text p-button-sm' type='button' label='Login'></button>
+    <button pButton class='p-button-secondary p-button-text p-button-sm' type='button' label="{{ 'HEADER.BUTTONS.SIGN-UP' | translate }}"></button>
+    <button pButton class='p-button-text p-button-sm' type='button' label="{{ 'HEADER.BUTTONS.LOGIN' | translate }}"></button>
   </ng-template>
 
   <!--    user controls -->
   <ng-template [ngIf]='true'>
     <div class='user-controls-header'>
       <button pButton icon='pi pi-user' class='p-button-rounded p-button-text' type='button'></button>
-      <button pButton class='p-button-secondary p-button-text p-button-sm' type='button' label='Logout'></button>
+      <button pButton class='p-button-secondary p-button-text p-button-sm' type='button' label="{{ 'HEADER.BUTTONS.LOGOUT' | translate }}"></button>
     </div>
   </ng-template>
 
@@ -36,24 +36,24 @@
     <div class='sidebar-body'>
       <!--    lang select-->
       <p-selectButton [options]='langSelect' [(ngModel)]='selectedLang' optionLabel='label'
-                      optionValue='lang'></p-selectButton>
+                      optionValue='lang' (onOptionClick)="changeLanguage(selectedLang)"></p-selectButton>
 
 
       <!--    board control buttons-->
       <ng-template [ngIf]='true'>
         <div class='board-controls-sidebar'>
-          <button pButton class='p-button-text p-button-sm' type='button' label='My boards'></button>
+          <button pButton class='p-button-text p-button-sm' type='button' label="{{ 'HEADER.BUTTONS.BOARDS' | translate }}"></button>
           <button pButton class='p-button-secondary p-button-text p-button-sm' type='button'
-                  label='Create new board'></button>
+                  label="{{ 'HEADER.BUTTONS.CREATE' | translate }}"></button>
         </div>
       </ng-template>
 
       <!--    user controls -->
       <ng-template [ngIf]='true'>
         <div class='user-controls-sidebar'>
-          <button class='p-button-rounded user-settings-btn p-button-text' pButton icon='pi pi-user' label='User settings'
+          <button class='p-button-rounded user-settings-btn p-button-text' pButton icon='pi pi-user' label="{{ 'HEADER.BUTTONS.SETTINGS' | translate }}"
                   type='button'></button>
-          <button pButton class='p-button-secondary p-button-text p-button-sm' type='button' label='Logout'></button>
+          <button pButton class='p-button-secondary p-button-text p-button-sm' type='button' label="{{ 'HEADER.BUTTONS.LOGOUT' | translate }}"></button>
         </div>
       </ng-template>
     </div>

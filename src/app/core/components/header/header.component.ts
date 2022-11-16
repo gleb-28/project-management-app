@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 type Lang = 'en' | 'ru';
 
@@ -19,10 +20,15 @@ export class HeaderComponent {
 
 	public sideBarIsOpen: boolean = false;
 
-	constructor() {
+	constructor(private translate: TranslateService) {
+
 		this.langSelect = [
 			{ label: 'EN', lang: 'en' },
 			{ label: 'RU', lang: 'ru' },
 		];
+	}
+
+	changeLanguage(lang:Lang) {
+		this.translate.use(lang);
 	}
 }

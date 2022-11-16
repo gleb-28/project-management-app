@@ -14,6 +14,15 @@ import { BoardsModule } from './boards/boards.module';
 import { InterceptorProviders } from './core/interceptors/InterceptorProviders';
 import UserEffect from './store/effects/user-effect/user.effect';
 import { userReducer } from './store/reducers/user-reducer/user.reducer';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { HttpBackend, HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+
+export function translateHttpLoaderFactory(httpBackend: HttpBackend): TranslateHttpLoader {
+	return new TranslateHttpLoader(new HttpClient(httpBackend));
+}
+
 
 @NgModule({
 	declarations: [AppComponent],
@@ -30,6 +39,14 @@ import { userReducer } from './store/reducers/user-reducer/user.reducer';
 		StoreDevtoolsModule.instrument({
 			maxAge: 25,
 			logOnly: environment.production,
+		}),
+		TranslateModule.forRoot({
+			loader: {
+				provide: TranslateLoader,
+				deps: [HttpBackend],
+				useFactory: translateHttpLoaderFactory,
+			},
+			defaultLanguage: 'en',
 		}),
 	],
 	providers: [InterceptorProviders],

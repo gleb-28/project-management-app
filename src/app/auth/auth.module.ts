@@ -8,12 +8,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 const COMPONENTS = [SignUpPageComponent, LoginPageComponent, UserSettingsPageComponent];
 const PrimeNgModules = [InputTextModule, ButtonModule, HttpClientModule];
 
 @NgModule({
 	declarations: [...COMPONENTS],
-	imports: [CommonModule, AuthRoutingModule, FormsModule, ReactiveFormsModule, ...PrimeNgModules],
+	imports: [CommonModule, AuthRoutingModule, FormsModule, ReactiveFormsModule, TranslateModule, ...PrimeNgModules],
+	exports: [...COMPONENTS],
 })
 export class AuthModule {}
