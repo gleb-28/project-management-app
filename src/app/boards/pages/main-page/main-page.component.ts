@@ -1,20 +1,6 @@
 import { Component } from '@angular/core';
-import { BoardResponse } from 'src/app/models/board.models';
-
-const mockBoards = [
-	{
-		_id: 'id1',
-		title: 'string',
-		owner: 'string',
-		users: ['id1', 'id2'],
-	},
-	{
-		_id: 'id2',
-		title: 'string2',
-		owner: 'string2',
-		users: ['id1', 'id2'],
-	},
-];
+import { Store } from '@ngrx/store';
+import { selectBoards } from '../../../store/selectors/boards-selector/boards.selector';
 
 @Component({
 	selector: 'app-main',
@@ -22,25 +8,7 @@ const mockBoards = [
 	styleUrls: ['./main-page.component.scss'],
 })
 export class MainPageComponent {
-	boards: Array<BoardResponse> = [];
+	boards$ = this.store.select(selectBoards);
 
-	draggedBoard: BoardResponse | null = null;
-
-	constructor() {
-		this.boards = mockBoards;
-	}
-
-	dragStart(board: BoardResponse) {
-		this.draggedBoard = board;
-	}
-
-	drop() {
-		if (this.draggedBoard) {
-			this.draggedBoard = null;
-		}
-	}
-
-	dragEnd() {
-		this.draggedBoard = null;
-	}
+	constructor(private store: Store) {}
 }

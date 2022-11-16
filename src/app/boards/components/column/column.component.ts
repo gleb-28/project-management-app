@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { TaskResponse } from 'src/app/models/task.models';
-
+import { TaskResponse } from '../../../models/task.model';
 
 const mockTasks: Array<TaskResponse> = [
 	{
@@ -67,11 +66,7 @@ export class ColumnComponent {
 		this.draggedTask = null;
 	}
 
-	addColumn() {
+	addColumn() {}
 
-	}
-
-	addTask() {
-
-	}
+	addTask() {}
 }

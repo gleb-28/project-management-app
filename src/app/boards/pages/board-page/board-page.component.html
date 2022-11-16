@@ -1,1 +1,7 @@
-<app-board></app-board>
+<div class="board-wrapper">
+  <app-column *ngFor="let column of columns$ | async" [columnId]="column._id"
+              [columnTitle]="column.title" >
+  </app-column>
+</div>
+<!--[pDraggable]="column.title"-->
+<!--[pDroppable]='columnTitles' (onDragStart)="dragStart(column)" (onDragEnd)="dragEnd()" (onDrop)="drop()" dragHandle=".column-header"-->

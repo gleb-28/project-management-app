@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainPageComponent } from './pages/main-page/main-page.component';
 import { BoardPageComponent } from './pages/board-page/board-page.component';
-import { BoardsComponent } from './components/boards/boards.component';
 import { ColumnComponent } from './components/column/column.component';
 import { TaskComponent } from './components/task/task.component';
 import { DragDropModule } from 'primeng/dragdrop';
@@ -15,7 +14,6 @@ import { BoardComponent } from './components/board/board.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { FilterByPipe } from './pipes/filter-by-pipe/filter-by.pipe';
-import { SortByPipePipe } from './pipes/sort-by-pipe/sort-by-pipe.pipe';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { boardsReducer } from '../store/reducers/boards-reducer/boards.reducer';
@@ -43,17 +41,12 @@ const PrimeNgModules = [
 	CheckboxModule,
 	InputTextModule,
 ];
+
+const PageComponents = [MainPageComponent, BoardPageComponent];
+const Components = [BoardComponent, ColumnComponent, TaskComponent];
+
 @NgModule({
-	declarations: [
-		MainPageComponent,
-		BoardPageComponent,
-		BoardComponent,
-		BoardsComponent,
-		ColumnComponent,
-		TaskComponent,
-		FilterByPipe,
-		SortByPipePipe,
-	],
+	declarations: [...PageComponents, ...Components, FilterByPipe],
 	imports: [
 		CommonModule,
 		...PrimeNgModules,

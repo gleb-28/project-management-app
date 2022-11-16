@@ -1,5 +1,3 @@
 <div class="board-wrapper">
-    <app-boards *ngFor="let board of boards" [boardTitle]="board.title" [boardUsers]="board.users"
-        pDraggable="boardsCard" (onDragStart)="dragStart(board)" (onDragEnd)="dragEnd()" (onDrop)="drop()">
-    </app-boards>
+	<app-board *ngFor="let board of boards$ | async" [boardTitle]="board.title"></app-board>
 </div>

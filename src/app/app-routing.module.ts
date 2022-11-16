@@ -5,11 +5,11 @@ import { MainPageComponent } from './boards/pages/main-page/main-page.component'
 
 const routes: Routes = [
 	{ path: 'main', component: MainPageComponent },
-	{ path: 'board', component: BoardPageComponent },
+	{ path: 'board/:boardId', component: BoardPageComponent },
 ];
 
 @NgModule({
 	imports: [RouterModule.forRoot(routes)],
 	exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
