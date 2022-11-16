@@ -1,16 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ColumnRequest, ColumnResponse } from 'src/app/models/column.models';
-import { BoardsModule } from '../../boards.module';
+import { ColumnRequest, ColumnResponse } from 'src/app/models/column.model';
 
-
-@Injectable({
-	providedIn: BoardsModule,
-})
+@Injectable()
 export class ColumnsService {
-
-	constructor(private http: HttpClient) { }
+	constructor(private http: HttpClient) {}
 
 	public getColumnsInBoard(boardId: string): Observable<ColumnResponse[]> {
 		return this.http.get<ColumnResponse[]>(`/boards/${boardId}/columns`);
@@ -33,9 +28,7 @@ export class ColumnsService {
 	}
 
 	public getColumnsByIdsListOrUserId(ids: string[], userId: string): Observable<ColumnResponse[]> {
-		const params = new HttpParams()
-			.set('ids', ids.join(','))
-			.set('userId', userId);
+		const params = new HttpParams().set('ids', ids.join(',')).set('userId', userId);
 		return this.http.get<ColumnResponse[]>('/columnsSet', { params: params });
 	}
 

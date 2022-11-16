@@ -1,24 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { BoardRequest, BoardResponse } from 'src/app/models/board.models';
-import { BoardsModule } from '../../boards.module';
+import { BoardRequest, BoardResponse } from 'src/app/models/board.model';
 
-
-@Injectable({
-	providedIn: BoardsModule,
-})
-
+@Injectable()
 export class BoardsService {
-
 	constructor(private http: HttpClient) {}
 
 	public getAllBoards(): Observable<BoardResponse[]> {
 		return this.http.get<BoardResponse[]>('/boards');
 	}
 
-	public createBoard(boardsData: BoardRequest): Observable<BoardResponse> {
-		return this.http.post<BoardResponse>('/boards', boardsData);
+	public createBoard(boardData: BoardRequest): Observable<BoardResponse> {
+		return this.http.post<BoardResponse>('/boards', boardData);
 	}
 
 	public getBoardById(boardId: string): Observable<BoardResponse> {

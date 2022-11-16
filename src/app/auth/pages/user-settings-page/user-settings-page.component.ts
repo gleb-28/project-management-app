@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { deleteUser, editUser } from 'src/app/store/actions/user-action/user.action';
+import { User } from 'src/app/store/models/user.state';
+import { selectUser } from 'src/app/store/selectors/user-selector/user.selector';
 import { CustomValidator } from '../../validator';
 
 @Component({
@@ -7,25 +11,39 @@ import { CustomValidator } from '../../validator';
 	templateUrl: './user-settings-page.component.html',
 	styleUrls: ['./user-settings-page.component.scss'],
 })
-export class UserSettingsPageComponent  {
-	updateForm: FormGroup = new FormGroup({
-		name: new FormControl('', [Validators.required, Validators.minLength(3)]),
-		login: new FormControl('', [Validators.required, Validators.minLength(3)]),
-		password: new FormControl('', [
-			Validators.required,
-			Validators.minLength(8),
-			CustomValidator.hasRegister,
-			CustomValidator.hasNumber,
-			CustomValidator.hasSymbol,
-		]),
-	});
+export class UserSettingsPageComponent implements OnInit {
+	user!: User;
 
-	public save() {
-		if (this.updateForm.valid) {}
+	public updateForm!: FormGroup;
+
+	constructor(private store: Store) {}
+
+	public ngOnInit(): void {
+		this.store.select(selectUser).subscribe((userData) => (this.user = userData));
+		this.updateForm = new FormGroup({
+			name: new FormControl(this.user.name, [Validators.required, Validators.minLength(3)]),
+			login: new FormControl(this.user.login, [Validators.required, Validators.minLength(3)]),
+			password: new FormControl('', [
+				Validators.required,
+				Validators.minLength(8),
+				CustomValidator.hasRegister,
+				CustomValidator.hasNumber,
+				CustomValidator.hasSymbol,
+			]),
+		});
 	}
 
+	public onSubmit() {
+		if (this.updateForm.valid) {
+			this.store.dispatch(editUser({ request: this.updateForm.value }));
+		}
+	}
 
-	public isValid(type:string, error: string ) {
+	public deleteUser() {
+		this.store.dispatch(deleteUser());
+	}
+
+	public isValid(type: string, error: string) {
 		return this.updateForm.controls[type].errors?.[error] && this.updateForm.controls[type].touched;
 	}
 }

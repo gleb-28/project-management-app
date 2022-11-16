@@ -1,5 +1,5 @@
 <div class="form-card">
-  <form [formGroup]="updateForm" (ngSubmit)="save()">
+  <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
       <h2 class="form-card__title">Edit profile</h2>
       <p class="form-card__inform">edit the data you want to change</p>
 
@@ -38,7 +38,7 @@
     <hr/>
     <div class="text">Or</div>
   </div>
-  <button pButton label="Delete profile" icon="pi pi-trash" class="form-card__delete"></button>
+  <button pButton label="Delete profile" icon="pi pi-trash" (click)="deleteUser()" class="form-card__delete"></button>
 </div>
 
 
