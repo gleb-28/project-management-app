@@ -21,6 +21,6 @@ export class LoggedAuthGuard implements CanLoad, CanActivate {
 	}
 
 	private checkAuth(): Observable<boolean | UrlTree> {
-		return this.isLogged$.pipe(map((isLogged) => (!isLogged ? true : this.router.parseUrl(''))));
+		return this.isLogged$.pipe(map((isLogged) => (isLogged ? this.router.parseUrl('boards') : true)));
 	}
 }

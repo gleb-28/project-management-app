@@ -21,6 +21,7 @@ export class BoardPageComponent implements OnInit {
 	constructor(private store: Store, private route: ActivatedRoute) {}
 
 	ngOnInit() {
+		console.log(this.boardId);
 		this.store.dispatch(openBoard({ boardId: this.boardId }));
 	}
 

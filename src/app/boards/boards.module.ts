@@ -30,6 +30,7 @@ import { ActiveBoardEffect } from '../store/effects/active-board-effect/active-b
 import { ColumnsEffect } from '../store/effects/active-board-effect/columns-effect/columns.effect';
 import { TasksEffect } from '../store/effects/active-board-effect/tasks-effect/tasks.effect';
 import { FilesEffect } from '../store/effects/active-board-effect/files-effect/files.effect';
+import { BoardsRoutingModule } from './boards-routing.module';
 
 const PrimeNgModules = [
 	ButtonModule,
@@ -49,6 +50,7 @@ const Components = [BoardComponent, ColumnComponent, TaskComponent];
 	declarations: [...PageComponents, ...Components, FilterByPipe],
 	imports: [
 		CommonModule,
+		BoardsRoutingModule,
 		...PrimeNgModules,
 		StoreModule.forFeature('boards', boardsReducer),
 		StoreModule.forFeature('activeBoard', { columns: columnsReducer, tasks: tasksReducer, files: filesReducer }),

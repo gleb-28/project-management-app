@@ -9,12 +9,13 @@ import { ButtonModule } from 'primeng/button';
 import { SidebarModule } from 'primeng/sidebar';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 import { AccordionModule } from 'primeng/accordion';
+import { RouterLink } from '@angular/router';
 
 const PrimeNgModules = [SelectButtonModule, ButtonModule, SidebarModule, AccordionModule];
 
 @NgModule({
 	declarations: [FooterComponent, HeaderComponent, WelcomePageComponent, NotFoundPageComponent],
-	imports: [CommonModule, FormsModule, ...PrimeNgModules],
+	imports: [CommonModule, FormsModule, RouterLink, ...PrimeNgModules],
 	exports: [HeaderComponent, WelcomePageComponent, NotFoundPageComponent, FooterComponent],
 })
 export class CoreModule {}

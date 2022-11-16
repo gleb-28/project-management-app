@@ -1,14 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectBoards } from '../../../store/selectors/boards-selector/boards.selector';
+import { getUserBoards } from '../../../store/actions/boards-action/boards.action';
+import { selectUserId } from '../../../store/selectors/user-selector/user.selector';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { BoardId } from '../../../models/ids.model';
 
 @Component({
 	selector: 'app-main',
 	templateUrl: './main-page.component.html',
 	styleUrls: ['./main-page.component.scss'],
 })
-export class MainPageComponent {
+export class MainPageComponent implements OnInit, OnDestroy {
 	boards$ = this.store.select(selectBoards);
+	userIdSubscription!: Subscription;
+	constructor(private store: Store, private router: Router) {}
 
-	constructor(private store: Store) {}
+	ngOnInit(): void {
+		this.userIdSubscription = this.store
+			.select(selectUserId)
+			.subscribe((userId) => this.store.dispatch(getUserBoards({ userId })));
+	}
+
+	ngOnDestroy(): void {
+		this.userIdSubscription.unsubscribe();
+	}
+
+	public openBoard(boardId: BoardId): void {
+		this.router.navigateByUrl(`boards/board/${boardId}`);
+	}
 }
