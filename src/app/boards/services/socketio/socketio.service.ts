@@ -1,0 +1,202 @@
+import { Injectable } from '@angular/core';
+import { DefaultEventsMap } from '@socket.io/component-emitter';
+import { io, Socket } from 'socket.io-client';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { Store } from '@ngrx/store';
+import { SocketActions, SocketEvents, SocketMessage } from 'src/app/models/socketio.model';
+import { deleteBoardSuccess, getUserBoards } from 'src/app/store/actions/boards-action/boards.action';
+import { deleteColumnSuccess, deleteFileSuccess, deleteTaskSuccess, loadColumns, loadFiles, loadTasks } from 'src/app/store/actions/active-board-action/active-board.action';
+import { getUser } from 'src/app/store/actions/user-action/user.action';
+import { selectUserId } from 'src/app/store/selectors/user-selector/user.selector';
+import { ActivatedRoute } from '@angular/router';
+
+
+@Injectable({
+	providedIn: 'root',
+})
+export class SocketioService {
+	private socket: Socket<DefaultEventsMap, DefaultEventsMap> | null = null;
+	private userId$: string = '';
+	private usersMessage$: BehaviorSubject<SocketMessage | {}> = new BehaviorSubject({});
+	private boardsMessage$: BehaviorSubject<SocketMessage | {}> = new BehaviorSubject({});
+	private columnsMessage$: BehaviorSubject<SocketMessage | {}> = new BehaviorSubject({});
+	private tasksMessage$: BehaviorSubject<SocketMessage | {}> = new BehaviorSubject({});
+	private filesMessage$: BehaviorSubject<SocketMessage | {}> = new BehaviorSubject({});
+
+	constructor(private store: Store, private route: ActivatedRoute) {
+		this.store.select(selectUserId).subscribe((userId) => (this.userId$ = userId));
+	}
+
+	private isUserExistInList(message: SocketMessage): boolean {
+		const { users, initUser, notify } = message;
+
+		return !!this.userId$ && initUser !== this.userId$ && notify && Array.isArray(users) && users?.includes(this.userId$);
+	}
+
+	private getBoardId(): string {
+		return this.route.snapshot.paramMap.get('id')!;
+	}
+
+	private getUsersMessage(): Observable<SocketMessage | {}> {
+		if (this.socket) {
+			this.socket.on(SocketEvents.USERS, (message: SocketMessage) => {
+				this.usersMessage$.next(message);
+
+				if (this.isUserExistInList(message)) {
+					this.store.dispatch(getUser());
+				}
+			});
+		}
+
+		return this.usersMessage$.asObservable();
+	}
+
+	private getIsDeleteMessage(message: SocketMessage): boolean {
+		return message?.action === SocketActions.DELETE;
+	}
+
+	private updateBoardsData(message: SocketMessage): void {
+		if (this.getIsDeleteMessage(message)) {
+			const boardIds = message?.ids;
+
+			if (Array.isArray(boardIds)) {
+				boardIds?.forEach((boardId) => {
+					this.store.dispatch(deleteBoardSuccess({ boardId }));
+				});
+			}
+		} else {
+			this.store.dispatch(getUserBoards({ userId: this.userId$ }));
+		}
+	}
+
+	private getBoardsMessage(): Observable<SocketMessage | {}> {
+		this.socket?.on(SocketEvents.BOARDS, (message: SocketMessage) => {
+			this.boardsMessage$.next(message);
+
+			if (this.isUserExistInList(message)) {
+				this.updateBoardsData(message);
+			}
+		});
+
+		return this.boardsMessage$.asObservable();
+	}
+
+	private updateColumnsData(message: SocketMessage): void {
+		if (this.getIsDeleteMessage(message)) {
+			const columnIds = message?.ids;
+
+			if (Array.isArray(columnIds)) {
+				columnIds?.forEach((columnId) => {
+					this.store.dispatch(deleteColumnSuccess({ columnId }));
+				});
+			}
+		} else {
+			const boardId = this.getBoardId();
+
+			if (boardId) {
+				this.store.dispatch(loadColumns({ boardId }));
+			}
+		}
+	}
+
+	private getColumnsMessage(): Observable<SocketMessage | {}> {
+		if (this.socket) {
+			this.socket.on(SocketEvents.COLUMNS, (message) => {
+				this.columnsMessage$.next(message);
+
+				if (this.isUserExistInList(message)) {
+					this.updateColumnsData(message);
+				}
+			});
+		}
+
+		return this.columnsMessage$.asObservable();
+	}
+
+	private updateTasksData(message: SocketMessage): void {
+		if (this.getIsDeleteMessage(message)) {
+			const taskIds = message?.ids;
+
+			if (Array.isArray(taskIds)) {
+				taskIds?.forEach((taskId) => {
+					this.store.dispatch(deleteTaskSuccess({ taskId }));
+				});
+			}
+		} else {
+			const boardId = this.getBoardId();
+
+			if (boardId) {
+				this.store.dispatch(loadTasks({ boardId }));
+			}
+		}
+	}
+
+	private getTasksMessage(): Observable<SocketMessage | {}> {
+		if (this.socket) {
+			this.socket.on(SocketEvents.TASKS, (message) => {
+				this.tasksMessage$.next(message);
+
+				if (this.isUserExistInList(message)) {
+					this.updateTasksData(message);
+				}
+			});
+		}
+
+		return this.tasksMessage$.asObservable();
+	}
+
+	private updateFilesData(message: SocketMessage): void {
+		if (this.getIsDeleteMessage(message)) {
+			const fileIds = message?.ids;
+
+			if (Array.isArray(fileIds)) {
+				fileIds?.forEach((fileId) => {
+					this.store.dispatch(deleteFileSuccess({ fileId }));
+				});
+			}
+		} else {
+			const boardId = this.getBoardId();
+
+			if (boardId) {
+				this.store.dispatch(loadFiles({ boardId }));
+			}
+		}
+	}
+
+	private getFilesMessage(): Observable<SocketMessage | {}> {
+		if (this.socket) {
+			this.socket.on(SocketEvents.FILES, (message) => {
+				this.filesMessage$.next(message);
+
+				if (this.isUserExistInList(message)) {
+					this.updateFilesData(message);
+				}
+			});
+		}
+
+		return this.filesMessage$.asObservable();
+	}
+
+	private subscribeAllMessages(): void {
+		this.getUsersMessage();
+		this.getBoardsMessage();
+		this.getColumnsMessage();
+		this.getTasksMessage();
+		this.getFilesMessage();
+	}
+
+	public setupSocketConnection(): void {
+		this.socket = io(environment.SOCKET_ENDPOINT);
+
+		if (this.socket) {
+			this.subscribeAllMessages();
+		}
+	}
+
+	public disconnect(): void {
+		if (this.socket) {
+			this.socket.disconnect();
+		}
+	}
+}

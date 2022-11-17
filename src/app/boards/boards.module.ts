@@ -17,6 +17,7 @@ import { ActiveBoardEffect } from '../store/effects/active-board-effect/active-b
 import { ColumnsEffect } from '../store/effects/active-board-effect/columns-effect/columns.effect';
 import { TasksEffect } from '../store/effects/active-board-effect/tasks-effect/tasks.effect';
 import { FilesEffect } from '../store/effects/active-board-effect/files-effect/files.effect';
+import { SocketioService } from './services/socketio/socketio.service';
 
 @NgModule({
 	declarations: [FilterByPipe],
@@ -26,6 +27,6 @@ import { FilesEffect } from '../store/effects/active-board-effect/files-effect/f
 		StoreModule.forFeature('activeBoard', { columns: columnsReducer, tasks: tasksReducer, files: filesReducer }),
 		EffectsModule.forFeature([BoardsEffect, ActiveBoardEffect, ColumnsEffect, TasksEffect, FilesEffect]),
 	],
-	providers: [BoardsService, ColumnsService, TasksService, FilesService, PointsService, FilterByPipe],
+	providers: [BoardsService, ColumnsService, TasksService, FilesService, PointsService, FilterByPipe, SocketioService],
 })
 export class BoardsModule {}
