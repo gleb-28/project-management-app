@@ -45,7 +45,7 @@ export function translateHttpLoaderFactory(httpBackend: HttpBackend): TranslateH
 				provide: TranslateLoader,
 				deps: [HttpBackend],
 				useFactory: translateHttpLoaderFactory,
-			}
+			},
 		}),
 	],
 	providers: [InterceptorProviders],
