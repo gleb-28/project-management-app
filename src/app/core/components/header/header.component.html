@@ -5,7 +5,7 @@
 	<ng-template [ngIf]="isLogged$ | async">
 		<div class="board-controls-header">
 			<button routerLink="boards" pButton class="p-button-text p-button-sm" type="button" label="My boards"></button>
-			<button
+			<button (click)="showCreateBoardModal()"
 				pButton
 				class="p-button-secondary p-button-text p-button-sm"
 				type="button"
@@ -70,7 +70,7 @@
 			<!--    board control buttons-->
 			<ng-template [ngIf]="isLogged$ | async">
 				<div class="board-controls-sidebar">
-					<button pButton class="p-button-text p-button-sm" type="button" label="My boards"></button>
+					<button (click)="showCreateBoardModal()" pButton class="p-button-text p-button-sm" type="button" label="My boards"></button>
 					<button
 						pButton
 						class="p-button-secondary p-button-text p-button-sm"
@@ -99,4 +99,21 @@
 			</ng-template>
 		</div>
 	</p-sidebar>
+
+  <!--Create new board modal-->
+  <p-dialog header="Create new board" [(visible)]="createBoardModalIsOpen">
+    <form [formGroup]="createBoardForm" (submit)="createBoardSubmit()">
+    <span class="p-float-label">
+      <input class="ng-pristine" id="board-title" formControlName="boardTitle" type="text" pInputText>
+      <label for="board-title">Board title</label>
+    </span>
+      <small *ngIf="createBoardForm.controls['boardTitle'].hasError('required')" class="p-error block">Please enter board title</small>
+      <small *ngIf="createBoardForm.controls['boardTitle'].hasError('minlength')" class="p-error block">Minimum length is 3 characters</small>
+      <small *ngIf="createBoardForm.controls['boardTitle'].hasError('maxlength')" class="p-error block">Maximum length is 30 characters</small>
+      <button pButton type="submit" label="Create"></button>
+    </form>
+  </p-dialog>
 </div>
+
+
+

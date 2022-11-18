@@ -9,7 +9,7 @@ import { SignUpPageComponent } from './auth/pages/sign-up-page/sign-up-page.comp
 import { UserSettingsPageComponent } from './auth/pages/user-settings-page/user-settings-page.component';
 
 const routes: Routes = [
-	{ path: '', pathMatch: 'full', redirectTo: 'boards' },
+	{ path: '', redirectTo: 'boards', pathMatch: 'full' },
 	{
 		path: 'welcome',
 		component: WelcomePageComponent,

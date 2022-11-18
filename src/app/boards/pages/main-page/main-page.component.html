@@ -1,6 +1,5 @@
 <div class="board-wrapper">
 	<app-board
-		*ngFor="let board of boards$ | async"
-		[boardTitle]="board.title"
-		(click)="openBoard(board._id)"></app-board>
+   		*ngFor="let board of boards$ | async"
+		[board]="board"></app-board>
 </div>

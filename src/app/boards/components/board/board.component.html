@@ -1,9 +1,18 @@
-<div class="card-wrapper">
-  <p-card [style]="{height: '120px', width: '300px'}">
-    <ng-template pTemplate="header">
-      <div class="card-header">
-        <p>{{boardTitle}}</p>
-      </div>
-    </ng-template>
-  </p-card>
-</div>
+<p-splitButton (onClick)="openBoard()" label="{{board.title}}" [model]="boardActions" styleClass="p-button-raised p-button-plain p-button-text mr-2 mb-2"></p-splitButton>
+
+<!--Rename board modal-->
+<p-dialog header="Rename board title" [(visible)]="renameBoardModalIsOpen">
+  <form [formGroup]="renameBoardForm" (submit)="renameBoardSubmit()">
+    <span class="p-float-label">
+      <input id="board-title" formControlName="boardTitle" type="text" pInputText>
+      <label for="board-title">Bord Title</label>
+    </span>
+    <small *ngIf="renameBoardForm.controls['boardTitle'].hasError('required')" class="p-error block">Please enter board title</small>
+    <small *ngIf="renameBoardForm.controls['boardTitle'].hasError('minlength')" class="p-error block">Minimum length is 3 characters</small>
+    <small *ngIf="renameBoardForm.controls['boardTitle'].hasError('maxlength')" class="p-error block">Maximum length is 30 characters</small>
+    <button pButton type="submit" label="Rename"></button>
+  </form>
+</p-dialog>
+
+<!--Delete board confirm modal-->
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>

@@ -2,7 +2,7 @@ import { BoardId, UserId } from './ids.model';
 
 export interface BoardRequest {
 	title: string;
-	owner: string;
+	owner: UserId;
 	users: UserId[];
 }
 

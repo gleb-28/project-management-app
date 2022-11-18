@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectIsLogged } from '../../../store/selectors/user-selector/user.selector';
+import { selectIsLogged, selectUser } from '../../../store/selectors/user-selector/user.selector';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { createBoard } from '../../../store/actions/boards-action/boards.action';
 
 type Lang = 'en' | 'ru';
 
@@ -14,14 +16,17 @@ interface LangSelect {
 	templateUrl: './header.component.html',
 	styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
-	isLogged$ = this.store.select(selectIsLogged);
+export class HeaderComponent implements OnInit, OnDestroy {
+	public isLogged$ = this.store.select(selectIsLogged);
+	private userSubscription = this.store.select(selectUser).subscribe((user) => (this.userId = user._id));
+	private userId = '';
 
 	public langSelect: LangSelect[];
-
 	public selectedLang: Lang = 'en';
 
-	public sideBarIsOpen: boolean = false;
+	public sideBarIsOpen = false;
+	public createBoardModalIsOpen = false;
+	public createBoardForm!: FormGroup;
 
 	constructor(private store: Store) {
 		this.langSelect = [
@@ -30,7 +35,37 @@ export class HeaderComponent {
 		];
 	}
 
-	public logout() {
+	ngOnInit() {
+		this.createBoardForm = new FormGroup({
+			boardTitle: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
+		});
+	}
+
+	public showCreateBoardModal(): void {
+		this.createBoardModalIsOpen = true;
+	}
+
+	public createBoardSubmit(): void {
+		if (this.createBoardForm.valid) {
+			this.store.dispatch(
+				createBoard({
+					boardData: {
+						title: this.createBoardForm.controls['boardTitle'].value,
+						owner: this.userId,
+						users: [],
+					},
+				}),
+			);
+			this.createBoardForm.reset();
+			this.createBoardModalIsOpen = false;
+		}
+	}
+
+	public logout(): void {
 		// TODO: dispatch logout action
+	}
+
+	ngOnDestroy() {
+		this.userSubscription.unsubscribe();
 	}
 }

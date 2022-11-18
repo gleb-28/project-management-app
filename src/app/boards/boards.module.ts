@@ -10,6 +10,7 @@ import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import { TabViewModule } from 'primeng/tabview';
 import { CardModule } from 'primeng/card';
+import { SplitButtonModule } from 'primeng/splitbutton';
 import { BoardComponent } from './components/board/board.component';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
@@ -31,6 +32,10 @@ import { ColumnsEffect } from '../store/effects/active-board-effect/columns-effe
 import { TasksEffect } from '../store/effects/active-board-effect/tasks-effect/tasks.effect';
 import { FilesEffect } from '../store/effects/active-board-effect/files-effect/files.effect';
 import { BoardsRoutingModule } from './boards-routing.module';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DialogModule } from 'primeng/dialog';
+import { ConfirmationService } from 'primeng/api';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const PrimeNgModules = [
 	ButtonModule,
@@ -39,8 +44,11 @@ const PrimeNgModules = [
 	TableModule,
 	TabViewModule,
 	CardModule,
+	SplitButtonModule,
 	CheckboxModule,
 	InputTextModule,
+	ConfirmDialogModule,
+	DialogModule,
 ];
 
 const PageComponents = [MainPageComponent, BoardPageComponent];
@@ -55,7 +63,16 @@ const Components = [BoardComponent, ColumnComponent, TaskComponent];
 		StoreModule.forFeature('boards', boardsReducer),
 		StoreModule.forFeature('activeBoard', { columns: columnsReducer, tasks: tasksReducer, files: filesReducer }),
 		EffectsModule.forFeature([BoardsEffect, ActiveBoardEffect, ColumnsEffect, TasksEffect, FilesEffect]),
+		ReactiveFormsModule,
 	],
-	providers: [BoardsService, ColumnsService, TasksService, FilesService, PointsService, FilterByPipe],
+	providers: [
+		BoardsService,
+		ColumnsService,
+		TasksService,
+		FilesService,
+		PointsService,
+		FilterByPipe,
+		ConfirmationService,
+	],
 })
 export class BoardsModule {}
