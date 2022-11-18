@@ -7,9 +7,12 @@ import {
 	HttpErrorResponse,
 } from '@angular/common/http';
 import { catchError, Observable, retry, throwError } from 'rxjs';
+import { ErrorDataService } from '../../services/error-data.service';
 
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
+
+	constructor(public errorDataService: ErrorDataService) {}
 
 	intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 		return next.handle(request)
@@ -20,13 +23,13 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 					if (error.error instanceof ErrorEvent) {
 						// client-side error
 						errorMessage = `Error: ${error.error.message}`;
-						console.log(errorMessage);
+						this.errorDataService.sendData(errorMessage);
 					} else {
 						// server-side error
 						errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+						this.errorDataService.sendData(errorMessage);
 					}
 					// window.alert(errorMessage);
-					console.log(errorMessage);
 					return throwError(errorMessage);
 				}),
 			);
