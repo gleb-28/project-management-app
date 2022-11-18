@@ -1,22 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 
 @Component({
 	selector: 'app-error',
 	templateUrl: './error.component.html',
 	styleUrls: ['./error.component.scss'],
+	providers: [MessageService],
 })
-export class ErrorComponent {
+export class ErrorComponent implements OnInit {
 	public error!: string;
 
 	constructor(private messageService: MessageService) { 
 	}
 
-	public addSingle():void {
-		this.messageService.add({ severity: 'error', summary: 'Error', detail: this.error });
+	public ngOnInit():void {
+		this.showError();
 	}
 
-	public clear(): void {
-		this.messageService.clear();
+	showError() {
+		this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Message Content' });
 	}
+
 }
