@@ -6,11 +6,11 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class ErrorDataService {
 
-	private dataSource: BehaviorSubject<string> = new BehaviorSubject<string>('');
-	public data: Observable<string> = this.dataSource.asObservable();
+	private errorSource: BehaviorSubject<string> = new BehaviorSubject<string>('');
+	public error: Observable<string> = this.errorSource.asObservable();
 
-	public sendData(data: string):void {
-		this.dataSource.next(data);
+	public sendData(error: string):void {
+		this.errorSource.next(error);
 	}
 
 }
