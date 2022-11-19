@@ -1,0 +1,15 @@
+.card-wrapper {
+    width: 280px;
+    height: 30px;
+    margin: 10px auto;
+    overflow-y: auto;
+}
+
+.card-header {
+    display: flex;
+    justify-content: flex-start;
+
+    p {
+        margin-left: 5px;
+    }
+}

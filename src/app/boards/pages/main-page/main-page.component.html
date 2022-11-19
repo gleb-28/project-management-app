@@ -1,0 +1,5 @@
+<div class="board-wrapper">
+	<app-board
+   		*ngFor="let board of boards$ | async"
+		[board]="board"></app-board>
+</div>

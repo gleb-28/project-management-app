@@ -1,0 +1,31 @@
+<p-card>
+  {{task.title}}
+  <button pButton (click)="showEditTaskModal()" type="button" icon="pi pi-file-edit"
+          class="p-button-rounded p-button-outlined"></button>
+  <button pButton (click)="deleteTask()" type="button" icon="pi pi-times"
+          class="p-button-rounded p-button-danger p-button-outlined"></button>
+</p-card>
+
+<!--Edit task modal-->
+<p-dialog header="Edit task" [(visible)]="editTaskModalIsOpen">
+  <form [formGroup]="editTaskForm" (submit)="editTaskSubmit()">
+    <span class="p-float-label">
+      <input id="task-title" formControlName="taskTitle" type="text" pInputText>
+      <label for="task-title">Task title</label>
+    </span>
+    <small *ngIf="editTaskForm.controls['taskTitle'].hasError('required')" class="p-error block">Please enter task
+      title</small>
+    <small *ngIf="editTaskForm.controls['taskTitle'].hasError('minlength')" class="p-error block">Minimum length is 3
+      characters</small>
+    <small *ngIf="editTaskForm.controls['taskTitle'].hasError('maxlength')" class="p-error block">Maximum length is 30
+      characters</small>
+    <span class="p-float-label">
+      <input id="task-description" formControlName="taskDescription" type="text" pInputText>
+      <label for="task-description">Task description</label>
+    </span>
+    <button pButton type="submit" label="Edit task"></button>
+  </form>
+</p-dialog>
+
+<!--Delete task confirm modal-->
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
