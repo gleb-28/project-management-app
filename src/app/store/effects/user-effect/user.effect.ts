@@ -32,7 +32,7 @@ export default class UserEffect {
 						return userAction.getUserSuccess({ response });
 					}),
 
-					catchError((error: ErrorResponse) => of(userAction.deleteUserError({ error }))),
+					catchError((error: ErrorResponse) => of(userAction.getUserError({ error }))),
 				);
 			}),
 		);

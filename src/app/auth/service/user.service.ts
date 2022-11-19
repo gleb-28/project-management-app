@@ -8,7 +8,7 @@ import { UserId } from 'src/app/models/ids.model';
 	providedIn: 'root',
 })
 export class UserService {
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) { }
 
 	public getUsers(): Observable<SignUpResponse[]> {
 		return this.http.get<SignUpResponse[]>('/users');
