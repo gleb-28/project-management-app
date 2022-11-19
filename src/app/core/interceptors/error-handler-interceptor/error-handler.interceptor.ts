@@ -14,7 +14,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
 	constructor(public errorDataService: ErrorDataService) {}
 
-	intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+	public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 		return next.handle(request)
 			.pipe(
 				retry(1),

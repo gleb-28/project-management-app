@@ -11,11 +11,11 @@ import { ErrorResponse } from 'src/app/models/error.model';
 	providers: [MessageService],
 })
 export class ErrorComponent implements OnInit {
-	public error!: ErrorResponse;
-	public  subscription!: Subscription; 
+	private error!: ErrorResponse;
+	private subscription!: Subscription; 
 
 	constructor(private messageService: MessageService,
-		public errorDataService: ErrorDataService) { 
+		private errorDataService: ErrorDataService) { 
 	}
 
 	public ngOnInit():void {
@@ -27,7 +27,7 @@ export class ErrorComponent implements OnInit {
 		});
 	}
 
-	showError() {
+	private showError():void {
 		this.messageService.add({ severity: 'error', summary: `${this.error.statusCode}`, detail: this.error.message });
 	}
 }
