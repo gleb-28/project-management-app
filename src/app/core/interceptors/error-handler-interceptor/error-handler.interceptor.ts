@@ -20,16 +20,8 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 				retry(1),
 				catchError((error: HttpErrorResponse) => {
 					let errorMessage = '';
-					if (error.error instanceof ErrorEvent) {
-						// client-side error
-						errorMessage = `Error: ${error.error.message}`;
-						this.errorDataService.sendData(errorMessage);
-					} else {
-						// server-side error
-						errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-						this.errorDataService.sendData(errorMessage);
-					}
-					// window.alert(errorMessage);
+					errorMessage = JSON.stringify(error.error);
+					this.errorDataService.sendData(errorMessage);
 					return throwError(errorMessage);
 				}),
 			);
