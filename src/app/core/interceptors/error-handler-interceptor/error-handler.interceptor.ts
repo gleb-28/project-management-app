@@ -48,7 +48,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 								break;
 						
 							default:
-								errorMessage = 'Something went wrong...';
+								errorMessage = 'Something went wrong...Check the console';
 								break;
 						}
 						this.errorDataService.sendData(errorMessage);
