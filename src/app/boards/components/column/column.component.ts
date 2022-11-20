@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { TaskResponse } from '../../../models/task.model';
 import { Store } from '@ngrx/store';
 import { selectTasksByColumnId } from '../../../store/selectors/active-board-selector/tasks-selector/tasks.selector';
@@ -7,11 +7,15 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { createTask, updateColumn } from '../../../store/actions/active-board-action/active-board.action';
 import { ColumnResponse } from '../../../models/column.model';
 import { selectUserId } from '../../../store/selectors/user-selector/user.selector';
+import { TaskDragDropService } from '../../services/task-drag-drop/task-drag-drop.service';
+import { ColumnId } from '../../../models/ids.model';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 
 @Component({
 	selector: 'app-column',
 	templateUrl: './column.component.html',
 	styleUrls: ['./column.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ColumnComponent implements OnInit, OnDestroy {
 	@Input() column!: ColumnResponse;
@@ -28,9 +32,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
 	public createTaskModalIsOpen = false;
 	public createTaskForm!: FormGroup;
 
-	public draggedTask: TaskResponse | null = null;
-
-	constructor(private store: Store) {}
+	constructor(private store: Store, private taskDragDropService: TaskDragDropService) {}
 
 	ngOnInit() {
 		this.tasks$ = this.store.select(selectTasksByColumnId(this.column._id));
@@ -95,35 +97,12 @@ export class ColumnComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	public taskDrop() {
-		// 	// console.log(event);
-		// 	// if (event.target instanceof HTMLElement) {
-		// 	// 	const draggedTaskId = event.target.closest('app-task')?.id;
-		// 	// 	console.log(draggedTaskId);
-		// 		// this.store.dispatch(
-		// 		// 	updateTask({
-		// 		// 		boardId: this.draggedTask.boardId,
-		// 		// 		columnId: this.draggedTask.columnId,
-		// 		// 		taskId: this.draggedTask._id,
-		// 		// 		taskData: {
-		// 		// 			columnId: columnId,
-		// 		// 			title: this.draggedTask.title,
-		// 		// 			description: this.draggedTask.description,
-		// 		// 			order: tasksAmount + 1,
-		// 		// 			userId: this.userId,
-		// 		// 			users: this.draggedTask.users,
-		// 		// 		},
-		// 		// 	}),
-		// 		// );
-		// 	}
+	public taskDrop(columnId: ColumnId, event: CdkDragDrop<string[]>) {
+		this.taskDragDropService.changeTasksOrder(columnId, event.currentIndex);
 	}
 
-	public dragStart(task: TaskResponse) {
-		this.draggedTask = task;
-	}
-
-	public dragEnd() {
-		this.draggedTask = null;
+	public taskDragStart(task: TaskResponse) {
+		this.taskDragDropService.taskDragStart(task);
 	}
 
 	ngOnDestroy() {

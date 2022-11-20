@@ -1,34 +1,30 @@
-<div class="column-wrapper">
-  <div class="column-header">
-    <p>
-      {{ column.title }}
-    </p>
-    <p-button
-      title="New"
-      icon="pi pi-file-edit"
-      class="p-button-sm"
-      [style]="{ height: '10px', width: '30px' }"
-      (click)="showRenameColumnModal()">
-    </p-button>
-    <p-button
-      title="New"
-      icon="pi pi-plus"
-      class="p-button-sm"
-      [style]="{ height: '10px', width: '30px' }"
-      (click)="showCreateTaskModal()">
-    </p-button>
-  </div>
-  <div class="column-body" pDroppable="task" (onDrop)="taskDrop()">
-    <app-task
-      *ngFor="let task of tasks$ | async"
-      [task]="task"
-      pDraggable="task"
-      [id]="task._id"
-      (onDragStart)="dragStart(task)"
-      (onDragEnd)="dragEnd()">
-    </app-task>
-  </div>
-
+<div class="column-header">
+  <p>
+    {{ column.title }}
+  </p>
+  <p-button
+    title="New"
+    icon="pi pi-file-edit"
+    class="p-button-sm"
+    [style]="{ height: '10px', width: '30px' }"
+    (click)="showRenameColumnModal()">
+  </p-button>
+  <p-button
+    title="New"
+    icon="pi pi-plus"
+    class="p-button-sm"
+    [style]="{ height: '10px', width: '30px' }"
+    (click)="showCreateTaskModal()">
+  </p-button>
+</div>
+<div class="column-body" cdkDropList (cdkDropListDropped)="taskDrop(column._id, $event)">
+  <app-task
+    class="task"
+    *ngFor="let task of tasks$ | async"
+    [task]="task"
+    cdkDrag
+    (cdkDragStarted)="taskDragStart(task)">
+  </app-task>
 </div>
 
 <!--Rename column modal-->

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectColumns } from '../../../store/selectors/active-board-selector/columns-selector/columns.selector';
 import { createColumn, openBoard } from '../../../store/actions/active-board-action/active-board.action';
@@ -9,6 +9,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 	selector: 'app-board-page',
 	templateUrl: './board-page.component.html',
 	styleUrls: ['./board-page.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BoardPageComponent implements OnInit, OnDestroy {
 	boardId = this.route.snapshot.params['boardId'];

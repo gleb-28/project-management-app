@@ -4,7 +4,7 @@ import { MainPageComponent } from './pages/main-page/main-page.component';
 import { BoardPageComponent } from './pages/board-page/board-page.component';
 import { ColumnComponent } from './components/column/column.component';
 import { TaskComponent } from './components/task/task.component';
-import { DragDropModule } from 'primeng/dragdrop';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ButtonModule } from 'primeng/button';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
@@ -36,10 +36,10 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmationService } from 'primeng/api';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TaskDragDropService } from './services/task-drag-drop/task-drag-drop.service';
 
 const PrimeNgModules = [
 	ButtonModule,
-	DragDropModule,
 	PanelModule,
 	TableModule,
 	TabViewModule,
@@ -59,11 +59,12 @@ const Components = [BoardComponent, ColumnComponent, TaskComponent];
 	imports: [
 		CommonModule,
 		BoardsRoutingModule,
+		ReactiveFormsModule,
 		...PrimeNgModules,
+		DragDropModule,
 		StoreModule.forFeature('boards', boardsReducer),
 		StoreModule.forFeature('activeBoard', { columns: columnsReducer, tasks: tasksReducer, files: filesReducer }),
 		EffectsModule.forFeature([BoardsEffect, ActiveBoardEffect, ColumnsEffect, TasksEffect, FilesEffect]),
-		ReactiveFormsModule,
 	],
 	providers: [
 		BoardsService,
@@ -73,6 +74,7 @@ const Components = [BoardComponent, ColumnComponent, TaskComponent];
 		PointsService,
 		FilterByPipe,
 		ConfirmationService,
+		TaskDragDropService,
 	],
 })
 export class BoardsModule {}

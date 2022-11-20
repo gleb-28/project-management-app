@@ -1,4 +1,4 @@
-<div class="board-wrapper">
+<div class="board-wrapper" cdkDropListGroup>
   <app-column *ngFor="let column of columns$ | async" [column]="column"></app-column>
   <button (click)="showCreateColumnModal()" pButton type="button" icon="pi pi-plus" class="p-button-rounded"></button>
 </div>

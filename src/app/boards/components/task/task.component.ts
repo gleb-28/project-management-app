@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { TaskResponse } from '../../../models/task.model';
 import { Store } from '@ngrx/store';
 import { ConfirmationService } from 'primeng/api';
@@ -9,6 +9,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 	selector: 'app-task',
 	templateUrl: './task.component.html',
 	styleUrls: ['./task.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskComponent implements OnInit {
 	@Input() task!: TaskResponse;
