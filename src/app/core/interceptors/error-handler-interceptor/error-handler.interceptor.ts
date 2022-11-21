@@ -5,26 +5,28 @@ import {
 	HttpEvent,
 	HttpInterceptor,
 	HttpErrorResponse,
+	HttpResponse,
 } from '@angular/common/http';
-import { catchError, Observable, retry, throwError } from 'rxjs';
-import { ErrorDataService } from '../../services/error-data.service';
+import { catchError, filter, Observable, throwError } from 'rxjs';
+import { HandleErrorResponseService } from '../../services/handle-error-response.service';
 import { ErrorFriendyMessage } from 'src/app/constants/error-response.enum';
 
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
 
-	constructor(public errorDataService: ErrorDataService) {}
+	constructor(private service: HandleErrorResponseService) {}
 
-	public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+	public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		return next.handle(request)
 			.pipe(
-				retry(1),
+				filter(event => event instanceof HttpResponse),
+				// retry(1),
 				catchError((error: HttpErrorResponse) => {
 					let errorMessage = '';
 					if (error.error instanceof ErrorEvent) {
 						// client-side error
 						errorMessage = `Search, what means '${error.error.message}'`;
-						this.errorDataService.sendData(errorMessage);
+						this.service.sendData(errorMessage);
 					} else {
 						// server-side error
 						switch (error.status) {
@@ -51,7 +53,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 								errorMessage = 'Something went wrong...Check the console';
 								break;
 						}
-						this.errorDataService.sendData(errorMessage);
+						this.service.sendData(errorMessage);
 					}
 				
 					return throwError(errorMessage);

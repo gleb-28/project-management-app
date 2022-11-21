@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { ErrorDataService } from 'src/app/core/services/error-data.service';
+import { HandleErrorResponseService } from 'src/app/core/services/handle-error-response.service';
 
 @Component({
 	selector: 'app-error',
@@ -10,21 +10,21 @@ import { ErrorDataService } from 'src/app/core/services/error-data.service';
 	providers: [MessageService],
 })
 export class ErrorComponent implements OnInit {
-	private error!: string;
+	private errorMessage!: string;
 	private subscription!: Subscription; 
 
 	constructor(private messageService: MessageService,
-		private errorDataService: ErrorDataService) { 
+		private handleErrorResponseService: HandleErrorResponseService) { 
 	}
 
 	public ngOnInit():void {
-		this.subscription = this.errorDataService.error.subscribe(response => {
-			this.error = response;
+		this.subscription = this.handleErrorResponseService.error.subscribe(response => {
+			this.errorMessage = response;
 			this.showError();
 		});
 	}
 
 	private showError():void {
-		this.messageService.add({ severity: 'error', detail: this.error });
+		this.messageService.add({ severity: 'error', detail: this.errorMessage });
 	}
 }
