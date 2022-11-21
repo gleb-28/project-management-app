@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DefaultEventsMap } from '@socket.io/component-emitter';
 import { io, Socket } from 'socket.io-client';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Store } from '@ngrx/store';
 import { SocketActions, SocketEvents, SocketMessage } from 'src/app/models/socketio.model';
@@ -10,6 +9,7 @@ import { deleteColumnSuccess, deleteFileSuccess, deleteTaskSuccess, loadColumns,
 import { getUser } from 'src/app/store/actions/user-action/user.action';
 import { selectUserId } from 'src/app/store/selectors/user-selector/user.selector';
 import { ActivatedRoute } from '@angular/router';
+import { selectAllUsersFromMyBoards } from 'src/app/store/selectors/boards-selector/boards.selector';
 
 
 @Injectable({
@@ -17,39 +17,34 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SocketioService {
 	private socket: Socket<DefaultEventsMap, DefaultEventsMap> | null = null;
-	private userId$: string = '';
-	private usersMessage$: BehaviorSubject<SocketMessage | {}> = new BehaviorSubject({});
-	private boardsMessage$: BehaviorSubject<SocketMessage | {}> = new BehaviorSubject({});
-	private columnsMessage$: BehaviorSubject<SocketMessage | {}> = new BehaviorSubject({});
-	private tasksMessage$: BehaviorSubject<SocketMessage | {}> = new BehaviorSubject({});
-	private filesMessage$: BehaviorSubject<SocketMessage | {}> = new BehaviorSubject({});
+	private userId: string = '';
 
-	constructor(private store: Store, private route: ActivatedRoute) {
-		this.store.select(selectUserId).subscribe((userId) => (this.userId$ = userId));
+	constructor(private store: Store, private route: ActivatedRoute) { }
+
+	private getUsersubscription() {
+		this.store.select(selectUserId).subscribe((userId) => (this.userId = userId));
 	}
 
 	private isUserExistInList(message: SocketMessage): boolean {
 		const { users, initUser, notify } = message;
+		const allUsersInMyBoard = this.store.select(selectAllUsersFromMyBoards);
 
-		return !!this.userId$ && initUser !== this.userId$ && notify && Array.isArray(users) && users?.includes(this.userId$);
+		return !!this.userId && initUser !== this.userId && notify && Array.isArray(users) && users?.includes(this.userId) && Array.isArray(allUsersInMyBoard) && allUsersInMyBoard?.includes(initUser);
 	}
 
 	private getBoardId(): string {
 		return this.route.snapshot.paramMap.get('id')!;
 	}
 
-	private getUsersMessage(): Observable<SocketMessage | {}> {
+	private getUsersMessage(): void {
 		if (this.socket) {
 			this.socket.on(SocketEvents.USERS, (message: SocketMessage) => {
-				this.usersMessage$.next(message);
 
-				if (this.isUserExistInList(message)) {
+				if (this.isUserExistInList(message) && this.getBoardId()) {
 					this.store.dispatch(getUser());
 				}
 			});
 		}
-
-		return this.usersMessage$.asObservable();
 	}
 
 	private getIsDeleteMessage(message: SocketMessage): boolean {
@@ -66,20 +61,17 @@ export class SocketioService {
 				});
 			}
 		} else {
-			this.store.dispatch(getUserBoards({ userId: this.userId$ }));
+			this.store.dispatch(getUserBoards({ userId: this.userId }));
 		}
 	}
 
-	private getBoardsMessage(): Observable<SocketMessage | {}> {
+	private getBoardsMessage(): void {
 		this.socket?.on(SocketEvents.BOARDS, (message: SocketMessage) => {
-			this.boardsMessage$.next(message);
 
-			if (this.isUserExistInList(message)) {
+			if (this.isUserExistInList(message) && this.getBoardId()) {
 				this.updateBoardsData(message);
 			}
 		});
-
-		return this.boardsMessage$.asObservable();
 	}
 
 	private updateColumnsData(message: SocketMessage): void {
@@ -100,18 +92,15 @@ export class SocketioService {
 		}
 	}
 
-	private getColumnsMessage(): Observable<SocketMessage | {}> {
+	private getColumnsMessage(): void {
 		if (this.socket) {
 			this.socket.on(SocketEvents.COLUMNS, (message) => {
-				this.columnsMessage$.next(message);
 
-				if (this.isUserExistInList(message)) {
+				if (this.isUserExistInList(message) && this.getBoardId()) {
 					this.updateColumnsData(message);
 				}
 			});
 		}
-
-		return this.columnsMessage$.asObservable();
 	}
 
 	private updateTasksData(message: SocketMessage): void {
@@ -132,18 +121,15 @@ export class SocketioService {
 		}
 	}
 
-	private getTasksMessage(): Observable<SocketMessage | {}> {
+	private getTasksMessage(): void {
 		if (this.socket) {
 			this.socket.on(SocketEvents.TASKS, (message) => {
-				this.tasksMessage$.next(message);
 
-				if (this.isUserExistInList(message)) {
+				if (this.isUserExistInList(message) && this.getBoardId()) {
 					this.updateTasksData(message);
 				}
 			});
 		}
-
-		return this.tasksMessage$.asObservable();
 	}
 
 	private updateFilesData(message: SocketMessage): void {
@@ -164,21 +150,19 @@ export class SocketioService {
 		}
 	}
 
-	private getFilesMessage(): Observable<SocketMessage | {}> {
+	private getFilesMessage(): void {
 		if (this.socket) {
 			this.socket.on(SocketEvents.FILES, (message) => {
-				this.filesMessage$.next(message);
 
-				if (this.isUserExistInList(message)) {
+				if (this.isUserExistInList(message) && this.getBoardId()) {
 					this.updateFilesData(message);
 				}
 			});
 		}
-
-		return this.filesMessage$.asObservable();
 	}
 
 	private subscribeAllMessages(): void {
+		this.getUsersubscription();
 		this.getUsersMessage();
 		this.getBoardsMessage();
 		this.getColumnsMessage();

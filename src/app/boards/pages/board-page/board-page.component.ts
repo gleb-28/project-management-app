@@ -4,6 +4,7 @@ import { selectColumns } from '../../../store/selectors/active-board-selector/co
 import { createColumn, openBoard } from '../../../store/actions/active-board-action/active-board.action';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { SocketioService } from '../../services/socketio/socketio.service';
 
 @Component({
 	selector: 'app-board-page',
@@ -21,7 +22,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 
 	// draggedColumn: ColumnResponse | null = null;
 
-	constructor(private store: Store, private route: ActivatedRoute) {}
+	constructor(private store: Store, private route: ActivatedRoute, private socketService: SocketioService) { }
 
 	ngOnInit() {
 		this.store.dispatch(openBoard({ boardId: this.boardId }));
@@ -29,6 +30,8 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 		this.createColumnForm = new FormGroup({
 			columnTitle: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
 		});
+
+		this.socketService.setupSocketConnection();
 	}
 
 	public createColumnSubmit(): void {

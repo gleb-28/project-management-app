@@ -7,3 +7,5 @@ const { selectAll } = boardsAdapter.getSelectors();
 export const selectBoardsFeature = createFeatureSelector<BoardsState>('boards');
 
 export const selectBoards = createSelector(selectBoardsFeature, selectAll);
+
+export const selectAllUsersFromMyBoards = createSelector(selectBoardsFeature, (state) => state.ids);
