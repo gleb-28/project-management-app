@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import { CustomTranslationService } from '../../services/custom-translation.service';
-import { LocalStorageService } from '../../services/local-storage.service';
+
 
 type Lang = 'en' | 'ru';
 
@@ -22,15 +21,10 @@ export class HeaderComponent {
 
 	public sideBarIsOpen: boolean = false;
 
-	constructor(
-		private translate: TranslateService,
-		private localStorage: LocalStorageService,
-		private customTranslate: CustomTranslationService,
-	) {
+	constructor( private customTranslate: CustomTranslationService ) {
 
-		this.selectedLang = this.customTranslate.lang;
-		this.translate.use(this.selectedLang);
-    
+		this.selectedLang = this.customTranslate.getUserLang();
+
 		this.langSelect = [
 			{ label: 'EN', lang: 'en' },
 			{ label: 'RU', lang: 'ru' },
@@ -38,7 +32,6 @@ export class HeaderComponent {
 	}
 
 	changeLanguage(lang:Lang | string) {
-		this.translate.use(lang);
-		this.localStorage.set('lang', lang);
+		this.customTranslate.changeLanguage(lang);
 	}
 }

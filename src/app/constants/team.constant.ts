@@ -25,3 +25,6 @@ export const team = [
 		gitHubLink: 'https://github.com/AnAtoliyAK',
 	},
 ];
+
+
+export const LANGUAGES = ['en', 'ru'];
