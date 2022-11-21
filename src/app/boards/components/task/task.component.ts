@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TaskResponse } from '../../../models/task.model';
 import { Store } from '@ngrx/store';
 import { ConfirmationService } from 'primeng/api';
@@ -16,6 +16,8 @@ export class TaskComponent implements OnInit {
 
 	public editTaskModalIsOpen = false;
 	public editTaskForm!: FormGroup;
+
+	@Output() taskDelete: EventEmitter<number> = new EventEmitter();
 
 	constructor(private store: Store, private confirmationService: ConfirmationService) {}
 
@@ -67,6 +69,7 @@ export class TaskComponent implements OnInit {
 						taskId: this.task._id,
 					}),
 				);
+				this.taskDelete.emit(this.task.order);
 				this.confirmationService.close();
 			},
 			reject: () => {

@@ -1,80 +1,87 @@
 <div class="column-header" cdkDragHandle="column">
-  <ng-content></ng-content>
-  <p class="column-title">
-    {{ column.title }}
-  </p>
-  <div class="column-buttons">
-    <p-button
-      title="New"
-      icon="pi pi-file-edit"
-      class="p-button-sm"
-      [style]="{ height: '10px', width: '30px' }"
-      (click)="showRenameColumnModal()">
-    </p-button>
-    <p-button
-      title="New"
-      icon="pi pi-times"
-      class="p-button-sm"
-      [style]="{ height: '10px', width: '30px' }"
-      (click)="deleteColumn()">
-    </p-button>
-  </div>
+	<ng-content></ng-content>
+	<p class="column-title">
+		{{ column.title }}
+	</p>
+	<div class="column-buttons">
+		<p-button
+			title="New"
+			icon="pi pi-file-edit"
+			class="p-button-sm"
+			[style]="{ height: '10px', width: '30px' }"
+			(click)="showRenameColumnModal()">
+		</p-button>
+		<p-button
+			title="New"
+			icon="pi pi-times"
+			class="p-button-sm"
+			[style]="{ height: '10px', width: '30px' }"
+			(click)="deleteColumn()">
+		</p-button>
+	</div>
 </div>
 <div class="column-body">
-  <div class="tasks" cdkDropList="task" (cdkDropListDropped)="taskDrop(column._id, $event)">
-    <app-task
-      class="task"
-      *ngFor="let task of tasks$ | async"
-      [task]="task"
-      cdkDrag="task"
-      (cdkDragStarted)="taskDragStart(task)">
-    </app-task>
-  </div>
-  <p-button
-    title="New"
-    icon="pi pi-plus"
-    class="p-button-sm"
-    [style]="{ height: '10px', width: '30px' }"
-    (click)="showCreateTaskModal()">
-  </p-button>
+	<div class="tasks" cdkDropList="task" (cdkDropListDropped)="taskDrop(column._id, $event)">
+		<app-task
+			class="task"
+			*ngFor="let task of tasks$ | async"
+			[task]="task"
+			(taskDelete)="updateTasksOrder($event)"
+			cdkDrag="task"
+			(cdkDragStarted)="taskDragStart(task)">
+		</app-task>
+	</div>
+	<p-button
+		title="New"
+		icon="pi pi-plus"
+		class="p-button-sm"
+		[style]="{ height: '10px', width: '30px' }"
+		(click)="showCreateTaskModal()">
+	</p-button>
 </div>
 
 <!--Rename column modal-->
 <p-dialog header="Column title" [(visible)]="renameColumnModalIsOpen">
-  <form [formGroup]="renameColumnForm" (submit)="renameColumnSubmit()">
-    <span class="p-float-label">
-      <input id="column-title" formControlName="columnTitle" type="text" pInputText>
-      <label for="column-title">Column title</label>
-    </span>
-    <small *ngIf="renameColumnForm.controls['columnTitle'].hasError('required')" class="p-error block">Please enter
-      column title</small>
-    <small *ngIf="renameColumnForm.controls['columnTitle'].hasError('minlength')" class="p-error block">Minimum length
-      is 3 characters</small>
-    <small *ngIf="renameColumnForm.controls['columnTitle'].hasError('maxlength')" class="p-error block">Maximum length
-      is 30 characters</small>
-    <button pButton type="submit" label="Rename"></button>
-  </form>
+	<form [formGroup]="renameColumnForm" (submit)="renameColumnSubmit()">
+		<span class="p-float-label">
+			<input id="column-title" formControlName="columnTitle" type="text" pInputText />
+			<label for="column-title">Column title</label>
+		</span>
+		<small *ngIf="renameColumnForm.controls['columnTitle'].hasError('required')" class="p-error block"
+			>Please enter column title</small
+		>
+		<small *ngIf="renameColumnForm.controls['columnTitle'].hasError('minlength')" class="p-error block"
+			>Minimum length is 3 characters</small
+		>
+		<small *ngIf="renameColumnForm.controls['columnTitle'].hasError('maxlength')" class="p-error block"
+			>Maximum length is 30 characters</small
+		>
+		<button pButton type="submit" label="Rename"></button>
+	</form>
 </p-dialog>
 
 <!--Create task modal-->
 <p-dialog header="Create task" [(visible)]="createTaskModalIsOpen">
-  <form [formGroup]="createTaskForm" (submit)="createTaskSubmit()">
-    <span class="p-float-label">
-      <input id="task-title" formControlName="taskTitle" type="text" pInputText>
-      <label for="task-title">Task title</label>
-    </span>
-    <small *ngIf="createTaskForm.controls['taskTitle'].hasError('required')" class="p-error block">Please enter task
-      title</small>
-    <small *ngIf="createTaskForm.controls['taskTitle'].hasError('minlength')" class="p-error block">Minimum length is 3
-      characters</small>
-    <small *ngIf="createTaskForm.controls['taskTitle'].hasError('maxlength')" class="p-error block">Maximum length is 30
-      characters</small>
-    <span class="p-float-label">
-      <input id="task-description" formControlName="taskDescription" type="text" pInputText>
-      <label for="task-description">Task description</label>
-    </span>
-    <button pButton type="submit" label="Create task"></button>
-  </form>
+	<form [formGroup]="createTaskForm" (submit)="createTaskSubmit()">
+		<span class="p-float-label">
+			<input id="task-title" formControlName="taskTitle" type="text" pInputText />
+			<label for="task-title">Task title</label>
+		</span>
+		<small *ngIf="createTaskForm.controls['taskTitle'].hasError('required')" class="p-error block"
+			>Please enter task title</small
+		>
+		<small *ngIf="createTaskForm.controls['taskTitle'].hasError('minlength')" class="p-error block"
+			>Minimum length is 3 characters</small
+		>
+		<small *ngIf="createTaskForm.controls['taskTitle'].hasError('maxlength')" class="p-error block"
+			>Maximum length is 30 characters</small
+		>
+		<span class="p-float-label">
+			<input id="task-description" formControlName="taskDescription" type="text" pInputText />
+			<label for="task-description">Task description</label>
+		</span>
+		<button pButton type="submit" label="Create task"></button>
+	</form>
 </p-dialog>
 
 <!--Delete column confirm modal-->

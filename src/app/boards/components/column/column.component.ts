@@ -1,10 +1,15 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { TaskResponse } from '../../../models/task.model';
 import { Store } from '@ngrx/store';
 import { selectTasksByColumnId } from '../../../store/selectors/active-board-selector/tasks-selector/tasks.selector';
-import { Observable, Subscription } from 'rxjs';
+import { map, Observable, Subscription, take } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { createTask, deleteColumn, updateColumn } from '../../../store/actions/active-board-action/active-board.action';
+import {
+	createTask,
+	deleteColumn,
+	updateColumn,
+	updateTask,
+} from '../../../store/actions/active-board-action/active-board.action';
 import { ColumnResponse } from '../../../models/column.model';
 import { selectUserId } from '../../../store/selectors/user-selector/user.selector';
 import { TaskDragDropService } from '../../services/task-drag-drop/task-drag-drop.service';
@@ -32,6 +37,8 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
 	public createTaskModalIsOpen = false;
 	public createTaskForm!: FormGroup;
+
+	@Output() columnDelete: EventEmitter<number> = new EventEmitter();
 
 	constructor(
 		private store: Store,
@@ -87,6 +94,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
 			message: `Are you sure that you want to delete "${this.column.title}" column?`,
 			accept: () => {
 				this.store.dispatch(deleteColumn({ boardId: this.column.boardId, columnId: this.column._id }));
+				this.columnDelete.emit(this.column.order);
 				this.confirmationService.close();
 			},
 			reject: () => {
@@ -121,6 +129,35 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
 	public taskDragStart(task: TaskResponse): void {
 		this.taskDragDropService.taskDragStart(task);
+	}
+
+	public updateTasksOrder(deletedTaskOrder: number) {
+		this.tasks$
+			.pipe(
+				take(1),
+				map((tasks) => tasks.filter((task) => task.order > deletedTaskOrder)),
+			)
+			.subscribe((tasksToUpdate) => {
+				if (tasksToUpdate.length) {
+					tasksToUpdate.forEach((task) => {
+						this.store.dispatch(
+							updateTask({
+								boardId: task.boardId,
+								columnId: task.boardId,
+								taskId: task._id,
+								taskData: {
+									order: task.order - 1,
+									columnId: task.columnId,
+									title: task.title,
+									description: task.description,
+									userId: task.userId,
+									users: task.users,
+								},
+							}),
+						);
+					});
+				}
+			});
 	}
 
 	ngOnDestroy() {
