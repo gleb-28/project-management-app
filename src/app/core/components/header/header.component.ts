@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { selectIsLogged, selectUser } from '../../../store/selectors/user-selector/user.selector';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { createBoard } from '../../../store/actions/boards-action/boards.action';
+import { logout } from 'src/app/store/actions/user-action/user.action';
 
 type Lang = 'en' | 'ru';
 
@@ -62,7 +63,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	}
 
 	public logout(): void {
-		// TODO: dispatch logout action
+		this.store.dispatch(logout());
 	}
 
 	ngOnDestroy() {

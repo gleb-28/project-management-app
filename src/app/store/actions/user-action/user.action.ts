@@ -23,3 +23,9 @@ export const editUserError = createAction(UserActionType.EDIT_USER_ERROR, props<
 export const deleteUser = createAction(UserActionType.DELETE_USER);
 export const deleteUserSuccess = createAction(UserActionType.DELETE_USER_SUCCESS);
 export const deleteUserError = createAction(UserActionType.DELETE_USER_ERROR, props<{ error: ErrorResponse }>());
+
+export const logout = createAction(UserActionType.LOGOUT_USER);
+export const logoutSuccess = createAction(UserActionType.LOGOUT_USER_SUCCESS);
+export const logoutError = createAction(UserActionType.LOGOUT_USER_ERROR, props<{ error: ErrorResponse }>());
+
+

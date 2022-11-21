@@ -101,4 +101,17 @@ export default class UserEffect {
 			}),
 		);
 	});
+
+	logoutUser$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(userAction.logout),
+			map(() => {
+				this.localStorage.remove('token');
+				this.router.navigateByUrl('');
+				return userAction.logoutSuccess();
+			}),
+			catchError((error: ErrorResponse) => of(userAction.logoutError({ error }))),
+		);
+	});
+
 }

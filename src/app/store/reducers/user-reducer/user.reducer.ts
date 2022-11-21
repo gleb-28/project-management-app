@@ -35,6 +35,7 @@ export const userReducer = createReducer(
 	on(userAction.signUpSuccess, (state): UserState => ({ ...state, status: ReqStatus.Success, error: null })),
 
 	on(
+		userAction.logoutSuccess,
 		userAction.deleteUserSuccess,
 		(state): UserState => ({ ...state, user: defaultUserState.user, status: ReqStatus.Success, error: null }),
 	),
@@ -45,6 +46,7 @@ export const userReducer = createReducer(
 		userAction.loginError,
 		userAction.editUserError,
 		userAction.deleteUserError,
+		userAction.logoutError,
 		(state, { error }): UserState => ({
 			...state,
 			status: ReqStatus.Error,
