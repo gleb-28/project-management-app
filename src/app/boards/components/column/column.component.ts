@@ -4,12 +4,13 @@ import { Store } from '@ngrx/store';
 import { selectTasksByColumnId } from '../../../store/selectors/active-board-selector/tasks-selector/tasks.selector';
 import { Observable, Subscription } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { createTask, updateColumn } from '../../../store/actions/active-board-action/active-board.action';
+import { createTask, deleteColumn, updateColumn } from '../../../store/actions/active-board-action/active-board.action';
 import { ColumnResponse } from '../../../models/column.model';
 import { selectUserId } from '../../../store/selectors/user-selector/user.selector';
 import { TaskDragDropService } from '../../services/task-drag-drop/task-drag-drop.service';
 import { ColumnId } from '../../../models/ids.model';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
 	selector: 'app-column',
@@ -32,7 +33,11 @@ export class ColumnComponent implements OnInit, OnDestroy {
 	public createTaskModalIsOpen = false;
 	public createTaskForm!: FormGroup;
 
-	constructor(private store: Store, private taskDragDropService: TaskDragDropService) {}
+	constructor(
+		private store: Store,
+		private taskDragDropService: TaskDragDropService,
+		private confirmationService: ConfirmationService,
+	) {}
 
 	ngOnInit() {
 		this.tasks$ = this.store.select(selectTasksByColumnId(this.column._id));
@@ -77,6 +82,19 @@ export class ColumnComponent implements OnInit, OnDestroy {
 		this.renameColumnModalIsOpen = false;
 	}
 
+	public deleteColumn(): void {
+		this.confirmationService.confirm({
+			message: `Are you sure that you want to delete "${this.column.title}" column?`,
+			accept: () => {
+				this.store.dispatch(deleteColumn({ boardId: this.column.boardId, columnId: this.column._id }));
+				this.confirmationService.close();
+			},
+			reject: () => {
+				this.confirmationService.close();
+			},
+		});
+	}
+
 	public createTaskSubmit(): void {
 		if (this.createTaskForm.valid) {
 			this.store.dispatch(
@@ -97,11 +115,11 @@ export class ColumnComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	public taskDrop(columnId: ColumnId, event: CdkDragDrop<string[]>) {
+	public taskDrop(columnId: ColumnId, event: CdkDragDrop<string[]>): void {
 		this.taskDragDropService.changeTasksOrder(columnId, event.currentIndex);
 	}
 
-	public taskDragStart(task: TaskResponse) {
+	public taskDragStart(task: TaskResponse): void {
 		this.taskDragDropService.taskDragStart(task);
 	}
 

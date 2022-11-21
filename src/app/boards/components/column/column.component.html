@@ -1,14 +1,35 @@
-<div class="column-header">
-  <p>
+<div class="column-header" cdkDragHandle="column">
+  <ng-content></ng-content>
+  <p class="column-title">
     {{ column.title }}
   </p>
-  <p-button
-    title="New"
-    icon="pi pi-file-edit"
-    class="p-button-sm"
-    [style]="{ height: '10px', width: '30px' }"
-    (click)="showRenameColumnModal()">
-  </p-button>
+  <div class="column-buttons">
+    <p-button
+      title="New"
+      icon="pi pi-file-edit"
+      class="p-button-sm"
+      [style]="{ height: '10px', width: '30px' }"
+      (click)="showRenameColumnModal()">
+    </p-button>
+    <p-button
+      title="New"
+      icon="pi pi-times"
+      class="p-button-sm"
+      [style]="{ height: '10px', width: '30px' }"
+      (click)="deleteColumn()">
+    </p-button>
+  </div>
+</div>
+<div class="column-body">
+  <div class="tasks" cdkDropList="task" (cdkDropListDropped)="taskDrop(column._id, $event)">
+    <app-task
+      class="task"
+      *ngFor="let task of tasks$ | async"
+      [task]="task"
+      cdkDrag="task"
+      (cdkDragStarted)="taskDragStart(task)">
+    </app-task>
+  </div>
   <p-button
     title="New"
     icon="pi pi-plus"
@@ -16,15 +37,6 @@
     [style]="{ height: '10px', width: '30px' }"
     (click)="showCreateTaskModal()">
   </p-button>
-</div>
-<div class="column-body" cdkDropList (cdkDropListDropped)="taskDrop(column._id, $event)">
-  <app-task
-    class="task"
-    *ngFor="let task of tasks$ | async"
-    [task]="task"
-    cdkDrag
-    (cdkDragStarted)="taskDragStart(task)">
-  </app-task>
 </div>
 
 <!--Rename column modal-->
@@ -64,3 +76,6 @@
     <button pButton type="submit" label="Create task"></button>
   </form>
 </p-dialog>
+
+<!--Delete column confirm modal-->
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>

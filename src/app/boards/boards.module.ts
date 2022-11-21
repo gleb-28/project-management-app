@@ -37,6 +37,7 @@ import { DialogModule } from 'primeng/dialog';
 import { ConfirmationService } from 'primeng/api';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TaskDragDropService } from './services/task-drag-drop/task-drag-drop.service';
+import { ColumnDragDropService } from './services/column-drag-drop/column-drag-drop.service';
 
 const PrimeNgModules = [
 	ButtonModule,
@@ -60,8 +61,8 @@ const Components = [BoardComponent, ColumnComponent, TaskComponent];
 		CommonModule,
 		BoardsRoutingModule,
 		ReactiveFormsModule,
-		...PrimeNgModules,
 		DragDropModule,
+		...PrimeNgModules,
 		StoreModule.forFeature('boards', boardsReducer),
 		StoreModule.forFeature('activeBoard', { columns: columnsReducer, tasks: tasksReducer, files: filesReducer }),
 		EffectsModule.forFeature([BoardsEffect, ActiveBoardEffect, ColumnsEffect, TasksEffect, FilesEffect]),
@@ -75,6 +76,7 @@ const Components = [BoardComponent, ColumnComponent, TaskComponent];
 		FilterByPipe,
 		ConfirmationService,
 		TaskDragDropService,
+		ColumnDragDropService,
 	],
 })
 export class BoardsModule {}

@@ -21,7 +21,7 @@ export class TaskDragDropService {
 		this.draggedTask = null;
 	}
 
-	public changeTasksOrder(columnId: ColumnId, taskCurrentIndex: number) {
+	public changeTasksOrder(columnId: ColumnId, taskCurrentIndex: number): void {
 		if (this.draggedTask) {
 			const draggedTask = this.draggedTask;
 			const newDraggedTaskOrder = taskCurrentIndex + 1;
@@ -34,8 +34,8 @@ export class TaskDragDropService {
 
 			// task dragged in the same column
 			if (draggedTask.columnId === columnId) {
-				// task drugged up
-				if (draggedTaskNewPrevItemOrder > draggedTask.order) {
+				// task drugged down
+				if (newDraggedTaskOrder > draggedTask.order) {
 					for (let i = draggedTaskNextItemOrder; i <= draggedTaskNewPrevItemOrder; i++) {
 						const nextTaskToChange = this.getTaskInColumnByOrder(draggedTask.columnId, i);
 						if (nextTaskToChange) {
@@ -43,8 +43,8 @@ export class TaskDragDropService {
 						}
 					}
 				}
-				// task dragged down
-				if (draggedTaskNewPrevItemOrder < draggedTask.order) {
+				// task dragged up
+				if (newDraggedTaskOrder < draggedTask.order) {
 					for (let i = newDraggedTaskOrder; i <= this.getTasksAmountInColumn(draggedTask.columnId); i++) {
 						const nextTaskToChange = this.getTaskInColumnByOrder(draggedTask.columnId, i);
 						if (nextTaskToChange) {
@@ -73,7 +73,7 @@ export class TaskDragDropService {
 		}
 	}
 
-	private dispatchChangeTaskOrderAction(task: TaskResponse, newOrder: number, newColumnId = task.columnId) {
+	private dispatchChangeTaskOrderAction(task: TaskResponse, newOrder: number, newColumnId = task.columnId): void {
 		this.store.dispatch(
 			updateTask({
 				boardId: task.boardId,
