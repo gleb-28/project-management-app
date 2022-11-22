@@ -18,12 +18,9 @@ import { selectAllUsersFromMyBoards } from 'src/app/store/selectors/boards-selec
 export class SocketioService {
 	private socket: Socket<DefaultEventsMap, DefaultEventsMap> | null = null;
 	private userId: string = '';
+	private userIdSubscription = this.store.select(selectUserId).subscribe((userId) => (this.userId = userId));
 
 	constructor(private store: Store, private route: ActivatedRoute) { }
-
-	private getUsersubscription() {
-		this.store.select(selectUserId).subscribe((userId) => (this.userId = userId));
-	}
 
 	private isUserExistInList(message: SocketMessage): boolean {
 		const { users, initUser, notify } = message;
@@ -162,7 +159,6 @@ export class SocketioService {
 	}
 
 	private subscribeAllMessages(): void {
-		this.getUsersubscription();
 		this.getUsersMessage();
 		this.getBoardsMessage();
 		this.getColumnsMessage();
@@ -182,5 +178,7 @@ export class SocketioService {
 		if (this.socket) {
 			this.socket.disconnect();
 		}
+
+		this.userIdSubscription.unsubscribe();
 	}
 }

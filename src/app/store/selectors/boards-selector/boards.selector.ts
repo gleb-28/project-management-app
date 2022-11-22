@@ -8,4 +8,4 @@ export const selectBoardsFeature = createFeatureSelector<BoardsState>('boards');
 
 export const selectBoards = createSelector(selectBoardsFeature, selectAll);
 
-export const selectAllUsersFromMyBoards = createSelector(selectBoardsFeature, (state) => state.ids);
+export const selectAllUsersFromMyBoards = createSelector(selectBoards, (boards) => boards.map((board) => board.users));
