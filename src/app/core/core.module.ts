@@ -4,19 +4,49 @@ import { WelcomePageComponent } from './pages/welcome-page/welcome-page.componen
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SelectButtonModule } from 'primeng/selectbutton';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { SidebarModule } from 'primeng/sidebar';
 import { NotFoundPageComponent } from './pages/not-found-page/not-found-page.component';
 import { AccordionModule } from 'primeng/accordion';
-import { ErrorComponent } from './components/error/error/error.component';
+import { RouterLink } from '@angular/router';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { TranslateModule } from '@ngx-translate/core';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { PreloaderComponent } from './components/preloader/preloader/preloader.component';
+import { ErrorToastComponent } from './components/error-toast/error-toast.component';
 import { ToastModule } from 'primeng/toast';
 
-const PrimeNgModules = [SelectButtonModule, ButtonModule, SidebarModule, AccordionModule, ToastModule];
+const Components = [
+	HeaderComponent,
+	WelcomePageComponent,
+	FooterComponent,
+	NotFoundPageComponent,
+	PreloaderComponent,
+	ErrorToastComponent,
+];
+const PrimeNgModules = [
+	SelectButtonModule,
+	ButtonModule,
+	SidebarModule,
+	AccordionModule,
+	ProgressSpinnerModule,
+	ToastModule,
+];
 
 @NgModule({
-	declarations: [FooterComponent, HeaderComponent, WelcomePageComponent, NotFoundPageComponent, ErrorComponent],
-	imports: [CommonModule, FormsModule, ...PrimeNgModules],
-	exports: [HeaderComponent, WelcomePageComponent, NotFoundPageComponent, FooterComponent, ErrorComponent],
+	declarations: [...Components],
+	imports: [
+		CommonModule,
+		FormsModule,
+		RouterLink,
+		TranslateModule,
+		DialogModule,
+		ReactiveFormsModule,
+		InputTextModule,
+		...PrimeNgModules,
+	],
+	exports: [...Components],
 })
 export class CoreModule {}

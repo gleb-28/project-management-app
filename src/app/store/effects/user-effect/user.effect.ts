@@ -9,6 +9,7 @@ import { selectUserId } from '../../selectors/user-selector/user.selector';
 import { ErrorResponse } from 'src/app/models/error.model';
 import { Router } from '@angular/router';
 import * as userAction from '../../actions/user-action/user.action';
+import { SignInRequest } from '../../../models/auth.model';
 
 @Injectable()
 export default class UserEffect {
@@ -28,11 +29,11 @@ export default class UserEffect {
 				const userId = this.authService.getIdFromToken();
 				return this.userService.getUser(userId).pipe(
 					map((response) => {
-						this.router.navigateByUrl('');
+						if (this.router.url === '/sign-in' || this.router.url === '/sign-up') this.router.navigateByUrl('boards');
 						return userAction.getUserSuccess({ response });
 					}),
 
-					catchError((error: ErrorResponse) => of(userAction.deleteUserError({ error }))),
+					catchError((error: ErrorResponse) => of(userAction.getUserError({ error }))),
 				);
 			}),
 		);
@@ -58,10 +59,13 @@ export default class UserEffect {
 		return this.actions$.pipe(
 			ofType(userAction.signUp),
 			exhaustMap(({ request }) => {
+				const signInUserData: SignInRequest = {
+					login: request.login,
+					password: request.password,
+				};
 				return this.authService.signUp(request).pipe(
-					map(() => {
-						this.router.navigateByUrl('auth/sign-in');
-						return userAction.signUpSuccess();
+					switchMap(() => {
+						return [userAction.signUpSuccess(), userAction.login({ request: signInUserData })];
 					}),
 
 					catchError((error: ErrorResponse) => of(userAction.signUpError({ error }))),

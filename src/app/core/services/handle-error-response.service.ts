@@ -5,11 +5,9 @@ import { BehaviorSubject } from 'rxjs';
 	providedIn: 'root',
 })
 export class HandleErrorResponseService {
-
 	public error: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
-	public sendData(errorMessage: string):void {
+	public sendData(errorMessage: string): void {
 		this.error.next(errorMessage);
 	}
-
 }

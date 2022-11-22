@@ -1,0 +1,28 @@
+:host {
+
+  .columns-wrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 88vh;
+    gap: 0.5rem;
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+
+    &.cdk-drop-list-dragging .column:not(.cdk-drag-placeholder) {
+      transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+    }
+  }
+
+  .column-handle {
+    cursor: move;
+    padding: 0.5rem;
+  }
+
+  .add-column-button {
+    flex: 0 0 48px;
+  }
+
+}

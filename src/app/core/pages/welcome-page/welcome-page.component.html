@@ -5,10 +5,10 @@
   <!--  about section-->
   <section class='about'>
     <p-accordion>
-      <p-accordionTab header="about this project">
-        <p class='text'>This project was made during the Angular Course in <a href='https://rs.school/' target='_blank'>RS
+      <p-accordionTab header="{{ 'WELCOME_PAGE.ABOUT' | translate }}">
+        <p class='text'>{{ 'WELCOME_PAGE.PROJECT' | translate }}<a href='https://rs.school/' target='_blank'>RS
           School.</a></p>
-        <ul> Our Team:
+        <ul> {{ 'WELCOME_PAGE.TEAM' | translate }}
           <li *ngFor="let member of team">
             {{member.role | titlecase}}:
             <a href='{{member.gitHubLink}}' target='_blank'>{{member.fullName}}</a></li>

@@ -5,11 +5,11 @@ import { login } from 'src/app/store/actions/user-action/user.action';
 import { CustomValidator } from '../../validator';
 
 @Component({
-	selector: 'app-login-page',
-	templateUrl: './login-page.component.html',
-	styleUrls: ['./login-page.component.scss'],
+	selector: 'app-sign-in-page',
+	templateUrl: './sign-in-page.component.html',
+	styleUrls: ['./sign-in-page.component.scss'],
 })
-export class LoginPageComponent {
+export class SignInPageComponent {
 	constructor(private store: Store) {}
 
 	loginForm: FormGroup = new FormGroup({

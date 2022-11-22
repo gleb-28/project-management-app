@@ -1,43 +1,43 @@
 <form class="form-card" [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-  <h2 class="form-card__title">Signup</h2>
+  <h2 class="form-card__title">{{ 'SIGN-UP-PAGE.TITLE' | translate }}</h2>
 
   <span class="p-float-label">
     <input pInputText class="form-card__field" type="text" formControlName="name">
-    <label for="float-input">Name</label>
+    <label for="float-input">{{ 'INPUTS_AUTH.NAME' | translate }}</label>
   </span>
   <div class="form-card__error-name">
-    <p *ngIf="isValid('name', 'required')">Please enter a login</p>
-    <p *ngIf="isValid('name', 'minlength')">At least 3 characters</p>
+    <p *ngIf="isValid('name', 'required')">{{ 'ERROR_INPUTS.NAME_REQUIRED' | translate }}</p>
+    <p *ngIf="isValid('name', 'minlength')">{{ 'ERROR_INPUTS.MIN_LENGTH' | translate }}</p>
   </div>
 
 
 <div >
   <span class="p-float-label">
     <input pInputText class="form-card__field" type="text" formControlName="login">
-    <label for="float-input">Login</label>
+    <label for="float-input">{{ 'INPUTS_AUTH.LOGIN' | translate }}</label>
   </span>
   <div class="form-card__error-name">
-    <p *ngIf="isValid('login', 'required')">Please enter a login</p>
-    <p *ngIf="isValid('login', 'minlength')">At least 3 characters</p>
+    <p *ngIf="isValid('login', 'required')">{{ 'ERROR_INPUTS.LOGIN_REQUIRED' | translate }}</p>
+    <p *ngIf="isValid('login', 'minlength')">{{ 'ERROR_INPUTS.MIN_LENGTH' | translate }}</p>
   </div>
 
   <span class="p-float-label">
     <input id="float-input" pInputText type="password" formControlName="password" >
-    <label for="float-input">Password</label>
+    <label for="float-input">{{ 'INPUTS_AUTH.PASSWORD' | translate }}</label>
   </span>
   <ul class="form-card__error-pass">
-    <li *ngIf="isValid('password', 'required')">Please enter a password</li>
-    <li *ngIf="isValid('password', 'minlength')">At least 8 characters</li>
-    <li *ngIf="isValid('password', 'isValidRegister')">At least one lowercase or at least one uppercase</li>
-    <li *ngIf="isValid('password', 'isValidNumber')">At least one numeric or one letters</li>
-    <li *ngIf="isValid('password', 'isValidSymbol')">At least one special character, e.g., ! @ # ? ]</li>
+    <li *ngIf="isValid('password', 'required')">{{ 'ERROR_INPUTS.PASSWORD_REQUIRED' | translate }}</li>
+    <li *ngIf="isValid('password', 'minlength')">{{ 'ERROR_INPUTS.PASSWORD_LENGTH' | translate }}</li>
+    <li *ngIf="isValid('password', 'isValidRegister')">{{ 'ERROR_INPUTS.PASSWORD_REGISTER' | translate }}</li>
+    <li *ngIf="isValid('password', 'isValidNumber')">{{ 'ERROR_INPUTS.PASSWORD_NUMBER' | translate }}</li>
+    <li *ngIf="isValid('password', 'isValidSymbol')">{{ 'ERROR_INPUTS.PASSWORD_SYMBOL' | translate }}</li>
   </ul>
 </div>
 
 
-  <button pButton class="form-card__btn" type="submit" label="Singup"></button>
-  <div class="form-card__info">Already have an account?
-    <button pButton label="Login" class="form-card__signup" class="p-button-text"></button>
+  <button pButton class="form-card__btn" type="submit" label="{{ 'SIGN-UP-PAGE.BUTTONS.SIGN-UP' | translate }}"></button>
+  <div class="form-card__info">{{ 'SIGN-UP-PAGE.ACCOUNT' | translate }}
+    <button pButton label="{{ 'SIGN-UP-PAGE.BUTTONS.LOGIN' | translate }}" class="p-button-text form-card__signup"></button>
   </div>
 </form>
 
