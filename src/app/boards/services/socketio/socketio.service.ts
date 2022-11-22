@@ -5,28 +5,48 @@ import { environment } from 'src/environments/environment';
 import { Store } from '@ngrx/store';
 import { SocketActions, SocketEvents, SocketMessage } from 'src/app/models/socketio.model';
 import { deleteBoardSuccess, getUserBoards } from 'src/app/store/actions/boards-action/boards.action';
-import { deleteColumnSuccess, deleteFileSuccess, deleteTaskSuccess, loadColumns, loadFiles, loadTasks } from 'src/app/store/actions/active-board-action/active-board.action';
+import {
+	deleteColumnSuccess,
+	deleteFileSuccess,
+	deleteTaskSuccess,
+	loadColumns,
+	loadFiles,
+	loadTasks,
+} from 'src/app/store/actions/active-board-action/active-board.action';
 import { getUser } from 'src/app/store/actions/user-action/user.action';
 import { selectUserId } from 'src/app/store/selectors/user-selector/user.selector';
 import { ActivatedRoute } from '@angular/router';
 import { selectAllUsersFromMyBoards } from 'src/app/store/selectors/boards-selector/boards.selector';
-
+import { UserId } from '../../../models/ids.model';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class SocketioService {
 	private socket: Socket<DefaultEventsMap, DefaultEventsMap> | null = null;
-	private userId: string = '';
 	private userIdSubscription = this.store.select(selectUserId).subscribe((userId) => (this.userId = userId));
+	private allUsersInMyBoardSubscription = this.store
+		.select(selectAllUsersFromMyBoards)
+		.subscribe((users) => (this.allUsersInMyBoard = users));
+	private userId: string = '';
+	private allUsersInMyBoard: UserId[] = [];
 
-	constructor(private store: Store, private route: ActivatedRoute) { }
+	constructor(private store: Store, private route: ActivatedRoute) {
+		console.log(this.allUsersInMyBoard);
+	}
 
 	private isUserExistInList(message: SocketMessage): boolean {
 		const { users, initUser, notify } = message;
-		const allUsersInMyBoard = this.store.select(selectAllUsersFromMyBoards);
 
-		return !!this.userId && initUser !== this.userId && notify && Array.isArray(users) && users?.includes(this.userId) && Array.isArray(allUsersInMyBoard) && allUsersInMyBoard?.includes(initUser);
+		return (
+			!!this.userId &&
+			initUser !== this.userId &&
+			notify &&
+			Array.isArray(users) &&
+			users?.includes(this.userId) &&
+			Array.isArray(this.allUsersInMyBoard) &&
+			this.allUsersInMyBoard?.includes(initUser)
+		);
 	}
 
 	private getBoardId(): string {
@@ -36,7 +56,6 @@ export class SocketioService {
 	private getUsersMessage(): void {
 		if (this.socket) {
 			this.socket.on(SocketEvents.USERS, (message: SocketMessage) => {
-
 				if (this.isUserExistInList(message) && this.getBoardId()) {
 					this.store.dispatch(getUser());
 				}
@@ -64,7 +83,6 @@ export class SocketioService {
 
 	private getBoardsMessage(): void {
 		this.socket?.on(SocketEvents.BOARDS, (message: SocketMessage) => {
-
 			if (this.isUserExistInList(message) && this.getBoardId()) {
 				this.updateBoardsData(message);
 			}
@@ -92,7 +110,6 @@ export class SocketioService {
 	private getColumnsMessage(): void {
 		if (this.socket) {
 			this.socket.on(SocketEvents.COLUMNS, (message) => {
-
 				if (this.isUserExistInList(message) && this.getBoardId()) {
 					this.updateColumnsData(message);
 				}
@@ -121,7 +138,6 @@ export class SocketioService {
 	private getTasksMessage(): void {
 		if (this.socket) {
 			this.socket.on(SocketEvents.TASKS, (message) => {
-
 				if (this.isUserExistInList(message) && this.getBoardId()) {
 					this.updateTasksData(message);
 				}
@@ -150,7 +166,6 @@ export class SocketioService {
 	private getFilesMessage(): void {
 		if (this.socket) {
 			this.socket.on(SocketEvents.FILES, (message) => {
-
 				if (this.isUserExistInList(message) && this.getBoardId()) {
 					this.updateFilesData(message);
 				}
