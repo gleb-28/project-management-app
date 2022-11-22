@@ -15,9 +15,25 @@ import { InputTextModule } from 'primeng/inputtext';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { PreloaderComponent } from './components/preloader/preloader/preloader.component';
+import { ErrorToastComponent } from './components/error-toast/error-toast.component';
+import { ToastModule } from 'primeng/toast';
 
-const Components = [HeaderComponent, WelcomePageComponent, FooterComponent, NotFoundPageComponent, PreloaderComponent];
-const PrimeNgModules = [SelectButtonModule, ButtonModule, SidebarModule, AccordionModule, ProgressSpinnerModule];
+const Components = [
+	HeaderComponent,
+	WelcomePageComponent,
+	FooterComponent,
+	NotFoundPageComponent,
+	PreloaderComponent,
+	ErrorToastComponent,
+];
+const PrimeNgModules = [
+	SelectButtonModule,
+	ButtonModule,
+	SidebarModule,
+	AccordionModule,
+	ProgressSpinnerModule,
+	ToastModule,
+];
 
 @NgModule({
 	declarations: [...Components],
