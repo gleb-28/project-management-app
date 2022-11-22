@@ -24,10 +24,12 @@ import { ColumnsService } from './services/columns/columns.service';
 import { TasksService } from './services/tasks/tasks.service';
 import { FilesService } from './services/files/files.service';
 import { PointsService } from './services/points/points.service';
+import { boardReducer } from '../store/reducers/active-board-reducer/board-reducer/board.reducer';
 import { columnsReducer } from '../store/reducers/active-board-reducer/columns-reducer/columns.reducer';
 import { tasksReducer } from '../store/reducers/active-board-reducer/tasks-reducer/tasks.reducer';
 import { filesReducer } from '../store/reducers/active-board-reducer/files-reducer/files.reducer';
 import { ActiveBoardEffect } from '../store/effects/active-board-effect/active-board.effect';
+import { BoardEffect } from '../store/effects/active-board-effect/board-effect/board.effect';
 import { ColumnsEffect } from '../store/effects/active-board-effect/columns-effect/columns.effect';
 import { TasksEffect } from '../store/effects/active-board-effect/tasks-effect/tasks.effect';
 import { FilesEffect } from '../store/effects/active-board-effect/files-effect/files.effect';
@@ -61,8 +63,13 @@ const Components = [BoardComponent, ColumnComponent, TaskComponent];
 		BoardsRoutingModule,
 		...PrimeNgModules,
 		StoreModule.forFeature('boards', boardsReducer),
-		StoreModule.forFeature('activeBoard', { columns: columnsReducer, tasks: tasksReducer, files: filesReducer }),
-		EffectsModule.forFeature([BoardsEffect, ActiveBoardEffect, ColumnsEffect, TasksEffect, FilesEffect]),
+		StoreModule.forFeature('activeBoard', {
+			board: boardReducer,
+			columns: columnsReducer,
+			tasks: tasksReducer,
+			files: filesReducer,
+		}),
+		EffectsModule.forFeature([BoardsEffect, ActiveBoardEffect, BoardEffect, ColumnsEffect, TasksEffect, FilesEffect]),
 		ReactiveFormsModule,
 	],
 	providers: [

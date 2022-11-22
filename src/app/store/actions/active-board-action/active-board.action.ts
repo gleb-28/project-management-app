@@ -1,6 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { ActiveBoardActionType } from './active-board-action.type';
 import { ErrorResponse } from '../../../models/error.model';
+import { BoardResponse } from '../../../models/board.model';
 import { ColumnRequest, ColumnResponse } from '../../../models/column.model';
 import { TaskRequest, TaskResponse } from '../../../models/task.model';
 import { FileResponse } from '../../../models/file.model';
@@ -8,6 +9,10 @@ import { BoardId, ColumnId, FileId, TaskId } from '../../../models/ids.model';
 
 // Board
 export const openBoard = createAction(ActiveBoardActionType.OPEN_BOARD, props<{ boardId: BoardId }>());
+
+export const loadBoard = createAction('[Board] Load board', props<{ boardId: BoardId }>());
+export const loadBoardSuccess = createAction('[Board] Load board success', props<{ board: BoardResponse }>());
+export const loadBoardError = createAction('[Board] Load board error', props<{ error: ErrorResponse }>());
 
 // Columns
 export const loadColumns = createAction(ActiveBoardActionType.LOAD_COLUMNS, props<{ boardId: BoardId }>());
