@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { CustomTranslationService } from '../../services/custom-translation.service';
+import { Lang } from '../../../models/lang.model';
 import { Store } from '@ngrx/store';
-import { selectIsLogged, selectUser } from '../../../store/selectors/user-selector/user.selector';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { createBoard } from '../../../store/actions/boards-action/boards.action';
-
-type Lang = 'en' | 'ru';
+import { selectIsLogged, selectUser } from '../../../store/selectors/user-selector/user.selector';
 
 interface LangSelect {
 	label: 'EN' | 'RU';
@@ -21,24 +21,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	private userSubscription = this.store.select(selectUser).subscribe((user) => (this.userId = user._id));
 	private userId = '';
 
-	public langSelect: LangSelect[];
-	public selectedLang: Lang = 'en';
+	public langSelect: LangSelect[] = [
+		{ label: 'EN', lang: 'en' },
+		{ label: 'RU', lang: 'ru' },
+	];
+
+	public selectedLang: Lang = this.customTranslate.getUserLang() as Lang;
 
 	public sideBarIsOpen = false;
 	public createBoardModalIsOpen = false;
 	public createBoardForm!: FormGroup;
 
-	constructor(private store: Store) {
-		this.langSelect = [
-			{ label: 'EN', lang: 'en' },
-			{ label: 'RU', lang: 'ru' },
-		];
-	}
+	constructor(private store: Store, private customTranslate: CustomTranslationService) {}
 
 	ngOnInit() {
 		this.createBoardForm = new FormGroup({
 			boardTitle: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
 		});
+	}
+
+	public changeLanguage(lang: Lang) {
+		this.customTranslate.changeLanguage(lang);
 	}
 
 	public showCreateBoardModal(): void {

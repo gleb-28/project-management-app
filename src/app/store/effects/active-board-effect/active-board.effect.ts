@@ -11,6 +11,7 @@ export class ActiveBoardEffect {
 		this.actions$.pipe(
 			ofType(fromBoard.openBoard),
 			switchMap(({ boardId }) => [
+				fromBoard.loadBoard({ boardId }),
 				fromBoard.loadColumns({ boardId }),
 				fromBoard.loadTasks({ boardId }),
 				fromBoard.loadFiles({ boardId }),

@@ -1,125 +1,24 @@
-/*--------Basic-----------*/
+@forward 'src/styles';
 
-.cssload-container {
-  position: fixed;
-  width: 100%;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-color: rgba(206, 197, 197, 0.7);
-  z-index: 9999;
-}
+.wrapper {
+	background: white;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
 
-.cssload-speeding-wheel {
-  content: "";
-  display: block;
-  position: absolute;
-  left: 45%;
-  top: 30%;
-  width: 200px;
-  height: 200px;
-  margin: 0 auto;
-  border: 8px solid rgb(0, 0, 0);
-  border-radius: 50%;
-  border-left-color: transparent;
-  border-right-color: transparent;
-  animation: cssload-spin 500ms infinite linear;
-  -o-animation: cssload-spin 500ms infinite linear;
-  -ms-animation: cssload-spin 500ms infinite linear;
-  -webkit-animation: cssload-spin 500ms infinite linear;
-  -moz-animation: cssload-spin 500ms infinite linear;
-}
+	.preloader-wrapper {
+		@extend %place-center;
+		height: 80vh;
+	}
 
-@keyframes cssload-spin {
-  100% {
-    transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-
-@-o-keyframes cssload-spin {
-  100% {
-    -o-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-
-@-ms-keyframes cssload-spin {
-  100% {
-    -ms-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-
-@-webkit-keyframes cssload-spin {
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-
-@-moz-keyframes cssload-spin {
-  100% {
-    -moz-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-
-/*--------PrimeNg-----------*/
-
-.container {
-  position: fixed;
-  width: 100%;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-color: rgba(206, 197, 197, 0.7);
-  z-index: 9999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-:host ::ng-deep .custom-spinner .p-progress-spinner-circle {
-  animation: custom-progress-spinner-dash 1.5s ease-in-out infinite, custom-progress-spinner-color 6s ease-in-out infinite;
-}
-
-@keyframes custom-progress-spinner-color {
-
-  100%,
-  0% {
-    stroke: #16697A;
-  }
-
-  40% {
-    stroke: #489FB5;
-  }
-
-  66% {
-    stroke: #82C0CC;
-  }
-
-  80%,
-  90% {
-    stroke: #FFA62B;
-  }
-}
-
-@keyframes custom-progress-spinner-dash {
-  0% {
-    stroke-dasharray: 1, 200;
-    stroke-dashoffset: 0;
-  }
-
-  50% {
-    stroke-dasharray: 89, 200;
-    stroke-dashoffset: -35px;
-  }
-
-  100% {
-    stroke-dasharray: 89, 200;
-    stroke-dashoffset: -124px;
-  }
+	::ng-deep .custom-spinner {
+		width: 200px;
+		height: 200px;
+	}
+	::ng-deep .p-progress-spinner-circle {
+		stroke: black;
+		animation: none;
+	}
 }

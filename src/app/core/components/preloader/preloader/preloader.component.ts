@@ -7,7 +7,7 @@ import { LoaderService } from 'src/app/core/services/loader.service';
 	styleUrls: ['./preloader.component.scss'],
 })
 export class PreloaderComponent {
+	public isLoading$ = this.loader.isLoading$.asObservable();
 
-	constructor(public loader: LoaderService) { }
-
+	constructor(public loader: LoaderService) {}
 }
