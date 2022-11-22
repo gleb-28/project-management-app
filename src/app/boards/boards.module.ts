@@ -36,6 +36,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmationService } from 'primeng/api';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AccordionModule } from 'primeng/accordion';
 
 const PrimeNgModules = [
 	ButtonModule,
@@ -49,6 +50,7 @@ const PrimeNgModules = [
 	InputTextModule,
 	ConfirmDialogModule,
 	DialogModule,
+	AccordionModule,
 ];
 
 const PageComponents = [MainPageComponent, BoardPageComponent];

@@ -1,3 +1,10 @@
+<p-accordion>
+  <p-accordionTab   header="members">
+    <p>{{members}}</p>
+  </p-accordionTab>
+</p-accordion>
+
+
 <p-splitButton (onClick)="openBoard()" label="{{board.title}}" [model]="boardActions" styleClass="p-button-raised p-button-plain p-button-text mr-2 mb-2"></p-splitButton>
 
 <!--Rename board modal-->
@@ -11,6 +18,21 @@
     <small *ngIf="renameBoardForm.controls['boardTitle'].hasError('minlength')" class="p-error block">Minimum length is 3 characters</small>
     <small *ngIf="renameBoardForm.controls['boardTitle'].hasError('maxlength')" class="p-error block">Maximum length is 30 characters</small>
     <button pButton type="submit" label="Rename"></button>
+  </form>
+</p-dialog>
+
+
+<!--Add member board modal-->
+<p-dialog header="Add member" [(visible)]="addMemberIsOpen">
+  <form [formGroup]="addMemberForm" (submit)="addMember()">
+    <span class="p-float-label">
+      <input id="add-member" formControlName="login" type="text" pInputText>
+      <label for="add-member">Login member</label>
+    </span>
+    <small *ngIf="addMemberForm.controls['login'].hasError('required')" class="p-error block">Please enter board title</small>
+    <small *ngIf="addMemberForm.controls['login'].hasError('minlength')" class="p-error block">Minimum length is 3 characters</small>
+    <small *ngIf="addMemberForm.controls['login'].hasError('maxlength')" class="p-error block">Maximum length is 30 characters</small>
+    <button pButton type="submit" label="Add"></button>
   </form>
 </p-dialog>
 

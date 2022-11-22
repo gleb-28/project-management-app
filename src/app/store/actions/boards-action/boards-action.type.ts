@@ -14,4 +14,9 @@ export enum BoardsActionType {
 	DELETE_BOARD = '[Boards] Delete board',
 	DELETE_BOARD_SUCCESS = '[Boards] Delete board success',
 	DELETE_BOARD_ERROR = '[Boards] Delete board error',
+
+	ADD_MEMBER = '[Boards] Add Member',
+	ADD_MEMBER_SUCCESS = '[Boards] Add Member success',
+	ADD_MEMBER_ERROR = '[Boards] Add Member error',
+
 }

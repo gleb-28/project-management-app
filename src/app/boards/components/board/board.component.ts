@@ -3,7 +3,7 @@ import { BoardResponse } from '../../../models/board.model';
 import { Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { Store } from '@ngrx/store';
-import { deleteBoard, updateBoard } from '../../../store/actions/boards-action/boards.action';
+import { deleteBoard, addMember, updateBoard } from '../../../store/actions/boards-action/boards.action';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -13,6 +13,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class BoardComponent implements OnInit {
 	@Input() board!: BoardResponse;
+
+	members!: string;
 
 	public boardActions = [
 		{
@@ -26,7 +28,7 @@ export class BoardComponent implements OnInit {
 			label: 'Add member',
 			icon: 'pi pi-plus',
 			command: () => {
-				this.addMember();
+				this.showAddMemberModal();
 			},
 		},
 		{ separator: true },
@@ -41,6 +43,8 @@ export class BoardComponent implements OnInit {
 
 	public renameBoardModalIsOpen = false;
 	public renameBoardForm!: FormGroup;
+	public addMemberIsOpen = false;
+	public addMemberForm!: FormGroup;
 
 	constructor(private store: Store, private router: Router, private confirmationService: ConfirmationService) {}
 
@@ -52,6 +56,16 @@ export class BoardComponent implements OnInit {
 				Validators.maxLength(30),
 			]),
 		});
+
+		this.addMemberForm = new FormGroup({
+			login: new FormControl('', [
+				Validators.required,
+				Validators.minLength(3),
+				Validators.maxLength(30),
+			]),
+		});
+
+		this.members = this.board.users.join(', ');
 	}
 
 	public showRenameBoardModal(): void {
@@ -88,9 +102,29 @@ export class BoardComponent implements OnInit {
 		});
 	}
 
-	private addMember() {}
+	public showAddMemberModal() {
+		this.addMemberIsOpen = true;
+	}
+
+	public addMember() {
+		if (this.addMemberForm.valid) {
+			this.store.dispatch(addMember({
+				login: this.addMemberForm.value.login,
+				boardId: this.board._id,
+				boardData: {
+					title: this.board.title,
+					owner: this.board.owner,
+					users: this.board.users,
+				},
+			}));
+
+			this.addMemberForm.reset();
+			this.addMemberIsOpen = false;
+		}
+	}
 
 	public openBoard(): void {
 		this.router.navigateByUrl(`boards/board/${this.board._id}`);
 	}
+
 }

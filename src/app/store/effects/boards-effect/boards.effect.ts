@@ -4,10 +4,11 @@ import { BoardsService } from '../../../boards/services/boards/boards.service';
 import { catchError, concatMap, map, of, switchMap } from 'rxjs';
 import * as fromBoards from '../../actions/boards-action/boards.action';
 import { ErrorResponse } from '../../../models/error.model';
+import { UserService } from 'src/app/auth/service/user.service';
 
 @Injectable()
 export class BoardsEffect {
-	constructor(private actions$: Actions, private boardsService: BoardsService) {}
+	constructor(private actions$: Actions, private boardsService: BoardsService, private userService: UserService) {}
 
 	getBoards$ = createEffect(() => {
 		return this.actions$.pipe(
@@ -60,4 +61,28 @@ export class BoardsEffect {
 			}),
 		);
 	});
+
+
+	addMember$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(fromBoards.addMember),
+			concatMap(({ login, boardId, boardData }) => {
+				return this.userService.getUsers(login).pipe(
+					map((user) => {
+						if (user) {
+							console.log('TEST before:', user, boardData.users);
+							boardData.users = [...boardData.users, user.login];
+							console.log('TEST after:', user, boardData.users);
+						}
+						return fromBoards.updateBoard({ boardId, boardData });
+					}),
+					catchError((error: ErrorResponse) => of(fromBoards.addMemberError({ error }))),
+				);
+			}),
+		);
+	});
 }
+
+
+
+

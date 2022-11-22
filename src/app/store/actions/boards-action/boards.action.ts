@@ -19,3 +19,7 @@ export const updateBoardError = createAction(BoardsActionType.UPDATE_BOARD_ERROR
 export const deleteBoard = createAction(BoardsActionType.DELETE_BOARD, props<{ boardId: BoardId }>());
 export const deleteBoardSuccess = createAction(BoardsActionType.DELETE_BOARD_SUCCESS, props<{ boardId: BoardId }>());
 export const deleteBoardError = createAction(BoardsActionType.DELETE_BOARD_ERROR, props<{ error: ErrorResponse }>());
+
+export const addMember = createAction(BoardsActionType.ADD_MEMBER, props<{ login: string, boardId: BoardId; boardData: BoardRequest }>());
+export const addMemberSuccess = createAction(BoardsActionType.ADD_MEMBER_SUCCESS);
+export const addMemberError = createAction(BoardsActionType.ADD_MEMBER_ERROR, props<{ error: ErrorResponse }>());
