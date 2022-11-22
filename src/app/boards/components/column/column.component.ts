@@ -1,17 +1,27 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { TaskResponse } from '../../../models/task.model';
 import { Store } from '@ngrx/store';
 import { selectTasksByColumnId } from '../../../store/selectors/active-board-selector/tasks-selector/tasks.selector';
-import { Observable, Subscription } from 'rxjs';
+import { map, Observable, Subscription, take } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { createTask, updateColumn } from '../../../store/actions/active-board-action/active-board.action';
+import {
+	createTask,
+	deleteColumn,
+	updateColumn,
+	updateTask,
+} from '../../../store/actions/active-board-action/active-board.action';
 import { ColumnResponse } from '../../../models/column.model';
 import { selectUserId } from '../../../store/selectors/user-selector/user.selector';
+import { TaskDragDropService } from '../../services/task-drag-drop/task-drag-drop.service';
+import { ColumnId } from '../../../models/ids.model';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
 	selector: 'app-column',
 	templateUrl: './column.component.html',
 	styleUrls: ['./column.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ColumnComponent implements OnInit, OnDestroy {
 	@Input() column!: ColumnResponse;
@@ -28,9 +38,13 @@ export class ColumnComponent implements OnInit, OnDestroy {
 	public createTaskModalIsOpen = false;
 	public createTaskForm!: FormGroup;
 
-	public draggedTask: TaskResponse | null = null;
+	@Output() columnDelete: EventEmitter<number> = new EventEmitter();
 
-	constructor(private store: Store) {}
+	constructor(
+		private store: Store,
+		private taskDragDropService: TaskDragDropService,
+		private confirmationService: ConfirmationService,
+	) {}
 
 	ngOnInit() {
 		this.tasks$ = this.store.select(selectTasksByColumnId(this.column._id));
@@ -75,6 +89,20 @@ export class ColumnComponent implements OnInit, OnDestroy {
 		this.renameColumnModalIsOpen = false;
 	}
 
+	public deleteColumn(): void {
+		this.confirmationService.confirm({
+			message: `Are you sure that you want to delete "${this.column.title}" column?`,
+			accept: () => {
+				this.store.dispatch(deleteColumn({ boardId: this.column.boardId, columnId: this.column._id }));
+				this.columnDelete.emit(this.column.order);
+				this.confirmationService.close();
+			},
+			reject: () => {
+				this.confirmationService.close();
+			},
+		});
+	}
+
 	public createTaskSubmit(): void {
 		if (this.createTaskForm.valid) {
 			this.store.dispatch(
@@ -95,35 +123,41 @@ export class ColumnComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	public taskDrop() {
-		// 	// console.log(event);
-		// 	// if (event.target instanceof HTMLElement) {
-		// 	// 	const draggedTaskId = event.target.closest('app-task')?.id;
-		// 	// 	console.log(draggedTaskId);
-		// 		// this.store.dispatch(
-		// 		// 	updateTask({
-		// 		// 		boardId: this.draggedTask.boardId,
-		// 		// 		columnId: this.draggedTask.columnId,
-		// 		// 		taskId: this.draggedTask._id,
-		// 		// 		taskData: {
-		// 		// 			columnId: columnId,
-		// 		// 			title: this.draggedTask.title,
-		// 		// 			description: this.draggedTask.description,
-		// 		// 			order: tasksAmount + 1,
-		// 		// 			userId: this.userId,
-		// 		// 			users: this.draggedTask.users,
-		// 		// 		},
-		// 		// 	}),
-		// 		// );
-		// 	}
+	public taskDrop(columnId: ColumnId, event: CdkDragDrop<string[]>): void {
+		this.taskDragDropService.changeTasksOrder(columnId, event.currentIndex);
 	}
 
-	public dragStart(task: TaskResponse) {
-		this.draggedTask = task;
+	public taskDragStart(task: TaskResponse): void {
+		this.taskDragDropService.taskDragStart(task);
 	}
 
-	public dragEnd() {
-		this.draggedTask = null;
+	public updateTasksOrder(deletedTaskOrder: number) {
+		this.tasks$
+			.pipe(
+				take(1),
+				map((tasks) => tasks.filter((task) => task.order > deletedTaskOrder)),
+			)
+			.subscribe((tasksToUpdate) => {
+				if (tasksToUpdate.length) {
+					tasksToUpdate.forEach((task) => {
+						this.store.dispatch(
+							updateTask({
+								boardId: task.boardId,
+								columnId: task.boardId,
+								taskId: task._id,
+								taskData: {
+									order: task.order - 1,
+									columnId: task.columnId,
+									title: task.title,
+									description: task.description,
+									userId: task.userId,
+									users: task.users,
+								},
+							}),
+						);
+					});
+				}
+			});
 	}
 
 	ngOnDestroy() {

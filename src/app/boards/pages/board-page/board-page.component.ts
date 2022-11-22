@@ -1,15 +1,20 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { selectColumns } from '../../../store/selectors/active-board-selector/columns-selector/columns.selector';
-import { createColumn, openBoard } from '../../../store/actions/active-board-action/active-board.action';
+import { createColumn, openBoard, updateColumn } from '../../../store/actions/active-board-action/active-board.action';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SocketioService } from '../../services/socketio/socketio.service';
+import { ColumnResponse } from '../../../models/column.model';
+import { ColumnDragDropService } from '../../services/column-drag-drop/column-drag-drop.service';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { map, take } from 'rxjs';
 
 @Component({
 	selector: 'app-board-page',
 	templateUrl: './board-page.component.html',
 	styleUrls: ['./board-page.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BoardPageComponent implements OnInit, OnDestroy {
 	boardId = this.route.snapshot.params['boardId'];
@@ -22,7 +27,12 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 
 	// draggedColumn: ColumnResponse | null = null;
 
-	constructor(private store: Store, private route: ActivatedRoute, private socketService: SocketioService) { }
+	constructor(
+		private store: Store,
+		private route: ActivatedRoute,
+		private columnDragDropService: ColumnDragDropService,
+		private socketService: SocketioService,
+	) { }
 
 	ngOnInit() {
 		this.store.dispatch(openBoard({ boardId: this.boardId }));
@@ -32,6 +42,10 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 		});
 
 		this.socketService.setupSocketConnection();
+	}
+
+	public showCreateColumnModal(): void {
+		this.createColumnModalIsOpen = true;
 	}
 
 	public createColumnSubmit(): void {
@@ -50,25 +64,39 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	public showCreateColumnModal(): void {
-		this.createColumnModalIsOpen = true;
+	public columnDragStart(column: ColumnResponse): void {
+		this.columnDragDropService.columnDragStart(column);
+	}
+
+	public columnDrop(event: CdkDragDrop<string[]>): void {
+		this.columnDragDropService.changeColumnsOrder(event.currentIndex);
+	}
+
+	public updateColumnsOrder(deletedColumnOrder: number) {
+		this.columns$
+			.pipe(
+				take(1),
+				map((columns) => columns.filter((column) => column.order > deletedColumnOrder)),
+			)
+			.subscribe((columnsToUpdate) => {
+				if (columnsToUpdate.length) {
+					columnsToUpdate.forEach((column) => {
+						this.store.dispatch(
+							updateColumn({
+								boardId: column.boardId,
+								columnId: column._id,
+								columnData: {
+									order: column.order - 1,
+									title: column.title,
+								},
+							}),
+						);
+					});
+				}
+			});
 	}
 
 	ngOnDestroy() {
 		this.columnsAmountSubscription.unsubscribe();
 	}
-
-	// dragStart(column: ColumnResponse) {
-	// 	this.draggedColumn = column;
-	// }
-	//
-	// drop() {
-	// 	if (this.draggedColumn) {
-	// 		this.draggedColumn = null;
-	// 	}
-	// }
-	//
-	// dragEnd() {
-	// 	this.draggedColumn = null;
-	// }
 }
