@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ColumnsService } from '../../../../boards/services/columns/columns.service';
-import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
+import { catchError, concatMap, map, of, switchMap } from 'rxjs';
 import { ErrorResponse } from '../../../../models/error.model';
 import * as fromBoard from '../../../actions/active-board-action/active-board.action';
 
@@ -25,7 +25,7 @@ export class ColumnsEffect {
 	createColumn$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(fromBoard.createColumn),
-			mergeMap(({ boardId, columnData }) => {
+			concatMap(({ boardId, columnData }) => {
 				return this.columnsService.createColumnInBoard(boardId, columnData).pipe(
 					map((column) => fromBoard.createColumnSuccess({ column })),
 
@@ -38,7 +38,7 @@ export class ColumnsEffect {
 	updateColumn$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(fromBoard.updateColumn),
-			mergeMap(({ boardId, columnId, columnData }) => {
+			concatMap(({ boardId, columnId, columnData }) => {
 				return this.columnsService.updateColumnById(boardId, columnId, columnData).pipe(
 					map((column) => fromBoard.updateColumnSuccess({ column })),
 
@@ -51,7 +51,7 @@ export class ColumnsEffect {
 	deleteColumn$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(fromBoard.deleteColumn),
-			mergeMap(({ boardId, columnId }) => {
+			concatMap(({ boardId, columnId }) => {
 				return this.columnsService.deleteColumnById(boardId, columnId).pipe(
 					map(() => fromBoard.deleteColumnSuccess({ columnId })),
 

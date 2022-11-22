@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { team } from 'src/app/constants/team.constant';
+import { TEAM } from 'src/app/constants/constants';
 
 @Component({
 	selector: 'app-welcome-page',
@@ -7,5 +7,5 @@ import { team } from 'src/app/constants/team.constant';
 	styleUrls: ['./welcome-page.component.scss'],
 })
 export class WelcomePageComponent {
-	public team = team;
+	public team = TEAM;
 }

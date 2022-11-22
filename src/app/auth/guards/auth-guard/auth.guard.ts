@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, CanLoad, Router, UrlTree } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { selectIsLogged } from '../../../store/selectors/user-selector/user.selector';
-import { map, Observable } from 'rxjs';
+import { selectUserState } from '../../../store/selectors/user-selector/user.selector';
+import { filter, map, Observable } from 'rxjs';
+import { ReqStatus } from '../../../store/enums/req-status';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class AuthGuard implements CanLoad, CanActivate {
-	isLogged$ = this.store.select(selectIsLogged);
+	userState$ = this.store.select(selectUserState);
 
 	constructor(private router: Router, private store: Store) {}
 
@@ -21,6 +22,9 @@ export class AuthGuard implements CanLoad, CanActivate {
 	}
 
 	private checkAuth(): Observable<boolean | UrlTree> {
-		return this.isLogged$.pipe(map((isLogged) => (isLogged ? true : this.router.parseUrl('welcome'))));
+		return this.userState$.pipe(
+			filter((state) => state.status !== ReqStatus.Pending),
+			map((state) => !!state.user._id || this.router.parseUrl('welcome')),
+		);
 	}
 }

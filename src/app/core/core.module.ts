@@ -12,20 +12,41 @@ import { AccordionModule } from 'primeng/accordion';
 import { RouterLink } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
+import { TranslateModule } from '@ngx-translate/core';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { PreloaderComponent } from './components/preloader/preloader/preloader.component';
+import { ErrorToastComponent } from './components/error-toast/error-toast.component';
+import { ToastModule } from 'primeng/toast';
 
-const PrimeNgModules = [SelectButtonModule, ButtonModule, SidebarModule, AccordionModule];
+const Components = [
+	HeaderComponent,
+	WelcomePageComponent,
+	FooterComponent,
+	NotFoundPageComponent,
+	PreloaderComponent,
+	ErrorToastComponent,
+];
+const PrimeNgModules = [
+	SelectButtonModule,
+	ButtonModule,
+	SidebarModule,
+	AccordionModule,
+	ProgressSpinnerModule,
+	ToastModule,
+];
 
 @NgModule({
-	declarations: [FooterComponent, HeaderComponent, WelcomePageComponent, NotFoundPageComponent],
+	declarations: [...Components],
 	imports: [
 		CommonModule,
 		FormsModule,
 		RouterLink,
-		...PrimeNgModules,
+		TranslateModule,
 		DialogModule,
 		ReactiveFormsModule,
 		InputTextModule,
+		...PrimeNgModules,
 	],
-	exports: [HeaderComponent, WelcomePageComponent, NotFoundPageComponent, FooterComponent],
+	exports: [...Components],
 })
 export class CoreModule {}
