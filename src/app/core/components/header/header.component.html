@@ -4,12 +4,18 @@
 	<!--    board control buttons-->
 	<ng-template [ngIf]="isLogged$ | async">
 		<div class="board-controls-header">
-			<button routerLink="boards" pButton class="p-button-text p-button-sm" type="button" label="My boards"></button>
-			<button (click)="showCreateBoardModal()"
+			<button
+				routerLink="boards"
+				pButton
+				class="p-button-text p-button-sm"
+				type="button"
+				label="{{ 'HEADER.BUTTONS.BOARDS' | translate }}"></button>
+			<button
+				(click)="showCreateBoardModal()"
 				pButton
 				class="p-button-secondary p-button-text p-button-sm"
 				type="button"
-				label="Create new board"></button>
+				label="{{ 'HEADER.BUTTONS.CREATE' | translate }}"></button>
 		</div>
 	</ng-template>
 </div>
@@ -22,8 +28,13 @@
 			pButton
 			class="p-button-secondary p-button-text p-button-sm"
 			type="button"
-			label="Registration"></button>
-		<button routerLink="sign-in" pButton class="p-button-text p-button-sm" type="button" label="Login"></button>
+			label="{{ 'HEADER.BUTTONS.SIGN-UP' | translate }}"></button>
+		<button
+			routerLink="sign-in"
+			pButton
+			class="p-button-text p-button-sm"
+			type="button"
+			label="{{ 'HEADER.BUTTONS.LOGIN' | translate }}"></button>
 	</ng-template>
 
 	<!--    user controls -->
@@ -40,7 +51,7 @@
 				pButton
 				class="p-button-secondary p-button-text p-button-sm"
 				type="button"
-				label="Logout"></button>
+				label="{{ 'HEADER.BUTTONS.LOGOUT' | translate }}"></button>
 		</div>
 	</ng-template>
 
@@ -64,56 +75,60 @@
 			<p-selectButton
 				[options]="langSelect"
 				[(ngModel)]="selectedLang"
+				(onOptionClick)="changeLanguage(selectedLang)"
 				optionLabel="label"
 				optionValue="lang"></p-selectButton>
 
 			<!--    board control buttons-->
 			<ng-template [ngIf]="isLogged$ | async">
-				<div class="board-controls-sidebar">
-					<button (click)="showCreateBoardModal()" pButton class="p-button-text p-button-sm" type="button" label="My boards"></button>
+				<div class="board-controls-header">
 					<button
+						routerLink="boards"
+						pButton
+						class="p-button-text p-button-sm"
+						type="button"
+						label="{{ 'HEADER.BUTTONS.BOARDS' | translate }}"></button>
+					<button
+						(click)="showCreateBoardModal()"
 						pButton
 						class="p-button-secondary p-button-text p-button-sm"
 						type="button"
-						label="Create new board"></button>
-				</div>
-			</ng-template>
-
-			<!--    user controls -->
-			<ng-template [ngIf]="isLogged$ | async" [ngIfElse]="loginButtons">
-				<div class="user-controls-sidebar">
-					<button
-						routerLink="user-settings"
-						class="p-button-rounded user-settings-btn p-button-text"
-						pButton
-						icon="pi pi-user"
-						label="User settings"
-						type="button"></button>
-					<button
-						(click)="logout()"
-						pButton
-						class="p-button-secondary p-button-text p-button-sm"
-						type="button"
-						label="Logout"></button>
+						label="{{ 'HEADER.BUTTONS.CREATE' | translate }}"></button>
 				</div>
 			</ng-template>
 		</div>
+
+		<!--    user controls -->
+		<ng-template [ngIf]="true">
+			<div class="user-controls-sidebar">
+				<button
+					class="p-button-rounded user-settings-btn p-button-text"
+					pButton
+					icon="pi pi-user"
+					label="User settings"
+					type="button"></button>
+				<button pButton class="p-button-secondary p-button-text p-button-sm" type="button" label="Logout"></button>
+			</div>
+		</ng-template>
 	</p-sidebar>
 
-  <!--Create new board modal-->
-  <p-dialog header="Create new board" [(visible)]="createBoardModalIsOpen">
-    <form [formGroup]="createBoardForm" (submit)="createBoardSubmit()">
-    <span class="p-float-label">
-      <input class="ng-pristine" id="board-title" formControlName="boardTitle" type="text" pInputText>
-      <label for="board-title">Board title</label>
-    </span>
-      <small *ngIf="createBoardForm.controls['boardTitle'].hasError('required')" class="p-error block">Please enter board title</small>
-      <small *ngIf="createBoardForm.controls['boardTitle'].hasError('minlength')" class="p-error block">Minimum length is 3 characters</small>
-      <small *ngIf="createBoardForm.controls['boardTitle'].hasError('maxlength')" class="p-error block">Maximum length is 30 characters</small>
-      <button pButton type="submit" label="Create"></button>
-    </form>
-  </p-dialog>
+	<!--Create new board modal-->
+	<p-dialog header="Create new board" [(visible)]="createBoardModalIsOpen">
+		<form [formGroup]="createBoardForm" (submit)="createBoardSubmit()">
+			<span class="p-float-label">
+				<input class="ng-pristine" id="board-title" formControlName="boardTitle" type="text" pInputText />
+				<label for="board-title">Board title</label>
+			</span>
+			<small *ngIf="createBoardForm.controls['boardTitle'].hasError('required')" class="p-error block"
+				>Please enter board title</small
+			>
+			<small *ngIf="createBoardForm.controls['boardTitle'].hasError('minlength')" class="p-error block"
+				>Minimum length is 3 characters</small
+			>
+			<small *ngIf="createBoardForm.controls['boardTitle'].hasError('maxlength')" class="p-error block"
+				>Maximum length is 30 characters</small
+			>
+			<button pButton type="submit" label="Create"></button>
+		</form>
+	</p-dialog>
 </div>
-
-
-

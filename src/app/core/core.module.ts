@@ -12,6 +12,7 @@ import { AccordionModule } from 'primeng/accordion';
 import { RouterLink } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
+import { TranslateModule } from '@ngx-translate/core';
 
 const PrimeNgModules = [SelectButtonModule, ButtonModule, SidebarModule, AccordionModule];
 
@@ -21,10 +22,11 @@ const PrimeNgModules = [SelectButtonModule, ButtonModule, SidebarModule, Accordi
 		CommonModule,
 		FormsModule,
 		RouterLink,
-		...PrimeNgModules,
+		TranslateModule,
 		DialogModule,
 		ReactiveFormsModule,
 		InputTextModule,
+		...PrimeNgModules,
 	],
 	exports: [HeaderComponent, WelcomePageComponent, NotFoundPageComponent, FooterComponent],
 })

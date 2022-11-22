@@ -1,4 +1,4 @@
-export const team = [
+export const TEAM = [
 	{
 		fullName: 'Artsiom Fando',
 		role: 'mentor',
@@ -25,3 +25,5 @@ export const team = [
 		gitHubLink: 'https://github.com/AnAtoliyAK',
 	},
 ];
+
+export const LANGUAGES = ['en', 'ru'];
