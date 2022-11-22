@@ -13,7 +13,6 @@ export class ErrorToastComponent implements OnInit {
 
 	public ngOnInit(): void {
 		this.handleErrorResponseService.error.asObservable().subscribe((error) => {
-			console.log(error);
 			this.showError(error);
 		});
 	}
