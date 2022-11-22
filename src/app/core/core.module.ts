@@ -12,11 +12,13 @@ import { AccordionModule } from 'primeng/accordion';
 import { RouterLink } from '@angular/router';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
+import { PreloaderComponent } from './components/preloader/preloader/preloader.component';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
-const PrimeNgModules = [SelectButtonModule, ButtonModule, SidebarModule, AccordionModule];
+const PrimeNgModules = [SelectButtonModule, ButtonModule, SidebarModule, AccordionModule, ProgressSpinnerModule];
 
 @NgModule({
-	declarations: [FooterComponent, HeaderComponent, WelcomePageComponent, NotFoundPageComponent],
+	declarations: [FooterComponent, HeaderComponent, WelcomePageComponent, NotFoundPageComponent, PreloaderComponent],
 	imports: [
 		CommonModule,
 		FormsModule,
@@ -26,6 +28,6 @@ const PrimeNgModules = [SelectButtonModule, ButtonModule, SidebarModule, Accordi
 		ReactiveFormsModule,
 		InputTextModule,
 	],
-	exports: [HeaderComponent, WelcomePageComponent, NotFoundPageComponent, FooterComponent],
+	exports: [HeaderComponent, WelcomePageComponent, NotFoundPageComponent, FooterComponent, PreloaderComponent],
 })
 export class CoreModule {}
