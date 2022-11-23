@@ -1,6 +1,6 @@
-import { BoardsState } from '../../models/boards.state';
+import { BoardsState } from '@app/store/models/boards.state';
+import { boardsAdapter } from '@app/store/reducers/boards-reducer/boards.reducer';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { boardsAdapter } from '../../reducers/boards-reducer/boards.reducer';
 
 const { selectAll } = boardsAdapter.getSelectors();
 

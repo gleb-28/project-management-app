@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { HandleErrorResponseService } from '@app/core/services/handle-error-response.service';
 import { MessageService } from 'primeng/api';
-import { HandleErrorResponseService } from 'src/app/core/services/handle-error-response.service';
 
 @Component({
 	selector: 'app-error-toast',

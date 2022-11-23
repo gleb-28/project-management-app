@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
-import { BoardId, UserId } from '../../../models/ids.model';
-import { BoardRequest, BoardResponse } from '../../../models/board.model';
-import { ErrorResponse } from '../../../models/error.model';
+import { BoardResponse, BoardRequest } from '@app/models/board.model';
+import { ErrorResponse } from '@app/models/error.model';
+import { UserId, BoardId } from '@app/models/ids.model';
 
 export const getUserBoards = createAction('[Boards] Get all user boards', props<{ userId: UserId }>());
 export const getUserBoardsSuccess = createAction('[Boards] Get all user boards success', props<{ boards: BoardResponse[] }>());

@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType, ROOT_EFFECTS_INIT } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { catchError, concatMap, exhaustMap, map, of, switchMap } from 'rxjs';
-import { AuthService } from 'src/app/auth/service/auth.service';
-import { UserService } from 'src/app/auth/service/user.service';
-import { LocalStorageService } from 'src/app/core/services/local-storage.service';
-import { selectUserId } from '../../selectors/user-selector/user.selector';
-import { ErrorResponse } from 'src/app/models/error.model';
 import { Router } from '@angular/router';
-import * as userAction from '../../actions/user-action/user.action';
-import { SignInRequest } from '../../../models/auth.model';
+import * as userAction from '@app/store/actions/user-action/user.action';
+import { ErrorResponse } from '@app/models/error.model';
+import { AuthService } from '@app/auth/service/auth.service';
+import { UserService } from '@app/auth/service/user.service';
+import { LocalStorageService } from '@app/core/services/local-storage.service';
+import { SignInRequest } from '@app/models/auth.model';
+import { selectUserId } from '@app/store/selectors/user-selector/user.selector';
 
 @Injectable()
 export default class UserEffect {

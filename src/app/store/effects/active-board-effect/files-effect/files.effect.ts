@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
+import { FilesService } from '@app/boards/services/files/files.service';
+import { ErrorResponse } from '@app/models/error.model';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { FilesService } from '../../../../boards/services/files/files.service';
 import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
-import { ErrorResponse } from '../../../../models/error.model';
-import * as fromBoard from '../../../actions/active-board-action/active-board.action';
+import * as fromBoard from '@app/store/actions/active-board-action/active-board.action';
 
 @Injectable()
 export class FilesEffect {

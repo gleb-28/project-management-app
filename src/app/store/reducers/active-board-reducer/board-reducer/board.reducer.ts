@@ -1,7 +1,7 @@
-import { ReqStatus } from '../../../enums/req-status';
+import { ReqStatus } from '@app/store/enums/req-status';
+import { BoardState } from '@app/store/models/active-board.state';
 import { createReducer, on } from '@ngrx/store';
-import { BoardState } from '../../../models/active-board.state';
-import * as fromBoard from '../../../actions/active-board-action/active-board.action';
+import * as fromBoard from '@app/store/actions/active-board-action/active-board.action';
 
 export const boardInitialState: BoardState = {
 	board: null,

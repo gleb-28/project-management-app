@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TaskResponse } from '../../../models/task.model';
+import { Component, ChangeDetectionStrategy, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { TaskResponse } from '@app/models/task.model';
+import { updateTask, deleteTask } from '@app/store/actions/active-board-action/active-board.action';
 import { Store } from '@ngrx/store';
 import { ConfirmationService } from 'primeng/api';
-import { deleteTask, updateTask } from '../../../store/actions/active-board-action/active-board.action';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
 	selector: 'app-task',

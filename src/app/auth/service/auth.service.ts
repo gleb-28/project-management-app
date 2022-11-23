@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { SignInRequest, SignInResponse, SignUpRequest, SignUpResponse } from 'src/app/models/auth.model';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { LocalStorageService } from '@app/core/services/local-storage.service';
+import { SignUpRequest, SignUpResponse, SignInRequest, SignInResponse } from '@app/models/auth.model';
 import { Observable } from 'rxjs';
-import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 
 
 interface DecoderToken {

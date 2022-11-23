@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { HandleErrorResponseService } from '../../services/handle-error-response.service';
-import { ERROR_MESSAGE } from '../../../constants/constants';
+import { ERROR_MESSAGE } from '@app/constants/constants';
+import { HandleErrorResponseService } from '@app/core/services/handle-error-response.service';
 
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {

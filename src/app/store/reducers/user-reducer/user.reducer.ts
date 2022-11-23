@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
-import { UserState } from '../../models/user.state';
-import { ReqStatus } from '../../enums/req-status';
-import * as userAction from '../../actions/user-action/user.action';
+import * as userAction from '@app/store/actions/user-action/user.action';
+import { ReqStatus } from '@app/store/enums/req-status';
+import { UserState } from '@app/store/models/user.state';
 
 export const defaultUserState: UserState = {
 	user: {

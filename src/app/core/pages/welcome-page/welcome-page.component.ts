@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TEAM } from 'src/app/constants/constants';
+import { TEAM } from '@app/constants/constants';
 
 @Component({
 	selector: 'app-welcome-page',

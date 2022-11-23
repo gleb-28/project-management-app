@@ -1,7 +1,7 @@
+import { TaskId } from '@app/models/ids.model';
+import { filesAdapter } from '@app/store/reducers/active-board-reducer/files-reducer/files.reducer';
 import { createSelector } from '@ngrx/store';
 import { selectActiveBoardFeature } from '../active-board.selector';
-import { filesAdapter } from '../../../reducers/active-board-reducer/files-reducer/files.reducer';
-import { TaskId } from '../../../../models/ids.model';
 
 const { selectAll } = filesAdapter.getSelectors();
 

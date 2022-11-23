@@ -1,4 +1,4 @@
+import { ActiveBoardState } from '@app/store/models/active-board.state';
 import { createFeatureSelector } from '@ngrx/store';
-import { ActiveBoardState } from '../../models/active-board.state';
 
 export const selectActiveBoardFeature = createFeatureSelector<ActiveBoardState>('activeBoard');

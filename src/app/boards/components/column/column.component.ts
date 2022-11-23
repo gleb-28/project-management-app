@@ -1,21 +1,16 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { TaskResponse } from '../../../models/task.model';
-import { Store } from '@ngrx/store';
-import { selectTasksByColumnId } from '../../../store/selectors/active-board-selector/tasks-selector/tasks.selector';
-import { map, Observable, Subscription, take } from 'rxjs';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {
-	createTask,
-	deleteColumn,
-	updateColumn,
-	updateTask,
-} from '../../../store/actions/active-board-action/active-board.action';
-import { ColumnResponse } from '../../../models/column.model';
-import { selectUserId } from '../../../store/selectors/user-selector/user.selector';
-import { TaskDragDropService } from '../../services/task-drag-drop/task-drag-drop.service';
-import { ColumnId } from '../../../models/ids.model';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { Component, ChangeDetectionStrategy, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { TaskDragDropService } from '@app/boards/services/task-drag-drop/task-drag-drop.service';
+import { ColumnResponse } from '@app/models/column.model';
+import { ColumnId } from '@app/models/ids.model';
+import { TaskResponse } from '@app/models/task.model';
+import { updateColumn, deleteColumn, createTask, updateTask } from '@app/store/actions/active-board-action/active-board.action';
+import { selectTasksByColumnId } from '@app/store/selectors/active-board-selector/tasks-selector/tasks.selector';
+import { selectUserId } from '@app/store/selectors/user-selector/user.selector';
+import { Store } from '@ngrx/store';
 import { ConfirmationService } from 'primeng/api';
+import { Observable, Subscription, take, map } from 'rxjs';
 
 @Component({
 	selector: 'app-column',

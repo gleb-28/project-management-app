@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, CanLoad, Router, UrlTree } from '@angular/router';
+import { ReqStatus } from '@app/store/enums/req-status';
+import { selectUserState } from '@app/store/selectors/user-selector/user.selector';
 import { Store } from '@ngrx/store';
-import { selectUserState } from '../../../store/selectors/user-selector/user.selector';
-import { filter, map, Observable } from 'rxjs';
-import { ReqStatus } from '../../../store/enums/req-status';
+import { Observable, filter, map } from 'rxjs';
 
 @Injectable({
 	providedIn: 'root',

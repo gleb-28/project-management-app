@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { PointResponse, PointRequest } from '@app/models/point.model';
 import { Observable } from 'rxjs';
-import { PointRequest, PointResponse } from 'src/app/models/point.model';
 
 @Injectable()
 export class PointsService {

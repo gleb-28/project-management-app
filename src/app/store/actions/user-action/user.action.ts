@@ -1,7 +1,7 @@
+import { SignUpResponse, SignInRequest, SignUpRequest } from '@app/models/auth.model';
+import { ErrorResponse } from '@app/models/error.model';
+import { UserRequest, UserResponse } from '@app/models/user.model';
 import { createAction, props } from '@ngrx/store';
-import { SignInRequest, SignUpRequest, SignUpResponse } from 'src/app/models/auth.model';
-import { ErrorResponse } from 'src/app/models/error.model';
-import { UserRequest, UserResponse } from 'src/app/models/user.model';
 
 export const getUser = createAction('[User] Get User');
 export const getUserSuccess = createAction('[User] Get User Success', props<{ response: SignUpResponse }>());

@@ -1,13 +1,13 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { selectColumns } from '../../../store/selectors/active-board-selector/columns-selector/columns.selector';
-import { createColumn, openBoard, updateColumn } from '../../../store/actions/active-board-action/active-board.action';
-import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ColumnResponse } from '../../../models/column.model';
-import { ColumnDragDropService } from '../../services/column-drag-drop/column-drag-drop.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { map, take } from 'rxjs';
+import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { ColumnDragDropService } from '@app/boards/services/column-drag-drop/column-drag-drop.service';
+import { ColumnResponse } from '@app/models/column.model';
+import { openBoard, createColumn, updateColumn } from '@app/store/actions/active-board-action/active-board.action';
+import { selectColumns } from '@app/store/selectors/active-board-selector/columns-selector/columns.selector';
+import { Store } from '@ngrx/store';
+import { take, map } from 'rxjs';
 
 @Component({
 	selector: 'app-board-page',
