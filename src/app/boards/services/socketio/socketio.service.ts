@@ -16,24 +16,25 @@ import {
 import { getUser } from 'src/app/store/actions/user-action/user.action';
 import { selectUserId } from 'src/app/store/selectors/user-selector/user.selector';
 import { ActivatedRoute } from '@angular/router';
-import { selectAllUsersFromMyBoards } from 'src/app/store/selectors/boards-selector/boards.selector';
-import { UserId } from '../../../models/ids.model';
+import { selectActiveBoardFeature } from 'src/app/store/selectors/active-board-selector/active-board.selector';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class SocketioService {
 	private socket: Socket<DefaultEventsMap, DefaultEventsMap> | null = null;
-	private userIdSubscription = this.store.select(selectUserId).subscribe((userId) => (this.userId = userId));
-	private allUsersInMyBoardSubscription = this.store
-		.select(selectAllUsersFromMyBoards)
-		.subscribe((users) => (this.allUsersInMyBoard = users));
-	private userId: string = '';
-	private allUsersInMyBoard: UserId[] = [];
+	private userIdSubscription = this.store
+		.select(selectUserId)
+		.subscribe((userId) => (this.userId = userId));
 
-	constructor(private store: Store, private route: ActivatedRoute) {
-		console.log(this.allUsersInMyBoard);
-	}
+	private boardIdSubscription = this.store
+		.select(selectActiveBoardFeature)
+		.subscribe((activeBoard) => (this.boardId = activeBoard?.board.board?._id!));
+
+	private userId: string = '';
+	private boardId: string = '';
+
+	constructor(private store: Store, private route: ActivatedRoute) { }
 
 	private isUserExistInList(message: SocketMessage): boolean {
 		const { users, initUser, notify } = message;
@@ -43,24 +44,16 @@ export class SocketioService {
 			initUser !== this.userId &&
 			notify &&
 			Array.isArray(users) &&
-			users?.includes(this.userId) &&
-			Array.isArray(this.allUsersInMyBoard) &&
-			this.allUsersInMyBoard?.includes(initUser)
+			users?.includes(this.userId)
 		);
 	}
 
-	private getBoardId(): string {
-		return this.route.snapshot.paramMap.get('id')!;
-	}
-
 	private getUsersMessage(): void {
-		if (this.socket) {
-			this.socket.on(SocketEvents.USERS, (message: SocketMessage) => {
-				if (this.isUserExistInList(message) && this.getBoardId()) {
-					this.store.dispatch(getUser());
-				}
-			});
-		}
+		this.socket?.on(SocketEvents.USERS, (message: SocketMessage) => {
+			if (this.isUserExistInList(message)) {
+				this.store.dispatch(getUser());
+			}
+		});
 	}
 
 	private getIsDeleteMessage(message: SocketMessage): boolean {
@@ -77,13 +70,15 @@ export class SocketioService {
 				});
 			}
 		} else {
-			this.store.dispatch(getUserBoards({ userId: this.userId }));
+			if (this.userId) {
+				this.store.dispatch(getUserBoards({ userId: this.userId }));
+			}
 		}
 	}
 
 	private getBoardsMessage(): void {
 		this.socket?.on(SocketEvents.BOARDS, (message: SocketMessage) => {
-			if (this.isUserExistInList(message) && this.getBoardId()) {
+			if (this.isUserExistInList(message)) {
 				this.updateBoardsData(message);
 			}
 		});
@@ -99,22 +94,18 @@ export class SocketioService {
 				});
 			}
 		} else {
-			const boardId = this.getBoardId();
-
-			if (boardId) {
-				this.store.dispatch(loadColumns({ boardId }));
+			if (this.boardId) {
+				this.store.dispatch(loadColumns({ boardId: this.boardId }));
 			}
 		}
 	}
 
 	private getColumnsMessage(): void {
-		if (this.socket) {
-			this.socket.on(SocketEvents.COLUMNS, (message) => {
-				if (this.isUserExistInList(message) && this.getBoardId()) {
-					this.updateColumnsData(message);
-				}
-			});
-		}
+		this.socket?.on(SocketEvents.COLUMNS, (message) => {
+			if (this.isUserExistInList(message)) {
+				this.updateColumnsData(message);
+			}
+		});
 	}
 
 	private updateTasksData(message: SocketMessage): void {
@@ -127,22 +118,19 @@ export class SocketioService {
 				});
 			}
 		} else {
-			const boardId = this.getBoardId();
-
-			if (boardId) {
-				this.store.dispatch(loadTasks({ boardId }));
+			if (this.boardId) {
+				this.store.dispatch(loadTasks({ boardId: this.boardId }));
 			}
 		}
 	}
 
 	private getTasksMessage(): void {
-		if (this.socket) {
-			this.socket.on(SocketEvents.TASKS, (message) => {
-				if (this.isUserExistInList(message) && this.getBoardId()) {
-					this.updateTasksData(message);
-				}
-			});
-		}
+		this.socket?.on(SocketEvents.TASKS, (message) => {
+			if (this.isUserExistInList(message)) {
+				this.updateTasksData(message);
+			}
+		});
+
 	}
 
 	private updateFilesData(message: SocketMessage): void {
@@ -155,22 +143,19 @@ export class SocketioService {
 				});
 			}
 		} else {
-			const boardId = this.getBoardId();
-
-			if (boardId) {
-				this.store.dispatch(loadFiles({ boardId }));
+			if (this.boardId) {
+				this.store.dispatch(loadFiles({ boardId: this.boardId }));
 			}
 		}
 	}
 
 	private getFilesMessage(): void {
-		if (this.socket) {
-			this.socket.on(SocketEvents.FILES, (message) => {
-				if (this.isUserExistInList(message) && this.getBoardId()) {
-					this.updateFilesData(message);
-				}
-			});
-		}
+		this.socket?.on(SocketEvents.FILES, (message) => {
+			if (this.isUserExistInList(message)) {
+				this.updateFilesData(message);
+			}
+		});
+
 	}
 
 	private subscribeAllMessages(): void {
@@ -190,10 +175,11 @@ export class SocketioService {
 	}
 
 	public disconnect(): void {
-		if (this.socket) {
+		if (this.socket?.connected) {
 			this.socket.disconnect();
 		}
 
 		this.userIdSubscription.unsubscribe();
+		this.boardIdSubscription.unsubscribe();
 	}
 }

@@ -4,7 +4,6 @@ import { selectColumns } from '../../../store/selectors/active-board-selector/co
 import { createColumn, openBoard, updateColumn } from '../../../store/actions/active-board-action/active-board.action';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { SocketioService } from '../../services/socketio/socketio.service';
 import { ColumnResponse } from '../../../models/column.model';
 import { ColumnDragDropService } from '../../services/column-drag-drop/column-drag-drop.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
@@ -31,7 +30,6 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 		private store: Store,
 		private route: ActivatedRoute,
 		private columnDragDropService: ColumnDragDropService,
-		private socketService: SocketioService,
 	) { }
 
 	ngOnInit() {
@@ -40,8 +38,6 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 		this.createColumnForm = new FormGroup({
 			columnTitle: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
 		});
-
-		this.socketService.setupSocketConnection();
 	}
 
 	public showCreateColumnModal(): void {
