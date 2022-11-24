@@ -1,10 +1,3 @@
-<p-accordion>
-  <p-accordionTab   header="members">
-    <p>{{members}}</p>
-  </p-accordionTab>
-</p-accordion>
-
-
 <p-splitButton (onClick)="openBoard()" label="{{board.title}}" [model]="boardActions" styleClass="p-button-raised p-button-plain p-button-text mr-2 mb-2"></p-splitButton>
 
 <!--Rename board modal-->
@@ -12,7 +5,7 @@
   <form [formGroup]="renameBoardForm" (submit)="renameBoardSubmit()">
     <span class="p-float-label">
       <input id="board-title" formControlName="boardTitle" type="text" pInputText>
-      <label for="board-title">Bord Title</label>
+      <label for="board-title">Board Title</label>
     </span>
     <small *ngIf="renameBoardForm.controls['boardTitle'].hasError('required')" class="p-error block">Please enter board title</small>
     <small *ngIf="renameBoardForm.controls['boardTitle'].hasError('minlength')" class="p-error block">Minimum length is 3 characters</small>
@@ -31,10 +24,18 @@
     </span>
     <small *ngIf="addMemberForm.controls['login'].hasError('required')" class="p-error block">Please enter board title</small>
     <small *ngIf="addMemberForm.controls['login'].hasError('minlength')" class="p-error block">Minimum length is 3 characters</small>
-    <small *ngIf="addMemberForm.controls['login'].hasError('maxlength')" class="p-error block">Maximum length is 30 characters</small>
     <button pButton type="submit" label="Add"></button>
   </form>
 </p-dialog>
 
 <!--Delete board confirm modal-->
 <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+
+
+<!-- Members Modal -->
+<p-dialog header="Members" [(visible)]="membersModalIsOpen">
+  <p class="member" *ngFor="let member of members"><span>{{member.login}}</span><button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger p-button-outlined" (click)="deleteMembers(member._id)"></button></p>
+
+  <button pButton label="Add member" icon="pi pi-plus" (click)="showAddMemberModal()"></button>
+
+</p-dialog>

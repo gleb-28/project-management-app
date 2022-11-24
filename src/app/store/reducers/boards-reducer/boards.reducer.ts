@@ -19,6 +19,7 @@ export const boardsReducer = createReducer(
 	boardsInitialState,
 
 	on(
+		fromBoards.deleteMember,
 		fromBoards.addMember,
 		fromBoards.getUserBoards,
 		fromBoards.createBoard,
@@ -45,9 +46,12 @@ export const boardsReducer = createReducer(
 	on(fromBoards.deleteBoardSuccess, (state, { boardId }): BoardsState => {
 		return boardsAdapter.removeOne(boardId, { ...state, status: ReqStatus.Success, error: null });
 	}),
-	on(fromBoards.addMemberSuccess, (state): BoardsState => ({ ...state, status: ReqStatus.Success, error: null })),
+	on(fromBoards.addMemberSuccess,
+		fromBoards.deleteMemberSuccess,
+		(state): BoardsState => ({ ...state, status: ReqStatus.Success, error: null })),
 
 	on(
+		fromBoards.deleteMemberError,
 		fromBoards.addMemberError,
 		fromBoards.getUserBoardsError,
 		fromBoards.createBoardError,

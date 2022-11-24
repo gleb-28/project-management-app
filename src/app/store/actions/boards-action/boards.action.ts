@@ -22,3 +22,9 @@ export const deleteBoardError = createAction('[Boards] Delete board error-toast'
 export const addMember = createAction('[Boards] Add Member', props<{ login: string, boardId: BoardId; boardData: BoardRequest }>());
 export const addMemberSuccess = createAction('[Boards] Add Member success');
 export const addMemberError = createAction('[Boards] Add Member error', props<{ error: ErrorResponse }>());
+
+export const deleteMember = createAction('[Boards] delete Member', props<{ members: string[], boardId: BoardId; boardData: BoardRequest }>());
+export const deleteMemberSuccess = createAction('[Boards] delete Member success');
+export const deleteMemberError = createAction('[Boards] delete Member error', props<{ error: ErrorResponse }>());
+
+

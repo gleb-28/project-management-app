@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { SignInRequest, SignUpResponse } from 'src/app/models/auth.model';
 import { UserId } from '../../models/ids.model';
 
@@ -10,11 +10,8 @@ import { UserId } from '../../models/ids.model';
 export class UserService {
 	constructor(private http: HttpClient) {}
 
-	public getUsers(login: string): Observable<SignUpResponse | undefined> {
-		return this.http.get<SignUpResponse[]>('/users').pipe(
-			map((usersInfo) =>
-				usersInfo.find((userInfo) => userInfo.login === login)),
-		);
+	public getUsers(): Observable<SignUpResponse[]> {
+		return this.http.get<SignUpResponse[]>('/users');
 	}
 
 	public getUser(id: UserId): Observable<SignUpResponse> {

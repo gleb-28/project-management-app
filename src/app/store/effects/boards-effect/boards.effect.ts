@@ -5,6 +5,8 @@ import { catchError, concatMap, map, of, switchMap } from 'rxjs';
 import * as fromBoards from '../../actions/boards-action/boards.action';
 import { ErrorResponse } from '../../../models/error.model';
 import { UserService } from 'src/app/auth/service/user.service';
+import { SignUpResponse } from 'src/app/models/auth.model';
+import { BoardRequest } from 'src/app/models/board.model';
 
 @Injectable()
 export class BoardsEffect {
@@ -67,20 +69,47 @@ export class BoardsEffect {
 		return this.actions$.pipe(
 			ofType(fromBoards.addMember),
 			concatMap(({ login, boardId, boardData }) => {
-				return this.userService.getUsers(login).pipe(
-					map((user) => {
-						if (user) {
-							console.log('TEST before:', user, boardData.users);
-							boardData.users = [...boardData.users, user.login];
-							console.log('TEST after:', user, boardData.users);
+				return this.userService.getUsers().pipe(
+					map((users) => {
+						let user:SignUpResponse | undefined = users.find((userInfo) => userInfo.login === login);
+
+						const newBoardData: BoardRequest = {
+							title: boardData.title,
+							owner: boardData.owner,
+							users: boardData.users,
+						};
+
+						if (user && !newBoardData.users.includes(user._id)) {
+							newBoardData.users = [...newBoardData.users, user._id];
+							return newBoardData;
+						} else if (!user) {
+							throw new Error('This user is not registered');
 						}
-						return fromBoards.updateBoard({ boardId, boardData });
+						return newBoardData;
 					}),
+					switchMap((newBoardData) => [fromBoards.addMemberSuccess(), fromBoards.updateBoard({ boardId,  boardData: newBoardData })]),
 					catchError((error: ErrorResponse) => of(fromBoards.addMemberError({ error }))),
 				);
 			}),
 		);
 	});
+
+	deleteMember$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(fromBoards.deleteMember),
+			map(({ members, boardId, boardData }) => {
+				const newBoardData: BoardRequest = {
+					title: boardData.title,
+					owner: boardData.owner,
+					users: members,
+				};
+				return { newBoardData, boardId };
+			}),
+			switchMap(({ newBoardData, boardId }) => [fromBoards.deleteMemberSuccess(), fromBoards.updateBoard({ boardId,  boardData: newBoardData })]),
+			catchError((error: ErrorResponse) => of(fromBoards.deleteMemberError({ error }))),
+		);
+	});
+
 }
 
 
