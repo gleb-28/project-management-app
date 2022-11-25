@@ -6,7 +6,7 @@ import { ColumnResponse } from '@app/models/column.model';
 import { ColumnId } from '@app/models/ids.model';
 import { TaskResponse } from '@app/models/task.model';
 import { updateColumn, deleteColumn, createTask, updateTask } from '@app/store/actions/active-board-action/active-board.action';
-import { selectTasksByColumnId } from '@app/store/selectors/active-board-selector/tasks-selector/tasks.selector';
+import { selectTasksByColumnId } from '@app/store/selectors/active-board-selector/tasks.selector';
 import { selectUserId } from '@app/store/selectors/user-selector/user.selector';
 import { Store } from '@ngrx/store';
 import { ConfirmationService } from 'primeng/api';

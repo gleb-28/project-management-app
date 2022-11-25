@@ -26,6 +26,8 @@ import { boardsReducer } from '@app/store/reducers/boards-reducer/boards.reducer
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { AvatarModule } from 'primeng/avatar';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { MembersEffect } from '@app/store/effects/active-board-effect/members-effect/members.effect';
+import { membersReducer } from '@app/store/reducers/active-board-reducer/members-reducer/members.reducer';
 import { BoardsRoutingModule } from './boards-routing.module';
 import { BoardComponent } from './components/board/board.component';
 import { ColumnComponent } from './components/column/column.component';
@@ -37,9 +39,10 @@ import { ColumnDragDropService } from './services/column-drag-drop/column-drag-d
 import { ColumnsService } from './services/columns/columns.service';
 import { FilesService } from './services/files/files.service';
 import { PointsService } from './services/points/points.service';
+import { SocketService } from './services/socketio/socket.service';
 import { TaskDragDropService } from './services/task-drag-drop/task-drag-drop.service';
 import { TasksService } from './services/tasks/tasks.service';
-import { SocketService } from './services/socketio/socket.service';
+
 
 const PrimeNgModules = [
 	ButtonModule,
@@ -69,11 +72,20 @@ const Components = [BoardComponent, ColumnComponent, TaskComponent];
 		StoreModule.forFeature('boards', boardsReducer),
 		StoreModule.forFeature('activeBoard', {
 			board: boardReducer,
+			members: membersReducer,
 			columns: columnsReducer,
 			tasks: tasksReducer,
 			files: filesReducer,
 		}),
-		EffectsModule.forFeature([BoardsEffect, ActiveBoardEffect, BoardEffect, ColumnsEffect, TasksEffect, FilesEffect]),
+		EffectsModule.forFeature([
+			BoardsEffect,
+			ActiveBoardEffect,
+			BoardEffect,
+			MembersEffect,
+			ColumnsEffect,
+			TasksEffect,
+			FilesEffect,
+		]),
 	],
 	providers: [
 		BoardsService,

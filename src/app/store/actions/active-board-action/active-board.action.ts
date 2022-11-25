@@ -1,3 +1,4 @@
+import { SignUpResponse } from '@app/models/auth.model';
 import { BoardResponse } from '@app/models/board.model';
 import { ColumnResponse, ColumnRequest } from '@app/models/column.model';
 import { ErrorResponse } from '@app/models/error.model';
@@ -7,12 +8,18 @@ import { TaskResponse, TaskRequest } from '@app/models/task.model';
 import { createAction, props } from '@ngrx/store';
 
 
+
 // Board
 export const openBoard = createAction('[Board] Open board', props<{ boardId: BoardId }>());
 
 export const loadBoard = createAction('[Board] Load board', props<{ boardId: BoardId }>());
 export const loadBoardSuccess = createAction('[Board] Load board success', props<{ board: BoardResponse }>());
 export const loadBoardError = createAction('[Board] Load board error-toast', props<{ error: ErrorResponse }>());
+
+// Members
+export const loadMembers = createAction('[Board] Load members', props<{ boardId: BoardId }>());
+export const loadMembersSuccess = createAction('[Board] Load members success', props<{ members: SignUpResponse[] }>());
+export const loadMembersError = createAction('[Board] Load members error-toast', props<{ error: ErrorResponse }>());
 
 // Columns
 export const loadColumns = createAction('[Board] Load columns', props<{ boardId: BoardId }>());

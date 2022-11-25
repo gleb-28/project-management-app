@@ -69,7 +69,7 @@ export class BoardComponent implements OnInit {
 			login: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
 		});
 
-		this.members = this.boardsService.getBoardMembersByBoardId(this.board._id);
+		this.boardsService.getBoardMembersByBoardId(this.board._id).subscribe((members) => (this.members = members));
 	}
 
 	public showMembersModal() {

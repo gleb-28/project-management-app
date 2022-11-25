@@ -1,9 +1,12 @@
 import { Component, ChangeDetectionStrategy, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { SignUpResponse } from '@app/models/auth.model';
 import { TaskResponse } from '@app/models/task.model';
 import { updateTask, deleteTask } from '@app/store/actions/active-board-action/active-board.action';
+import { selectMembers } from '@app/store/selectors/active-board-selector/members.selector';
 import { Store } from '@ngrx/store';
 import { ConfirmationService } from 'primeng/api';
+
 
 @Component({
 	selector: 'app-task',
@@ -13,6 +16,8 @@ import { ConfirmationService } from 'primeng/api';
 })
 export class TaskComponent implements OnInit {
 	@Input() task!: TaskResponse;
+	private members$ = this.store.select(selectMembers);
+	public assignedUsers: SignUpResponse[] = [];
 
 	public editTaskModalIsOpen = false;
 	public editTaskForm!: FormGroup;
@@ -29,6 +34,11 @@ export class TaskComponent implements OnInit {
 				Validators.maxLength(30),
 			]),
 			taskDescription: new FormControl(this.task.description),
+		});
+
+		this.members$.subscribe((members) => {
+			this.assignedUsers = members.filter((member) => this.task.users.includes(member._id));
+			// TODO: show assigned members to task
 		});
 	}
 

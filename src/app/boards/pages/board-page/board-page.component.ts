@@ -5,12 +5,12 @@ import { ActivatedRoute } from '@angular/router';
 import { ColumnDragDropService } from '@app/boards/services/column-drag-drop/column-drag-drop.service';
 import { ColumnResponse } from '@app/models/column.model';
 import { openBoard, createColumn, updateColumn } from '@app/store/actions/active-board-action/active-board.action';
-import { selectBoard } from '@app/store/selectors/active-board-selector/board-selector/board.selector';
-import { selectColumns } from '@app/store/selectors/active-board-selector/columns-selector/columns.selector';
+import { selectBoard } from '@app/store/selectors/active-board-selector/board.selector';
+import { selectColumns } from '@app/store/selectors/active-board-selector/columns.selector';
+import { selectMembers } from '@app/store/selectors/active-board-selector/members.selector';
 import { selectUser } from '@app/store/selectors/user-selector/user.selector';
 import { Store } from '@ngrx/store';
 import { take, map } from 'rxjs';
-
 
 
 @Component({
@@ -23,6 +23,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 	public user$ = this.store.select(selectUser);
 	private boardId = this.route.snapshot.params['boardId'];
 	public board$ = this.store.select(selectBoard);
+	public members$ = this.store.select(selectMembers);
 	public columns$ = this.store.select(selectColumns);
 	private columnsAmountSubscription = this.columns$.subscribe((columns) => (this.columnsAmount = columns.length));
 	private columnsAmount = 0;

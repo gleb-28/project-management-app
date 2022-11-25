@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectColumns } from '../../../store/selectors/active-board-selector/columns-selector/columns.selector';
+import { selectColumns } from '../../../store/selectors/active-board-selector/columns.selector';
 import { ColumnResponse } from '../../../models/column.model';
 import { updateColumn } from '../../../store/actions/active-board-action/active-board.action';
 

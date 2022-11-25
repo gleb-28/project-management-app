@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ColumnId } from '@app/models/ids.model';
 import { TaskResponse } from '@app/models/task.model';
 import { updateTask } from '@app/store/actions/active-board-action/active-board.action';
-import { selectAllTasks } from '@app/store/selectors/active-board-selector/tasks-selector/tasks.selector';
+import { selectAllTasks } from '@app/store/selectors/active-board-selector/tasks.selector';
 import { Store } from '@ngrx/store';
 
 
