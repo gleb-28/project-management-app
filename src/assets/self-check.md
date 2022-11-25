@@ -1,7 +1,7 @@
 1. Task: https://github.com/rolling-scopes-school/js-fe-course-en/blob/main/tasks/angular/project-management-system.md
 2. Screenshot: ![image](https://user-images.githubusercontent.com/85630053/203555778-994b9625-3e89-4940-869b-bff3e13a3648.png)
 3. Deploy: [kanban-back.onrender.com](https://kanban-back.onrender.com/)
-4. Score 600/620
+4. Score 620/620
 5. Done / 27.11.2022 22:59
 
 **Welcome route +70**
@@ -50,5 +50,3 @@
    * [x] Boards search and task search in boards. See above in Main route.
    * [x] Custom preloader is implemented. (30)
 
-**Penalties -20**
-   * [x] The presence of errors and warnings in the console. Mistakes are presented in the console. (-20)
