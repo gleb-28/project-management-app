@@ -2,19 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ButtonModule } from 'primeng/button';
-import { PanelModule } from 'primeng/panel';
-import { TableModule } from 'primeng/table';
-import { TabViewModule } from 'primeng/tabview';
 import { CardModule } from 'primeng/card';
 import { SplitButtonModule } from 'primeng/splitbutton';
-import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmationService } from 'primeng/api';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActiveBoardEffect } from '@app/store/effects/active-board-effect/active-board.effect';
 import { BoardEffect } from '@app/store/effects/active-board-effect/board-effect/board.effect';
 import { ColumnsEffect } from '@app/store/effects/active-board-effect/columns-effect/columns.effect';
@@ -26,6 +22,9 @@ import { columnsReducer } from '@app/store/reducers/active-board-reducer/columns
 import { filesReducer } from '@app/store/reducers/active-board-reducer/files-reducer/files.reducer';
 import { tasksReducer } from '@app/store/reducers/active-board-reducer/tasks-reducer/tasks.reducer';
 import { boardsReducer } from '@app/store/reducers/boards-reducer/boards.reducer';
+import { AvatarGroupModule } from 'primeng/avatargroup';
+import { AvatarModule } from 'primeng/avatar';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { BoardsRoutingModule } from './boards-routing.module';
 import { BoardComponent } from './components/board/board.component';
 import { ColumnComponent } from './components/column/column.component';
@@ -38,25 +37,25 @@ import { ColumnDragDropService } from './services/column-drag-drop/column-drag-d
 import { ColumnsService } from './services/columns/columns.service';
 import { FilesService } from './services/files/files.service';
 import { PointsService } from './services/points/points.service';
+import { SocketioService } from './services/socketio/socketio.service';
 import { TaskDragDropService } from './services/task-drag-drop/task-drag-drop.service';
 import { TasksService } from './services/tasks/tasks.service';
 
-
 const PrimeNgModules = [
 	ButtonModule,
-	PanelModule,
-	TableModule,
-	TabViewModule,
 	CardModule,
 	SplitButtonModule,
-	CheckboxModule,
 	InputTextModule,
 	ConfirmDialogModule,
 	DialogModule,
+	InputTextareaModule,
+	AvatarGroupModule,
+	AvatarModule,
 ];
 
 const PageComponents = [MainPageComponent, BoardPageComponent];
 const Components = [BoardComponent, ColumnComponent, TaskComponent];
+
 
 @NgModule({
 	declarations: [...PageComponents, ...Components, FilterByPipe],
@@ -65,6 +64,8 @@ const Components = [BoardComponent, ColumnComponent, TaskComponent];
 		BoardsRoutingModule,
 		ReactiveFormsModule,
 		DragDropModule,
+		ReactiveFormsModule,
+		FormsModule,
 		...PrimeNgModules,
 		StoreModule.forFeature('boards', boardsReducer),
 		StoreModule.forFeature('activeBoard', {
@@ -74,7 +75,6 @@ const Components = [BoardComponent, ColumnComponent, TaskComponent];
 			files: filesReducer,
 		}),
 		EffectsModule.forFeature([BoardsEffect, ActiveBoardEffect, BoardEffect, ColumnsEffect, TasksEffect, FilesEffect]),
-		ReactiveFormsModule,
 	],
 	providers: [
 		BoardsService,
@@ -84,8 +84,10 @@ const Components = [BoardComponent, ColumnComponent, TaskComponent];
 		PointsService,
 		FilterByPipe,
 		ConfirmationService,
+		SocketioService,
 		TaskDragDropService,
 		ColumnDragDropService,
+
 	],
 })
-export class BoardsModule {}
+export class BoardsModule { }

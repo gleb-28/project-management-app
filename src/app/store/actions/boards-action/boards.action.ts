@@ -18,3 +18,13 @@ export const updateBoardError = createAction('[Boards] Update board error-toast'
 export const deleteBoard = createAction('[Boards] Delete board', props<{ boardId: BoardId }>());
 export const deleteBoardSuccess = createAction('[Boards] Delete board success', props<{ boardId: BoardId }>());
 export const deleteBoardError = createAction('[Boards] Delete board error-toast', props<{ error: ErrorResponse }>());
+
+export const addBoardMember = createAction('[Boards] Add board member', props<{ login: string, boardId: BoardId; boardData: BoardRequest }>());
+export const addBoardMemberSuccess = createAction('[Boards] Add board member success');
+export const addBoardMemberError = createAction('[Boards] Add board member error', props<{ error: ErrorResponse }>());
+
+export const deleteBoardMember = createAction('[Boards] Delete board member', props<{ members: string[], boardId: BoardId; boardData: BoardRequest }>());
+export const deleteBoardMemberSuccess = createAction('[Boards] Delete board member success');
+export const deleteBoardMemberError = createAction('[Boards] Delete board member error', props<{ error: ErrorResponse }>());
+
+

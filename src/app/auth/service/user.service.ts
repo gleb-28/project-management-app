@@ -4,11 +4,13 @@ import { SignUpResponse, SignInRequest } from '@app/models/auth.model';
 import { UserId } from '@app/models/ids.model';
 import { Observable } from 'rxjs';
 
+
+
 @Injectable({
 	providedIn: 'root',
 })
 export class UserService {
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) { }
 
 	public getUsers(): Observable<SignUpResponse[]> {
 		return this.http.get<SignUpResponse[]>('/users');

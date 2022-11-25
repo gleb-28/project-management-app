@@ -1,23 +1,21 @@
 <div class="column-header" cdkDragHandle="column">
 	<ng-content></ng-content>
-	<p class="column-title">
+	<p class="column-title" title="{{ column.title }}">
 		{{ column.title }}
 	</p>
 	<div class="column-buttons">
-		<p-button
-			title="New"
+		<button
+			pButton
+			title="Rename column"
 			icon="pi pi-file-edit"
-			class="p-button-sm"
-			[style]="{ height: '10px', width: '30px' }"
-			(click)="showRenameColumnModal()">
-		</p-button>
-		<p-button
-			title="New"
+			class="p-button-rounded p-button-text"
+			(click)="showRenameColumnModal()"></button>
+		<button
+			pButton
+			title="Delete column"
 			icon="pi pi-times"
-			class="p-button-sm"
-			[style]="{ height: '10px', width: '30px' }"
-			(click)="deleteColumn()">
-		</p-button>
+			class="p-button-rounded p-button-text"
+			(click)="deleteColumn()"></button>
 	</div>
 </div>
 <div class="column-body">
@@ -28,59 +26,63 @@
 			[task]="task"
 			(taskDelete)="updateTasksOrder($event)"
 			cdkDrag="task"
-			(cdkDragStarted)="taskDragStart(task)">
+			(cdkDragStarted)="taskDragStart(task)"
+			><div class="handle-wrapper" cdkDragHandle="task"></div>
 		</app-task>
 	</div>
 	<p-button
-		title="New"
+		title="Create task"
 		icon="pi pi-plus"
-		class="p-button-sm"
-		[style]="{ height: '10px', width: '30px' }"
+		styleClass="p-button-rounded create-task-button"
 		(click)="showCreateTaskModal()">
 	</p-button>
 </div>
 
 <!--Rename column modal-->
-<p-dialog header="Column title" [(visible)]="renameColumnModalIsOpen">
+<p-dialog header="Column title" [(visible)]="renameColumnModalIsOpen" [draggable]="false">
 	<form [formGroup]="renameColumnForm" (submit)="renameColumnSubmit()">
-		<span class="p-float-label">
-			<input id="column-title" formControlName="columnTitle" type="text" pInputText />
-			<label for="column-title">Column title</label>
-		</span>
-		<small *ngIf="renameColumnForm.controls['columnTitle'].hasError('required')" class="p-error block"
-			>Please enter column title</small
-		>
-		<small *ngIf="renameColumnForm.controls['columnTitle'].hasError('minlength')" class="p-error block"
-			>Minimum length is 3 characters</small
-		>
-		<small *ngIf="renameColumnForm.controls['columnTitle'].hasError('maxlength')" class="p-error block"
-			>Maximum length is 30 characters</small
-		>
-		<button pButton type="submit" label="Rename"></button>
+		<input class="dialog-form__input" formControlName="columnTitle" type="text" pInputText />
+
+		<div class="dialog-form__error-wrapper">
+			<small *ngIf="renameColumnForm.controls['columnTitle'].hasError('required')" class="p-error block"
+				>Please enter column title</small
+			>
+			<small *ngIf="renameColumnForm.controls['columnTitle'].hasError('minlength')" class="p-error block"
+				>Minimum length is 3 characters</small
+			>
+			<small *ngIf="renameColumnForm.controls['columnTitle'].hasError('maxlength')" class="p-error block"
+				>Maximum length is 30 characters</small
+			>
+		</div>
+
+		<button pButton class="p-button-outlined" type="submit" label="Rename"></button>
 	</form>
 </p-dialog>
 
 <!--Create task modal-->
-<p-dialog header="Create task" [(visible)]="createTaskModalIsOpen">
+<p-dialog header="Create task" [(visible)]="createTaskModalIsOpen" [draggable]="false">
 	<form [formGroup]="createTaskForm" (submit)="createTaskSubmit()">
-		<span class="p-float-label">
-			<input id="task-title" formControlName="taskTitle" type="text" pInputText />
-			<label for="task-title">Task title</label>
-		</span>
-		<small *ngIf="createTaskForm.controls['taskTitle'].hasError('required')" class="p-error block"
-			>Please enter task title</small
-		>
-		<small *ngIf="createTaskForm.controls['taskTitle'].hasError('minlength')" class="p-error block"
-			>Minimum length is 3 characters</small
-		>
-		<small *ngIf="createTaskForm.controls['taskTitle'].hasError('maxlength')" class="p-error block"
-			>Maximum length is 30 characters</small
-		>
-		<span class="p-float-label">
-			<input id="task-description" formControlName="taskDescription" type="text" pInputText />
-			<label for="task-description">Task description</label>
-		</span>
-		<button pButton type="submit" label="Create task"></button>
+		<input class="dialog-form__input" placeholder="Task title" formControlName="taskTitle" type="text" pInputText />
+
+		<div class="dialog-form__error-wrapper">
+			<small *ngIf="createTaskForm.controls['taskTitle'].hasError('required')" class="p-error block"
+				>Please enter task title</small
+			>
+			<small *ngIf="createTaskForm.controls['taskTitle'].hasError('minlength')" class="p-error block"
+				>Minimum length is 3 characters</small
+			>
+			<small *ngIf="createTaskForm.controls['taskTitle'].hasError('maxlength')" class="p-error block"
+				>Maximum length is 30 characters</small
+			>
+		</div>
+
+		<textarea
+			class="dialog-form__input dialog-form__input--description"
+			placeholder="Task description"
+			pInputTextarea
+			formControlName="taskDescription"
+			[autoResize]="true"></textarea>
+		<button pButton class="dialog-form__submit-button p-button-outlined" type="submit" label="Create task"></button>
 	</form>
 </p-dialog>
 

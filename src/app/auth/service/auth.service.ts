@@ -27,12 +27,6 @@ export class AuthService {
 		return this.http.post<SignInResponse>('/auth/signin', userData);
 	}
 
-	logout() {
-		this.LocalStorage.remove('token');
-		//this.router.navigateByUrl('/welcom')
-	}
-
-
 	// get idea from  https://stackoverflow.com/questions/38552003/how-to-decode-jwt-token-in-javascript-without-using-a-library
 	getIdFromToken(): string  {
 		const token: string | null = this.LocalStorage.get('token');

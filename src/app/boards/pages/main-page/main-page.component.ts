@@ -13,6 +13,9 @@ import { Subscription } from 'rxjs';
 export class MainPageComponent implements OnInit, OnDestroy {
 	boards$ = this.store.select(selectBoards);
 	userIdSubscription!: Subscription;
+
+	boardsFilter = '';
+
 	constructor(private store: Store) {}
 
 	ngOnInit(): void {

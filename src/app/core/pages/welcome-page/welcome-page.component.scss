@@ -1,34 +1,86 @@
 @forward 'src/styles';
 
-:host{
-  @extend %place-center;
-  height: 100%;
-  min-height: 80vh;
+:host {
+	@extend %place-center;
+	height: 100%;
+	min-height: 80vh;
 
-  .body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    padding: 1rem 0 3rem;
-  }
+	.body {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 1rem;
+		padding: 1rem 0 3rem;
+	}
 
-  .welcome-image {
-    width: 100%;
-    max-width: 34rem;
-    height: auto;
-  }
+	.welcome-image {
+		width: 100%;
+		max-width: 34rem;
+		height: auto;
+	}
 
-  .text {
-    margin-bottom: 1rem;
-  }
+	.text {
+		margin-bottom: 1rem;
+	}
 
-  ul {
-    list-style-type: none;
+	::ng-deep .p-accordion .p-accordion-header .p-accordion-header-link .p-accordion-toggle-icon {
+		display: none;
+	}
 
-    li {
-      margin-top: 0.5rem;
-    }
-  }
+	::ng-deep .p-accordion {
+		& .p-accordion-header {
+			text-align: center;
+
+			& .p-accordion-header-link {
+				display: inline-block;
+				text-decoration: underline;
+				padding: 0.5rem;
+				border: none;
+				color: var(--primary);
+				background: none;
+				font-weight: 400;
+				border-radius: 0;
+				&::before {
+					content: '(';
+				}
+				&::after {
+					content: ')';
+				}
+			}
+			@media (hover: hover) {
+				&:not(.p-highlight):not(.p-disabled):hover .p-accordion-header-link {
+					background: none;
+					color: inherit;
+					text-decoration: none;
+				}
+			}
+			&:not(.p-disabled).p-highlight .p-accordion-header-link {
+				background: none;
+				color: inherit;
+				text-decoration: none;
+				&::before {
+					content: '';
+				}
+				&::after {
+					content: ':';
+				}
+			}
+		}
+
+		& .p-accordion-content {
+			border: none;
+			font-family: var(--font-main);
+			padding: 0.5rem;
+			color: var(--text);
+		}
+	}
+
+	ul {
+		list-style-type: none;
+
+		li {
+			margin-top: 0.5rem;
+		}
+	}
 }

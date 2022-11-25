@@ -15,6 +15,12 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { environment } from '@env/environment';
 import UserEffect from './store/effects/user-effect/user.effect';
 import { CoreModule } from './core/core.module';
+import { boardsReducer } from './store/reducers/boards-reducer/boards.reducer';
+import { boardReducer } from './store/reducers/active-board-reducer/board-reducer/board.reducer';
+import { columnsReducer } from './store/reducers/active-board-reducer/columns-reducer/columns.reducer';
+import { filesReducer } from './store/reducers/active-board-reducer/files-reducer/files.reducer';
+import { tasksReducer } from './store/reducers/active-board-reducer/tasks-reducer/tasks.reducer';
+
 
 export function translateHttpLoaderFactory(httpBackend: HttpBackend): TranslateHttpLoader {
 	return new TranslateHttpLoader(new HttpClient(httpBackend), './assets/translations/', '.json');
@@ -30,6 +36,13 @@ export function translateHttpLoaderFactory(httpBackend: HttpBackend): TranslateH
 		AuthModule,
 		StoreModule.forFeature('user', userReducer),
 		StoreModule.forRoot({}),
+		StoreModule.forFeature('boards', boardsReducer),
+		StoreModule.forFeature('activeBoard', {
+			board: boardReducer,
+			columns: columnsReducer,
+			tasks: tasksReducer,
+			files: filesReducer,
+		}),
 		EffectsModule.forRoot([UserEffect]),
 		StoreDevtoolsModule.instrument({
 			maxAge: 25,
