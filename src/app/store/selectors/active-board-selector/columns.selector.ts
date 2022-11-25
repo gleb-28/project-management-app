@@ -1,6 +1,6 @@
-import { columnsAdapter } from '../../../reducers/active-board-reducer/columns-reducer/columns.reducer';
+import { columnsAdapter } from '../../reducers/active-board-reducer/columns-reducer/columns.reducer';
 import { createSelector } from '@ngrx/store';
-import { selectActiveBoardFeature } from '../active-board.selector';
+import { selectActiveBoardFeature } from './active-board.selector';
 
 const { selectAll } = columnsAdapter.getSelectors();
 

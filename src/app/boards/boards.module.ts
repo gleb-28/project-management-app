@@ -40,6 +40,8 @@ import { ColumnDragDropService } from './services/column-drag-drop/column-drag-d
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { AvatarModule } from 'primeng/avatar';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { MembersEffect } from '../store/effects/active-board-effect/members-effect/members.effect';
+import { membersReducer } from '../store/reducers/active-board-reducer/members-reducer/members.reducer';
 
 const PrimeNgModules = [
 	ButtonModule,
@@ -69,11 +71,20 @@ const Components = [BoardComponent, ColumnComponent, TaskComponent];
 		StoreModule.forFeature('boards', boardsReducer),
 		StoreModule.forFeature('activeBoard', {
 			board: boardReducer,
+			members: membersReducer,
 			columns: columnsReducer,
 			tasks: tasksReducer,
 			files: filesReducer,
 		}),
-		EffectsModule.forFeature([BoardsEffect, ActiveBoardEffect, BoardEffect, ColumnsEffect, TasksEffect, FilesEffect]),
+		EffectsModule.forFeature([
+			BoardsEffect,
+			ActiveBoardEffect,
+			BoardEffect,
+			MembersEffect,
+			ColumnsEffect,
+			TasksEffect,
+			FilesEffect,
+		]),
 	],
 	providers: [
 		BoardsService,

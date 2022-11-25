@@ -19,9 +19,12 @@
 				class="p-button-rounded p-button-text"></button>
 		</div>
 	</div>
-	<ng-container *ngIf="task.users.length">
+	<ng-container *ngIf="assignedUsers.length">
 		<p-avatarGroup>
-			<p-avatar *ngFor="let member of task.users" label="G"></p-avatar>
+			<p-avatar
+				*ngFor="let user of assignedUsers"
+				label="{{ user.name | slice: 0:1 }}"
+				title="{{ user.name }}({{ user.login }})"></p-avatar>
 		</p-avatarGroup>
 	</ng-container>
 </p-card>

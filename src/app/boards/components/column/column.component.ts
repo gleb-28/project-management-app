@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { TaskResponse } from '../../../models/task.model';
 import { Store } from '@ngrx/store';
-import { selectTasksByColumnId } from '../../../store/selectors/active-board-selector/tasks-selector/tasks.selector';
+import { selectTasksByColumnId } from '../../../store/selectors/active-board-selector/tasks.selector';
 import { map, Observable, Subscription, take } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {

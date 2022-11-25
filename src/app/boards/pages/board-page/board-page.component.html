@@ -2,11 +2,11 @@
 	<h2 class="board-bar__title">{{ board.title }}</h2>
 	<p-avatarGroup *ngIf="user$ | async as user" class="board-bar__members">
 		<p-avatar label="{{ user.name | slice: 0:1 }}" title="{{ user.name }}({{ user.login }})" size="large"></p-avatar>
-		<ng-container *ngIf="board.users.length">
+		<ng-container *ngIf="members$ | async as members">
 			<p-avatar
-				*ngFor="let member of board.users"
-				label="{{ member | slice: 0:1 }}"
-				title="Elon"
+				*ngFor="let member of members"
+				label="{{ member.name | slice: 0:1 }}"
+				title="{{ member.name }}({{ member.login }})"
 				size="large"></p-avatar>
 		</ng-container>
 	</p-avatarGroup>

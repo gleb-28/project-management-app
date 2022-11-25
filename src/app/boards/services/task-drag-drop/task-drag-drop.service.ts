@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { selectAllTasks } from '../../../store/selectors/active-board-selector/tasks-selector/tasks.selector';
+import { selectAllTasks } from '../../../store/selectors/active-board-selector/tasks.selector';
 import { updateTask } from '../../../store/actions/active-board-action/active-board.action';
 import { Store } from '@ngrx/store';
 import { TaskResponse } from '../../../models/task.model';

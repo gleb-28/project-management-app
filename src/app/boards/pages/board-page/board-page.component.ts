@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectColumns } from '../../../store/selectors/active-board-selector/columns-selector/columns.selector';
+import { selectColumns } from '../../../store/selectors/active-board-selector/columns.selector';
 import { createColumn, openBoard, updateColumn } from '../../../store/actions/active-board-action/active-board.action';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -8,8 +8,9 @@ import { ColumnResponse } from '../../../models/column.model';
 import { ColumnDragDropService } from '../../services/column-drag-drop/column-drag-drop.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { map, take } from 'rxjs';
-import { selectBoard } from '../../../store/selectors/active-board-selector/board-selector/board.selector';
+import { selectBoard } from '../../../store/selectors/active-board-selector/board.selector';
 import { selectUser } from '../../../store/selectors/user-selector/user.selector';
+import { selectMembers } from '../../../store/selectors/active-board-selector/members.selector';
 
 @Component({
 	selector: 'app-board-page',
@@ -21,6 +22,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 	public user$ = this.store.select(selectUser);
 	private boardId = this.route.snapshot.params['boardId'];
 	public board$ = this.store.select(selectBoard);
+	public members$ = this.store.select(selectMembers);
 	public columns$ = this.store.select(selectColumns);
 	private columnsAmountSubscription = this.columns$.subscribe((columns) => (this.columnsAmount = columns.length));
 	private columnsAmount = 0;

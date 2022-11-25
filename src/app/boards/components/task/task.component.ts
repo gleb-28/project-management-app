@@ -4,6 +4,8 @@ import { Store } from '@ngrx/store';
 import { ConfirmationService } from 'primeng/api';
 import { deleteTask, updateTask } from '../../../store/actions/active-board-action/active-board.action';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { selectMembers } from '../../../store/selectors/active-board-selector/members.selector';
+import { SignUpResponse } from '../../../models/auth.model';
 
 @Component({
 	selector: 'app-task',
@@ -13,6 +15,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class TaskComponent implements OnInit {
 	@Input() task!: TaskResponse;
+	private members$ = this.store.select(selectMembers);
+	public assignedUsers: SignUpResponse[] = [];
 
 	public editTaskModalIsOpen = false;
 	public editTaskForm!: FormGroup;
@@ -29,6 +33,11 @@ export class TaskComponent implements OnInit {
 				Validators.maxLength(30),
 			]),
 			taskDescription: new FormControl(this.task.description),
+		});
+
+		this.members$.subscribe((members) => {
+			this.assignedUsers = members.filter((member) => this.task.users.includes(member._id));
+			// TODO: show assigned members to task
 		});
 	}
 

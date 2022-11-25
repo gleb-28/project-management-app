@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { BoardRequest, BoardResponse } from 'src/app/models/board.model';
 import { UserService } from 'src/app/auth/service/user.service';
 import { SignUpResponse } from 'src/app/models/auth.model';
@@ -39,17 +39,15 @@ export class BoardsService {
 		return this.http.get<BoardResponse[]>(`/boardsSet/${userId}`);
 	}
 
-	public getBoardMembersByBoardId(boardId: BoardId): SignUpResponse[] {
+	public getBoardMembersByBoardId(boardId: BoardId): Observable<SignUpResponse[]> {
 		let boardUsers: SignUpResponse[] = [];
-
 		this.getBoardById(boardId).subscribe((board) => {
 			const userIds = board.users;
 
 			userIds.forEach((userId) => {
-				this.userService.getUser(userId).subscribe((userInfo) => boardUsers.push(userInfo));
+				this.userService.getUser(userId).subscribe((userInfo) => (boardUsers = [...boardUsers, userInfo]));
 			});
 		});
-
-		return boardUsers;
+		return of(boardUsers);
 	}
 }
