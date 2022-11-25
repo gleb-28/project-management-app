@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SocketioService } from './boards/services/socketio/socketio.service';
+import { SocketService } from './boards/services/socketio/socket.service';
 
 @Component({
 	selector: 'app-root',
@@ -7,7 +7,7 @@ import { SocketioService } from './boards/services/socketio/socketio.service';
 	styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-	constructor(private socketService: SocketioService) { }
+	constructor(private socketService: SocketService) {}
 
 	ngOnInit(): void {
 		this.socketService.setupSocketConnection();

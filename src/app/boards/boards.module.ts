@@ -5,11 +5,12 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { InputTextModule } from 'primeng/inputtext';
+import { FilterByPipe } from './pipes/filter-by-pipe/filter-by.pipe';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmationService } from 'primeng/api';
-import { StoreModule } from '@ngrx/store';
-import { EffectsModule } from '@ngrx/effects';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActiveBoardEffect } from '@app/store/effects/active-board-effect/active-board.effect';
 import { BoardEffect } from '@app/store/effects/active-board-effect/board-effect/board.effect';
@@ -31,15 +32,14 @@ import { ColumnComponent } from './components/column/column.component';
 import { TaskComponent } from './components/task/task.component';
 import { BoardPageComponent } from './pages/board-page/board-page.component';
 import { MainPageComponent } from './pages/main-page/main-page.component';
-import { FilterByPipe } from './pipes/filter-by-pipe/filter-by.pipe';
 import { BoardsService } from './services/boards/boards.service';
 import { ColumnDragDropService } from './services/column-drag-drop/column-drag-drop.service';
 import { ColumnsService } from './services/columns/columns.service';
 import { FilesService } from './services/files/files.service';
 import { PointsService } from './services/points/points.service';
-import { SocketioService } from './services/socketio/socketio.service';
 import { TaskDragDropService } from './services/task-drag-drop/task-drag-drop.service';
 import { TasksService } from './services/tasks/tasks.service';
+import { SocketService } from './services/socketio/socket.service';
 
 const PrimeNgModules = [
 	ButtonModule,
@@ -55,7 +55,6 @@ const PrimeNgModules = [
 
 const PageComponents = [MainPageComponent, BoardPageComponent];
 const Components = [BoardComponent, ColumnComponent, TaskComponent];
-
 
 @NgModule({
 	declarations: [...PageComponents, ...Components, FilterByPipe],
@@ -84,10 +83,9 @@ const Components = [BoardComponent, ColumnComponent, TaskComponent];
 		PointsService,
 		FilterByPipe,
 		ConfirmationService,
-		SocketioService,
+		SocketService,
 		TaskDragDropService,
 		ColumnDragDropService,
-
 	],
 })
-export class BoardsModule { }
+export class BoardsModule {}

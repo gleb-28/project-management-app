@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { DefaultEventsMap } from '@socket.io/component-emitter';
 import { io, Socket } from 'socket.io-client';
 import { Store } from '@ngrx/store';
-import { ActivatedRoute } from '@angular/router';
 import { SocketMessage, SocketEvents, SocketActions } from '@app/models/socketio.model';
 import { deleteColumnSuccess, loadColumns, deleteTaskSuccess, loadTasks, deleteFileSuccess, loadFiles } from '@app/store/actions/active-board-action/active-board.action';
 import { deleteBoardSuccess, getUserBoards } from '@app/store/actions/boards-action/boards.action';
@@ -11,15 +10,12 @@ import { selectActiveBoardFeature } from '@app/store/selectors/active-board-sele
 import { selectUserId } from '@app/store/selectors/user-selector/user.selector';
 import { environment } from '@env/environment';
 
-
 @Injectable({
 	providedIn: 'root',
 })
-export class SocketioService {
+export class SocketService {
 	private socket: Socket<DefaultEventsMap, DefaultEventsMap> | null = null;
-	private userIdSubscription = this.store
-		.select(selectUserId)
-		.subscribe((userId) => (this.userId = userId));
+	private userIdSubscription = this.store.select(selectUserId).subscribe((userId) => (this.userId = userId));
 
 	private boardIdSubscription = this.store
 		.select(selectActiveBoardFeature)
@@ -28,18 +24,12 @@ export class SocketioService {
 	private userId: string = '';
 	private boardId: string = '';
 
-	constructor(private store: Store, private route: ActivatedRoute) { }
+	constructor(private store: Store) {}
 
 	private isUserExistInList(message: SocketMessage): boolean {
 		const { users, initUser, notify } = message;
 
-		return (
-			!!this.userId &&
-			initUser !== this.userId &&
-			notify &&
-			Array.isArray(users) &&
-			users?.includes(this.userId)
-		);
+		return !!this.userId && initUser !== this.userId && notify && Array.isArray(users) && users?.includes(this.userId);
 	}
 
 	private getUsersMessage(): void {
@@ -124,7 +114,6 @@ export class SocketioService {
 				this.updateTasksData(message);
 			}
 		});
-
 	}
 
 	private updateFilesData(message: SocketMessage): void {
@@ -149,7 +138,6 @@ export class SocketioService {
 				this.updateFilesData(message);
 			}
 		});
-
 	}
 
 	private subscribeAllMessages(): void {
