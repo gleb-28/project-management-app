@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CustomValidator } from '@app/auth/validator';
+import { editUser, deleteUser } from '@app/store/actions/user-action/user.action';
+import { User } from '@app/store/models/user.state';
+import { selectUser } from '@app/store/selectors/user-selector/user.selector';
 import { Store } from '@ngrx/store';
-import { deleteUser, editUser } from 'src/app/store/actions/user-action/user.action';
-import { User } from 'src/app/store/models/user.state';
-import { selectUser } from 'src/app/store/selectors/user-selector/user.selector';
-import { CustomValidator } from '../../validator';
 
 @Component({
 	selector: 'app-user-settings-page',

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { selectAllTasks } from '../../../store/selectors/active-board-selector/tasks.selector';
-import { updateTask } from '../../../store/actions/active-board-action/active-board.action';
+import { ColumnId } from '@app/models/ids.model';
+import { TaskResponse } from '@app/models/task.model';
+import { updateTask } from '@app/store/actions/active-board-action/active-board.action';
+import { selectAllTasks } from '@app/store/selectors/active-board-selector/tasks.selector';
 import { Store } from '@ngrx/store';
-import { TaskResponse } from '../../../models/task.model';
-import { ColumnId } from '../../../models/ids.model';
+
 
 @Injectable()
 export class TaskDragDropService {

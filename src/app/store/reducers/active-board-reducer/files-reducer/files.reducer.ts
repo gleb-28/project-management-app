@@ -1,9 +1,9 @@
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
-import { FileResponse } from '../../../../models/file.model';
-import { FilesState } from '../../../models/active-board.state';
-import { ReqStatus } from '../../../enums/req-status';
 import { createReducer, on } from '@ngrx/store';
-import * as fromBoard from '../../../actions/active-board-action/active-board.action';
+import * as fromBoard from '@app/store/actions/active-board-action/active-board.action';
+import { FileResponse } from '@app/models/file.model';
+import { ReqStatus } from '@app/store/enums/req-status';
+import { FilesState } from '@app/store/models/active-board.state';
 
 export const filesAdapter: EntityAdapter<FileResponse> = createEntityAdapter<FileResponse>({
 	selectId: (file) => file._id,

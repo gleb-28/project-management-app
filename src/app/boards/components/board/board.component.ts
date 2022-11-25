@@ -1,17 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { BoardResponse } from '../../../models/board.model';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ConfirmationService } from 'primeng/api';
+import { BoardsService } from '@app/boards/services/boards/boards.service';
+import { SignUpResponse } from '@app/models/auth.model';
+import { BoardResponse } from '@app/models/board.model';
+import { updateBoard, deleteBoard, addBoardMember, deleteBoardMember } from '@app/store/actions/boards-action/boards.action';
 import { Store } from '@ngrx/store';
-import {
-	deleteBoard,
-	addBoardMember,
-	updateBoard,
-	deleteBoardMember,
-} from '../../../store/actions/boards-action/boards.action';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { SignUpResponse } from 'src/app/models/auth.model';
-import { BoardsService } from '../../services/boards/boards.service';
+import { ConfirmationService } from 'primeng/api';
+
 
 @Component({
 	selector: 'app-board',

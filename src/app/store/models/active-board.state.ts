@@ -1,10 +1,10 @@
 import { State } from './state.model';
-import { ColumnResponse } from '../../models/column.model';
-import { TaskResponse } from '../../models/task.model';
-import { FileResponse } from '../../models/file.model';
 import { EntityState } from '@ngrx/entity';
-import { BoardResponse } from '../../models/board.model';
-import { SignUpResponse } from '../../models/auth.model';
+import { BoardResponse } from '@app/models/board.model';
+import { ColumnResponse } from '@app/models/column.model';
+import { FileResponse } from '@app/models/file.model';
+import { TaskResponse } from '@app/models/task.model';
+import { SignUpResponse } from '@app/models/auth.model';
 
 export interface ActiveBoardState extends State {
 	board: BoardState;

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CustomValidator } from '@app/auth/validator';
+import { signUp } from '@app/store/actions/user-action/user.action';
 import { Store } from '@ngrx/store';
-import { signUp } from 'src/app/store/actions/user-action/user.action';
-import { CustomValidator } from '../../validator';
 
 @Component({
 	selector: 'app-sign-up-page',

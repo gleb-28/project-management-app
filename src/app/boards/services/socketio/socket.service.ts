@@ -2,20 +2,13 @@ import { Injectable } from '@angular/core';
 import { DefaultEventsMap } from '@socket.io/component-emitter';
 import { io, Socket } from 'socket.io-client';
 import { Store } from '@ngrx/store';
-import { selectUserId } from '../../../store/selectors/user-selector/user.selector';
-import { selectActiveBoardFeature } from '../../../store/selectors/active-board-selector/active-board.selector';
-import { SocketActions, SocketEvents, SocketMessage } from '../../../models/socketio.model';
-import { getUser } from '../../../store/actions/user-action/user.action';
-import { deleteBoardSuccess, getUserBoards } from '../../../store/actions/boards-action/boards.action';
-import {
-	deleteColumnSuccess,
-	deleteFileSuccess,
-	deleteTaskSuccess,
-	loadColumns,
-	loadFiles,
-	loadTasks,
-} from '../../../store/actions/active-board-action/active-board.action';
-import { environment } from '../../../../environments/environment';
+import { SocketMessage, SocketEvents, SocketActions } from '@app/models/socketio.model';
+import { deleteColumnSuccess, loadColumns, deleteTaskSuccess, loadTasks, deleteFileSuccess, loadFiles } from '@app/store/actions/active-board-action/active-board.action';
+import { deleteBoardSuccess, getUserBoards } from '@app/store/actions/boards-action/boards.action';
+import { getUser } from '@app/store/actions/user-action/user.action';
+import { selectActiveBoardFeature } from '@app/store/selectors/active-board-selector/active-board.selector';
+import { selectUserId } from '@app/store/selectors/user-selector/user.selector';
+import { environment } from '@env/environment';
 
 @Injectable({
 	providedIn: 'root',

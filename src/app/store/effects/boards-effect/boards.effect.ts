@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
+import { BoardsService } from '@app/boards/services/boards/boards.service';
+import { ErrorResponse } from '@app/models/error.model';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { BoardsService } from '../../../boards/services/boards/boards.service';
 import { catchError, concatMap, map, of, switchMap } from 'rxjs';
-import * as fromBoards from '../../actions/boards-action/boards.action';
-import { ErrorResponse } from '../../../models/error.model';
-import { UserService } from 'src/app/auth/service/user.service';
-import { SignUpResponse } from 'src/app/models/auth.model';
-import { BoardRequest } from 'src/app/models/board.model';
-import { HandleErrorResponseService } from 'src/app/core/services/handle-error-response.service';
-import { ErrorMessageService } from '../../../core/services/error-message/error-message.service';
+import * as fromBoards from '@app/store/actions/boards-action/boards.action';
+import { UserService } from '@app/auth/service/user.service';
+import { HandleErrorResponseService } from '@app/core/services/handle-error-response.service';
+import { SignUpResponse } from '@app/models/auth.model';
+import { BoardRequest } from '@app/models/board.model';
+import { ErrorMessageService } from '@app/core/services/error-message/error-message.service';
+
 
 @Injectable()
 export class BoardsEffect {

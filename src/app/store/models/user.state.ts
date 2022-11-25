@@ -1,5 +1,5 @@
 import { State } from './state.model';
-import { UserId } from '../../models/ids.model';
+import { UserId } from '@app/models/ids.model';
 
 export interface UserState extends State {
 	user: User;

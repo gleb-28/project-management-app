@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { BoardResponse, BoardRequest } from '@app/models/board.model';
+import { UserService } from '@app/auth/service/user.service';
+import { SignUpResponse } from '@app/models/auth.model';
+import { BoardId } from '@app/models/ids.model';
 import { Observable, of } from 'rxjs';
-import { BoardRequest, BoardResponse } from 'src/app/models/board.model';
-import { UserService } from 'src/app/auth/service/user.service';
-import { SignUpResponse } from 'src/app/models/auth.model';
-import { BoardId } from '../../../models/ids.model';
+
 
 @Injectable()
 export class BoardsService {

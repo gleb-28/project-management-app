@@ -1,11 +1,12 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { CustomTranslationService } from '../../services/custom-translation.service';
-import { Lang } from '../../../models/lang.model';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { CustomTranslationService } from '@app/core/services/custom-translation.service';
+import { Lang } from '@app/models/lang.model';
+import { createBoard } from '@app/store/actions/boards-action/boards.action';
+import { logout } from '@app/store/actions/user-action/user.action';
+import { selectIsLogged, selectUser } from '@app/store/selectors/user-selector/user.selector';
 import { Store } from '@ngrx/store';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { createBoard } from '../../../store/actions/boards-action/boards.action';
-import { selectIsLogged, selectUser } from '../../../store/selectors/user-selector/user.selector';
-import { logout } from 'src/app/store/actions/user-action/user.action';
+
 
 interface LangSelect {
 	label: 'EN' | 'RU';

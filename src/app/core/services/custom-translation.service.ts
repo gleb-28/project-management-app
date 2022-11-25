@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { LANGUAGES } from '@app/constants/constants';
 import { TranslateService } from '@ngx-translate/core';
-import { LANGUAGES } from 'src/app/constants/constants';
 import { LocalStorageService } from './local-storage.service';
 
 @Injectable({

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
+import { BoardsService } from '@app/boards/services/boards/boards.service';
+import { ErrorResponse } from '@app/models/error.model';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, of, switchMap } from 'rxjs';
-import { BoardsService } from '../../../../boards/services/boards/boards.service';
-import { ErrorResponse } from '../../../../models/error.model';
-import * as fromBoard from '../../../actions/active-board-action/active-board.action';
+import * as fromBoard from '@app/store/actions/active-board-action/active-board.action';
 
 @Injectable()
 export class BoardEffect {

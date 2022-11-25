@@ -1,9 +1,9 @@
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
-import { TaskResponse } from '../../../../models/task.model';
-import { TasksState } from '../../../models/active-board.state';
-import { ReqStatus } from '../../../enums/req-status';
 import { createReducer, on } from '@ngrx/store';
-import * as fromBoard from '../../../actions/active-board-action/active-board.action';
+import * as fromBoard from '@app/store/actions/active-board-action/active-board.action';
+import { TaskResponse } from '@app/models/task.model';
+import { ReqStatus } from '@app/store/enums/req-status';
+import { TasksState } from '@app/store/models/active-board.state';
 
 export const tasksAdapter: EntityAdapter<TaskResponse> = createEntityAdapter<TaskResponse>({
 	selectId: (task) => task._id,
