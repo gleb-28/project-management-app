@@ -34,5 +34,6 @@ export const ERROR_MESSAGE: { [key: number]: string } = {
 	402: 'This file already exist',
 	403: 'You are not logged in',
 	404: 'Sorry.. Was not founded',
+	407: 'This login does not exist',
 	409: 'This login already exist',
 };

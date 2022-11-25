@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { deleteBoard, addMember, updateBoard, deleteMember } from '../../../store/actions/boards-action/boards.action';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { SignUpResponse } from 'src/app/models/auth.model';
-import { UserService } from 'src/app/auth/service/user.service';
+import { BoardsService } from '../../services/boards/boards.service';
 
 @Component({
 	selector: 'app-board',
@@ -45,11 +45,10 @@ export class BoardComponent implements OnInit {
 
 	public renameBoardModalIsOpen = false;
 	public renameBoardForm!: FormGroup;
-	public addMemberIsOpen = false;
 	public addMemberForm!: FormGroup;
 	public membersModalIsOpen = false;
 
-	constructor(private store: Store, private router: Router, private confirmationService: ConfirmationService, private userService: UserService) {}
+	constructor(private store: Store, private router: Router, private confirmationService: ConfirmationService, private boardsService: BoardsService) {}
 
 	ngOnInit() {
 		this.renameBoardForm = new FormGroup({
@@ -68,9 +67,7 @@ export class BoardComponent implements OnInit {
 			]),
 		});
 
-		this.members = this.getMembers();
-
-
+		this.members = this.boardsService.getBoardMembers(this.board.users);
 	}
 
 	public showMembersModal() {
@@ -78,10 +75,6 @@ export class BoardComponent implements OnInit {
 	}
 	public showRenameBoardModal(): void {
 		this.renameBoardModalIsOpen = true;
-	}
-	public showAddMemberModal() {
-		this.addMemberIsOpen = true;
-		this.membersModalIsOpen = false;
 	}
 
 	public renameBoardSubmit(): void {
@@ -127,20 +120,10 @@ export class BoardComponent implements OnInit {
 			}));
 
 			this.addMemberForm.reset();
-			this.addMemberIsOpen = false;
 		}
 	}
 
-	getMembers(): SignUpResponse[] {
-		let members:SignUpResponse[] = [];
-
-		this.board.users.forEach((userId) =>
-			this.userService.getUser(userId).subscribe((userInfo)=>	members.push(userInfo)));
-
-		return members;
-	}
-
-	deleteMembers(id: string) {
+	deleteMember(id: string) {
 		let newMembers = [...this.board.users].filter((idMember) => idMember !== id);
 		this.store.dispatch(deleteMember({
 			members: newMembers,

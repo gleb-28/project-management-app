@@ -7,10 +7,13 @@ import { ErrorResponse } from '../../../models/error.model';
 import { UserService } from 'src/app/auth/service/user.service';
 import { SignUpResponse } from 'src/app/models/auth.model';
 import { BoardRequest } from 'src/app/models/board.model';
+import { HandleErrorResponseService } from 'src/app/core/services/handle-error-response.service';
+import { ERROR_MESSAGE } from 'src/app/constants/constants';
 
 @Injectable()
 export class BoardsEffect {
-	constructor(private actions$: Actions, private boardsService: BoardsService, private userService: UserService) {}
+	constructor(private actions$: Actions, private boardsService: BoardsService, private userService: UserService,
+		private errorService: HandleErrorResponseService) {}
 
 	getBoards$ = createEffect(() => {
 		return this.actions$.pipe(
@@ -71,19 +74,19 @@ export class BoardsEffect {
 			concatMap(({ login, boardId, boardData }) => {
 				return this.userService.getUsers().pipe(
 					map((users) => {
-						let user:SignUpResponse | undefined = users.find((userInfo) => userInfo.login === login);
+						const user:SignUpResponse | undefined = users.find((userInfo) => userInfo.login === login);
 
 						const newBoardData: BoardRequest = {
 							title: boardData.title,
 							owner: boardData.owner,
 							users: boardData.users,
 						};
-
+            
 						if (user && !newBoardData.users.includes(user._id)) {
 							newBoardData.users = [...newBoardData.users, user._id];
 							return newBoardData;
-						} else if (!user) {
-							throw new Error('This user is not registered');
+						} else {
+							this.errorService.sendData(ERROR_MESSAGE[407]);
 						}
 						return newBoardData;
 					}),

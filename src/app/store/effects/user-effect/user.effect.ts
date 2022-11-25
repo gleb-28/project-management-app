@@ -114,7 +114,6 @@ export default class UserEffect {
 				this.router.navigateByUrl('');
 				return userAction.logoutSuccess();
 			}),
-			catchError((error: ErrorResponse) => of(userAction.logoutError({ error }))),
 		);
 	});
 

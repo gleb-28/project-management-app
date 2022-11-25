@@ -2,10 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BoardRequest, BoardResponse } from 'src/app/models/board.model';
+import { UserService } from 'src/app/auth/service/user.service';
+import { SignUpResponse } from 'src/app/models/auth.model';
 
 @Injectable()
 export class BoardsService {
-	constructor(private http: HttpClient) {}
+
+	constructor(private http: HttpClient, private userService: UserService) {}
 
 	public getAllBoards(): Observable<BoardResponse[]> {
 		return this.http.get<BoardResponse[]>('/boards');
@@ -34,5 +37,13 @@ export class BoardsService {
 
 	public getBoardsByUserId(userId: string): Observable<BoardResponse[]> {
 		return this.http.get<BoardResponse[]>(`/boardsSet/${userId}`);
+	}
+
+	public getBoardMembers(membersIds: string[]) {
+		let members:SignUpResponse[] = [];
+		membersIds.forEach((userId) =>
+			this.userService.getUser(userId).subscribe((userInfo)=>	members.push(userInfo)));
+
+		return members;
 	}
 }

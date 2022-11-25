@@ -49,7 +49,6 @@ export const userReducer = createReducer(
 		userAction.loginError,
 		userAction.editUserError,
 		userAction.deleteUserError,
-		userAction.logoutError,
 		(state, { error }): UserState => ({
 			...state,
 			status: ReqStatus.Error,
