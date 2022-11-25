@@ -1,1 +1,31 @@
+::ng-deep .p-toast {
+	font-family: var(--font-main);
 
+	& .p-toast-message {
+		&.p-toast-message-error {
+			color: var(--error);
+			background-color: white;
+			border-left: solid var(--error);
+			border-width: 0 0 0 6px;
+
+			& .p-toast-message-icon,
+			& .p-toast-icon-close {
+				color: var(--error);
+			}
+		}
+
+		& .p-toast-icon-close:hover {
+			background: none;
+			filter: brightness(85%);
+		}
+
+		& .p-toast-icon-close:focus {
+			box-shadow: none;
+		}
+
+		@media (max-width: 420px) {
+			margin: 0 auto;
+			max-width: 280px;
+		}
+	}
+}
