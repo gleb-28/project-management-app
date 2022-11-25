@@ -19,12 +19,12 @@ export const deleteBoard = createAction('[Boards] Delete board', props<{ boardId
 export const deleteBoardSuccess = createAction('[Boards] Delete board success', props<{ boardId: BoardId }>());
 export const deleteBoardError = createAction('[Boards] Delete board error-toast', props<{ error: ErrorResponse }>());
 
-export const addMember = createAction('[Boards] Add Member', props<{ login: string, boardId: BoardId; boardData: BoardRequest }>());
-export const addMemberSuccess = createAction('[Boards] Add Member success');
-export const addMemberError = createAction('[Boards] Add Member error', props<{ error: ErrorResponse }>());
+export const addBoardMember = createAction('[Boards] Add board member', props<{ login: string, boardId: BoardId; boardData: BoardRequest }>());
+export const addBoardMemberSuccess = createAction('[Boards] Add board member success');
+export const addBoardMemberError = createAction('[Boards] Add board member error', props<{ error: ErrorResponse }>());
 
-export const deleteMember = createAction('[Boards] delete Member', props<{ members: string[], boardId: BoardId; boardData: BoardRequest }>());
-export const deleteMemberSuccess = createAction('[Boards] delete Member success');
-export const deleteMemberError = createAction('[Boards] delete Member error', props<{ error: ErrorResponse }>());
+export const deleteBoardMember = createAction('[Boards] Delete board member', props<{ members: string[], boardId: BoardId; boardData: BoardRequest }>());
+export const deleteBoardMemberSuccess = createAction('[Boards] Delete board member success');
+export const deleteBoardMemberError = createAction('[Boards] Delete board member error', props<{ error: ErrorResponse }>());
 
 

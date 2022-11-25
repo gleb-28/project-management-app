@@ -1,26 +1,24 @@
-:host{
-  margin: 20px;
-}
-.card-wrapper {
-	width: 280px;
-	height: 120px;
-	margin: 10px auto;
-}
+:host {
+	width: 100%;
 
-.card-header {
-	display: flex;
-	justify-content: center;
-
-	p {
-		margin-left: 5px;
+	::ng-deep .p-splitbutton.p-button-raised {
+		width: 50%;
+		@media (max-width: 800px) {
+			width: 100%;
+		}
 	}
-}
 
-.boardsContent {
-	display: flex;
-	justify-content: space-around;
-	align-items: flex-end;
-	padding: 0;
+	.dialog-form {
+		&__input {
+			margin-bottom: 1rem;
+		}
+
+		&__error-wrapper {
+			position: relative;
+			bottom: 8px;
+			text-align: left;
+		}
+	}
 }
 
 .member{

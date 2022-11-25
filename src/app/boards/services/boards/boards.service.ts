@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 import { BoardRequest, BoardResponse } from 'src/app/models/board.model';
 import { UserService } from 'src/app/auth/service/user.service';
 import { SignUpResponse } from 'src/app/models/auth.model';
+import { BoardId } from '../../../models/ids.model';
 
 @Injectable()
 export class BoardsService {
-
 	constructor(private http: HttpClient, private userService: UserService) {}
 
 	public getAllBoards(): Observable<BoardResponse[]> {
@@ -39,11 +39,17 @@ export class BoardsService {
 		return this.http.get<BoardResponse[]>(`/boardsSet/${userId}`);
 	}
 
-	public getBoardMembers(membersIds: string[]) {
-		let members:SignUpResponse[] = [];
-		membersIds.forEach((userId) =>
-			this.userService.getUser(userId).subscribe((userInfo)=>	members.push(userInfo)));
+	public getBoardMembersByBoardId(boardId: BoardId): SignUpResponse[] {
+		let boardUsers: SignUpResponse[] = [];
 
-		return members;
+		this.getBoardById(boardId).subscribe((board) => {
+			const userIds = board.users;
+
+			userIds.forEach((userId) => {
+				this.userService.getUser(userId).subscribe((userInfo) => boardUsers.push(userInfo));
+			});
+		});
+
+		return boardUsers;
 	}
 }

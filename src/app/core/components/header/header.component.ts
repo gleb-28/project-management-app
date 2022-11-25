@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { CustomTranslationService } from '../../services/custom-translation.service';
+import { Lang } from '../../../models/lang.model';
 import { Store } from '@ngrx/store';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { createBoard } from '../../../store/actions/boards-action/boards.action';
 import { selectIsLogged, selectUser } from '../../../store/selectors/user-selector/user.selector';
 import { logout } from 'src/app/store/actions/user-action/user.action';
-import { Lang } from '../../../models/lang.model';
-import { CustomTranslationService } from '../../services/custom-translation.service';
 
 interface LangSelect {
 	label: 'EN' | 'RU';
@@ -26,12 +26,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
 		{ label: 'EN', lang: 'en' },
 		{ label: 'RU', lang: 'ru' },
 	];
-
 	public selectedLang: Lang = this.customTranslate.getUserLang() as Lang;
 
 	public sideBarIsOpen = false;
 	public createBoardModalIsOpen = false;
 	public createBoardForm!: FormGroup;
+
+	public windowWidth = window.innerWidth;
+	@HostListener('window:resize', ['$event.target']) handleResize(event: Window) {
+		this.windowWidth = event.innerWidth;
+	}
 
 	constructor(private store: Store, private customTranslate: CustomTranslationService) {}
 
@@ -46,6 +50,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	}
 
 	public showCreateBoardModal(): void {
+		if (this.sideBarIsOpen) this.sideBarIsOpen = false;
 		this.createBoardModalIsOpen = true;
 	}
 
@@ -66,6 +71,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	}
 
 	public logout(): void {
+		if (this.sideBarIsOpen) this.sideBarIsOpen = false;
 		this.store.dispatch(logout());
 	}
 

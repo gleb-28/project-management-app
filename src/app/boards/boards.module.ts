@@ -6,13 +6,9 @@ import { ColumnComponent } from './components/column/column.component';
 import { TaskComponent } from './components/task/task.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ButtonModule } from 'primeng/button';
-import { PanelModule } from 'primeng/panel';
-import { TableModule } from 'primeng/table';
-import { TabViewModule } from 'primeng/tabview';
 import { CardModule } from 'primeng/card';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { BoardComponent } from './components/board/board.component';
-import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { FilterByPipe } from './pipes/filter-by-pipe/filter-by.pipe';
 import { StoreModule } from '@ngrx/store';
@@ -37,24 +33,23 @@ import { BoardsRoutingModule } from './boards-routing.module';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { ConfirmationService } from 'primeng/api';
-import { ReactiveFormsModule } from '@angular/forms';
-import { AccordionModule } from 'primeng/accordion';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TaskDragDropService } from './services/task-drag-drop/task-drag-drop.service';
 import { ColumnDragDropService } from './services/column-drag-drop/column-drag-drop.service';
+import { AvatarGroupModule } from 'primeng/avatargroup';
+import { AvatarModule } from 'primeng/avatar';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 const PrimeNgModules = [
 	ButtonModule,
-	DragDropModule,
-	PanelModule,
-	TableModule,
-	TabViewModule,
 	CardModule,
 	SplitButtonModule,
-	CheckboxModule,
 	InputTextModule,
 	ConfirmDialogModule,
 	DialogModule,
-	AccordionModule,
+	InputTextareaModule,
+	AvatarGroupModule,
+	AvatarModule,
 ];
 
 const PageComponents = [MainPageComponent, BoardPageComponent];
@@ -67,6 +62,8 @@ const Components = [BoardComponent, ColumnComponent, TaskComponent];
 		BoardsRoutingModule,
 		ReactiveFormsModule,
 		DragDropModule,
+		ReactiveFormsModule,
+		FormsModule,
 		...PrimeNgModules,
 		StoreModule.forFeature('boards', boardsReducer),
 		StoreModule.forFeature('activeBoard', {
@@ -76,7 +73,6 @@ const Components = [BoardComponent, ColumnComponent, TaskComponent];
 			files: filesReducer,
 		}),
 		EffectsModule.forFeature([BoardsEffect, ActiveBoardEffect, BoardEffect, ColumnsEffect, TasksEffect, FilesEffect]),
-		ReactiveFormsModule,
 	],
 	providers: [
 		BoardsService,

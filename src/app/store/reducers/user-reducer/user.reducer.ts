@@ -21,7 +21,6 @@ export const userReducer = createReducer(
 		userAction.login,
 		userAction.editUser,
 		userAction.deleteUser,
-		userAction.logout,
 		(state): UserState => ({ ...state, status: ReqStatus.Loading }),
 	),
 
@@ -38,7 +37,7 @@ export const userReducer = createReducer(
 	),
 
 	on(
-		userAction.logoutSuccess,
+		userAction.logout,
 		userAction.deleteUserSuccess,
 		(state): UserState => ({ ...state, user: defaultUserState.user, status: ReqStatus.Success, error: null }),
 	),

@@ -24,5 +24,4 @@ export const deleteUserSuccess = createAction('[User] Delete User Success');
 export const deleteUserError = createAction('[User] Delete User Error', props<{ error: ErrorResponse }>());
 
 export const logout = createAction('[User] Logout User');
-export const logoutSuccess = createAction('[User] Logout User Success');
 

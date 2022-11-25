@@ -106,15 +106,16 @@ export default class UserEffect {
 		);
 	});
 
-	logoutUser$ = createEffect(() => {
-		return this.actions$.pipe(
-			ofType(userAction.logout),
-			map(() => {
-				this.localStorage.remove('token');
-				this.router.navigateByUrl('');
-				return userAction.logoutSuccess();
-			}),
-		);
-	});
-
+	logoutUser$ = createEffect(
+		() => {
+			return this.actions$.pipe(
+				ofType(userAction.logout),
+				map(() => {
+					this.localStorage.remove('token');
+					this.router.navigateByUrl('');
+				}),
+			);
+		},
+		{ dispatch: false },
+	);
 }
