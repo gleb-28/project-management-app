@@ -29,7 +29,7 @@ import { BoardEffect } from '../store/effects/active-board-effect/board-effect/b
 import { ColumnsEffect } from '../store/effects/active-board-effect/columns-effect/columns.effect';
 import { TasksEffect } from '../store/effects/active-board-effect/tasks-effect/tasks.effect';
 import { FilesEffect } from '../store/effects/active-board-effect/files-effect/files.effect';
-import { SocketioService } from './services/socketio/socketio.service';
+import { SocketService } from './services/socketio/socket.service';
 import { BoardsRoutingModule } from './boards-routing.module';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
@@ -55,7 +55,6 @@ const PrimeNgModules = [
 
 const PageComponents = [MainPageComponent, BoardPageComponent];
 const Components = [BoardComponent, ColumnComponent, TaskComponent];
-
 
 @NgModule({
 	declarations: [...PageComponents, ...Components, FilterByPipe],
@@ -84,10 +83,9 @@ const Components = [BoardComponent, ColumnComponent, TaskComponent];
 		PointsService,
 		FilterByPipe,
 		ConfirmationService,
-		SocketioService,
+		SocketService,
 		TaskDragDropService,
 		ColumnDragDropService,
-
 	],
 })
-export class BoardsModule { }
+export class BoardsModule {}

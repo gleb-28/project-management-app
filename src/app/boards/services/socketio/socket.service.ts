@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { DefaultEventsMap } from '@socket.io/component-emitter';
 import { io, Socket } from 'socket.io-client';
-import { environment } from 'src/environments/environment';
 import { Store } from '@ngrx/store';
-import { SocketActions, SocketEvents, SocketMessage } from 'src/app/models/socketio.model';
-import { deleteBoardSuccess, getUserBoards } from 'src/app/store/actions/boards-action/boards.action';
+import { selectUserId } from '../../../store/selectors/user-selector/user.selector';
+import { selectActiveBoardFeature } from '../../../store/selectors/active-board-selector/active-board.selector';
+import { SocketActions, SocketEvents, SocketMessage } from '../../../models/socketio.model';
+import { getUser } from '../../../store/actions/user-action/user.action';
+import { deleteBoardSuccess, getUserBoards } from '../../../store/actions/boards-action/boards.action';
 import {
 	deleteColumnSuccess,
 	deleteFileSuccess,
@@ -12,20 +14,15 @@ import {
 	loadColumns,
 	loadFiles,
 	loadTasks,
-} from 'src/app/store/actions/active-board-action/active-board.action';
-import { getUser } from 'src/app/store/actions/user-action/user.action';
-import { selectUserId } from 'src/app/store/selectors/user-selector/user.selector';
-import { ActivatedRoute } from '@angular/router';
-import { selectActiveBoardFeature } from 'src/app/store/selectors/active-board-selector/active-board.selector';
+} from '../../../store/actions/active-board-action/active-board.action';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
 	providedIn: 'root',
 })
-export class SocketioService {
+export class SocketService {
 	private socket: Socket<DefaultEventsMap, DefaultEventsMap> | null = null;
-	private userIdSubscription = this.store
-		.select(selectUserId)
-		.subscribe((userId) => (this.userId = userId));
+	private userIdSubscription = this.store.select(selectUserId).subscribe((userId) => (this.userId = userId));
 
 	private boardIdSubscription = this.store
 		.select(selectActiveBoardFeature)
@@ -34,18 +31,12 @@ export class SocketioService {
 	private userId: string = '';
 	private boardId: string = '';
 
-	constructor(private store: Store, private route: ActivatedRoute) { }
+	constructor(private store: Store) {}
 
 	private isUserExistInList(message: SocketMessage): boolean {
 		const { users, initUser, notify } = message;
 
-		return (
-			!!this.userId &&
-			initUser !== this.userId &&
-			notify &&
-			Array.isArray(users) &&
-			users?.includes(this.userId)
-		);
+		return !!this.userId && initUser !== this.userId && notify && Array.isArray(users) && users?.includes(this.userId);
 	}
 
 	private getUsersMessage(): void {
@@ -130,7 +121,6 @@ export class SocketioService {
 				this.updateTasksData(message);
 			}
 		});
-
 	}
 
 	private updateFilesData(message: SocketMessage): void {
@@ -155,7 +145,6 @@ export class SocketioService {
 				this.updateFilesData(message);
 			}
 		});
-
 	}
 
 	private subscribeAllMessages(): void {
