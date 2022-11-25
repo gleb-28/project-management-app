@@ -3,8 +3,15 @@ import { BoardResponse } from '../../../models/board.model';
 import { Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { Store } from '@ngrx/store';
-import { deleteBoard, updateBoard } from '../../../store/actions/boards-action/boards.action';
+import {
+	deleteBoard,
+	addBoardMember,
+	updateBoard,
+	deleteBoardMember,
+} from '../../../store/actions/boards-action/boards.action';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { SignUpResponse } from 'src/app/models/auth.model';
+import { BoardsService } from '../../services/boards/boards.service';
 
 @Component({
 	selector: 'app-board',
@@ -13,6 +20,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class BoardComponent implements OnInit {
 	@Input() board!: BoardResponse;
+
+	members!: SignUpResponse[];
 
 	public boardActions = [
 		{
@@ -23,10 +32,10 @@ export class BoardComponent implements OnInit {
 			},
 		},
 		{
-			label: 'Add member',
-			icon: 'pi pi-plus',
+			label: 'Members',
+			icon: ' ',
 			command: () => {
-				this.addMember();
+				this.showMembersModal();
 			},
 		},
 		{ separator: true },
@@ -41,8 +50,15 @@ export class BoardComponent implements OnInit {
 
 	public renameBoardModalIsOpen = false;
 	public renameBoardForm!: FormGroup;
+	public addMemberForm!: FormGroup;
+	public membersModalIsOpen = false;
 
-	constructor(private store: Store, private router: Router, private confirmationService: ConfirmationService) {}
+	constructor(
+		private store: Store,
+		private router: Router,
+		private confirmationService: ConfirmationService,
+		private boardsService: BoardsService,
+	) {}
 
 	ngOnInit() {
 		this.renameBoardForm = new FormGroup({
@@ -52,8 +68,17 @@ export class BoardComponent implements OnInit {
 				Validators.maxLength(30),
 			]),
 		});
+
+		this.addMemberForm = new FormGroup({
+			login: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
+		});
+
+		this.members = this.boardsService.getBoardMembersByBoardId(this.board._id);
 	}
 
+	public showMembersModal() {
+		this.membersModalIsOpen = true;
+	}
 	public showRenameBoardModal(): void {
 		this.renameBoardModalIsOpen = true;
 	}
@@ -88,7 +113,39 @@ export class BoardComponent implements OnInit {
 		});
 	}
 
-	private addMember() {}
+	public addMember() {
+		if (this.addMemberForm.valid) {
+			this.store.dispatch(
+				addBoardMember({
+					login: this.addMemberForm.value.login,
+					boardId: this.board._id,
+					boardData: {
+						title: this.board.title,
+						owner: this.board.owner,
+						users: this.board.users,
+					},
+				}),
+			);
+
+			this.addMemberForm.reset();
+		}
+	}
+
+	deleteMember(id: string) {
+		let newMembers = [...this.board.users].filter((idMember) => idMember !== id);
+		this.store.dispatch(
+			deleteBoardMember({
+				members: newMembers,
+				boardId: this.board._id,
+				boardData: {
+					title: this.board.title,
+					owner: this.board.owner,
+					users: this.board.users,
+				},
+			}),
+		);
+		this.membersModalIsOpen = false;
+	}
 
 	public openBoard(): void {
 		this.router.navigateByUrl(`boards/board/${this.board._id}`);

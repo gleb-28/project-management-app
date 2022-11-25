@@ -5,10 +5,11 @@ import { Store } from '@ngrx/store';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { createBoard } from '../../../store/actions/boards-action/boards.action';
 import { selectIsLogged, selectUser } from '../../../store/selectors/user-selector/user.selector';
+import { logout } from 'src/app/store/actions/user-action/user.action';
 
 interface LangSelect {
 	label: 'EN' | 'RU';
-	lang: Lang;
+	lang: 'en' | 'ru';
 }
 
 @Component({
@@ -71,7 +72,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 	public logout(): void {
 		if (this.sideBarIsOpen) this.sideBarIsOpen = false;
-		// TODO: dispatch logout action
+		this.store.dispatch(logout());
 	}
 
 	ngOnDestroy() {
