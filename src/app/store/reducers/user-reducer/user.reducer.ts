@@ -30,11 +30,14 @@ export const userReducer = createReducer(
 		(state, { response }): UserState => ({ ...state, user: response, status: ReqStatus.Success, error: null }),
 	),
 
-	on(userAction.loginSuccess, (state): UserState => ({ ...state, status: ReqStatus.Success, error: null })),
-
-	on(userAction.signUpSuccess, (state): UserState => ({ ...state, status: ReqStatus.Success, error: null })),
+	on(
+		userAction.loginSuccess,
+		userAction.signUpSuccess,
+		(state): UserState => ({ ...state, status: ReqStatus.Success, error: null }),
+	),
 
 	on(
+		userAction.logout,
 		userAction.deleteUserSuccess,
 		(state): UserState => ({ ...state, user: defaultUserState.user, status: ReqStatus.Success, error: null }),
 	),

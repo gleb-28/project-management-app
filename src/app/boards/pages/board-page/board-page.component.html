@@ -1,3 +1,23 @@
+<div class="board-bar" *ngIf="board$ | async as board">
+	<h2 class="board-bar__title">{{ board.title }}</h2>
+	<p-avatarGroup *ngIf="user$ | async as user" class="board-bar__members">
+		<p-avatar label="{{ user.name | slice: 0:1 }}" title="{{ user.name }}({{ user.login }})" size="large"></p-avatar>
+		<ng-container *ngIf="board.users.length">
+			<p-avatar
+				*ngFor="let member of board.users"
+				label="{{ member | slice: 0:1 }}"
+				title="Elon"
+				size="large"></p-avatar>
+		</ng-container>
+	</p-avatarGroup>
+	<input
+		class="board-bar__filter-input"
+		type="text"
+		placeholder="Search by task title"
+		pInputText
+		[(ngModel)]="tasksFilter" />
+</div>
+
 <div
 	class="columns-wrapper"
 	cdkDropListGroup="task"
@@ -17,6 +37,7 @@
 	<button
 		(click)="showCreateColumnModal()"
 		pButton
+		title="Create column"
 		type="button"
 		icon="pi pi-plus"
 		class="p-button-rounded add-column-button"></button>
@@ -25,19 +46,20 @@
 <!--Create column modal-->
 <p-dialog header="Column title" [(visible)]="createColumnModalIsOpen">
 	<form [formGroup]="createColumnForm" (submit)="createColumnSubmit()">
-		<span class="p-float-label">
-			<input id="column-title" formControlName="columnTitle" type="text" pInputText />
-			<label for="column-title">Column title</label>
-		</span>
-		<small *ngIf="createColumnForm.controls['columnTitle'].hasError('required')" class="p-error block"
-			>Please enter column title</small
-		>
-		<small *ngIf="createColumnForm.controls['columnTitle'].hasError('minlength')" class="p-error block"
-			>Minimum length is 3 characters</small
-		>
-		<small *ngIf="createColumnForm.controls['columnTitle'].hasError('maxlength')" class="p-error block"
-			>Maximum length is 30 characters</small
-		>
-		<button pButton type="submit" label="Create"></button>
+		<input class="dialog-form__input" formControlName="columnTitle" type="text" pInputText />
+
+		<div class="dialog-form__error-wrapper">
+			<small *ngIf="createColumnForm.controls['columnTitle'].hasError('required')" class="p-error block"
+				>Please enter column title</small
+			>
+			<small *ngIf="createColumnForm.controls['columnTitle'].hasError('minlength')" class="p-error block"
+				>Minimum length is 3 characters</small
+			>
+			<small *ngIf="createColumnForm.controls['columnTitle'].hasError('maxlength')" class="p-error block"
+				>Maximum length is 30 characters</small
+			>
+		</div>
+
+		<button pButton class="p-button-outlined" type="submit" label="Create"></button>
 	</form>
 </p-dialog>

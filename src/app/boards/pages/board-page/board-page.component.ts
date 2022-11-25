@@ -8,6 +8,8 @@ import { ColumnResponse } from '../../../models/column.model';
 import { ColumnDragDropService } from '../../services/column-drag-drop/column-drag-drop.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { map, take } from 'rxjs';
+import { selectBoard } from '../../../store/selectors/active-board-selector/board-selector/board.selector';
+import { selectUser } from '../../../store/selectors/user-selector/user.selector';
 
 @Component({
 	selector: 'app-board-page',
@@ -16,21 +18,23 @@ import { map, take } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BoardPageComponent implements OnInit, OnDestroy {
-	boardId = this.route.snapshot.params['boardId'];
-	columns$ = this.store.select(selectColumns);
-	columnsAmountSubscription = this.columns$.subscribe((columns) => (this.columnsAmount = columns.length));
-	columnsAmount = 0;
+	public user$ = this.store.select(selectUser);
+	private boardId = this.route.snapshot.params['boardId'];
+	public board$ = this.store.select(selectBoard);
+	public columns$ = this.store.select(selectColumns);
+	private columnsAmountSubscription = this.columns$.subscribe((columns) => (this.columnsAmount = columns.length));
+	private columnsAmount = 0;
 
 	public createColumnModalIsOpen = false;
 	public createColumnForm!: FormGroup;
 
-	// draggedColumn: ColumnResponse | null = null;
+	public tasksFilter = '';
 
 	constructor(
 		private store: Store,
 		private route: ActivatedRoute,
 		private columnDragDropService: ColumnDragDropService,
-	) { }
+	) {}
 
 	ngOnInit() {
 		this.store.dispatch(openBoard({ boardId: this.boardId }));
