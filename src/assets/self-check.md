@@ -1,5 +1,5 @@
 1. Task: https://github.com/rolling-scopes-school/js-fe-course-en/blob/main/tasks/angular/project-management-system.md
-2. Screenshot: ![image](https://user-images.githubusercontent.com/85630053/203555778-994b9625-3e89-4940-869b-bff3e13a3648.png)
+2. Screenshot: ![image](../assets/img/main-screen.jpg)
 3. Deploy: [kanban-back.onrender.com](https://kanban-back.onrender.com/)
 4. Score 620/620
 5. Done / 27.11.2022 22:59
