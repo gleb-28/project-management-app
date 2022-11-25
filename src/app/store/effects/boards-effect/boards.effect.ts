@@ -8,7 +8,7 @@ import { UserService } from 'src/app/auth/service/user.service';
 import { SignUpResponse } from 'src/app/models/auth.model';
 import { BoardRequest } from 'src/app/models/board.model';
 import { HandleErrorResponseService } from 'src/app/core/services/handle-error-response.service';
-import { ERROR_MESSAGE } from 'src/app/constants/constants';
+import { ErrorMessageService } from '../../../core/services/error-message/error-message.service';
 
 @Injectable()
 export class BoardsEffect {
@@ -17,6 +17,7 @@ export class BoardsEffect {
 		private boardsService: BoardsService,
 		private userService: UserService,
 		private errorService: HandleErrorResponseService,
+		private errorMessageService: ErrorMessageService,
 	) {}
 
 	getBoards$ = createEffect(() => {
@@ -89,7 +90,7 @@ export class BoardsEffect {
 							newBoardData.users = [...newBoardData.users, user._id];
 							return newBoardData;
 						} else {
-							this.errorService.sendData(ERROR_MESSAGE['LOGIN_DOES_NOT_EXIST']);
+							this.errorService.sendData(this.errorMessageService.getError('LOGIN_DOES_NOT_EXIST'));
 						}
 						return newBoardData;
 					}),
