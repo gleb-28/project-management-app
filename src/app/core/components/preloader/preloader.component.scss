@@ -1,4 +1,4 @@
-@forward 'src/styles';
+@forward '../../../../styles';
 
 .wrapper {
 	background: white;
@@ -18,7 +18,7 @@
 		height: 200px;
 	}
 	::ng-deep .p-progress-spinner-circle {
-		stroke: black;
+		stroke: var(--primary);
 		animation: none;
 	}
 }

@@ -1,54 +1,91 @@
 :host {
-  flex: 0 0 300px;
+	flex: 0 0 300px;
+	max-width: 300px;
 
-  .column-header {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    background-color: var(--gray-800);
-    width: 100%;
-    height: 50px;
-    border-radius: 5px;
-    padding: 0 5px;
-    color: white;
-  }
+	.column-header {
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+		color: var(--primary);
+		background-color: var(--secondary);
+		width: 100%;
+		padding: 0.5rem;
+		border: 1px solid var(--extra);
+		border-radius: var(--b-radius);
+		margin-bottom: 0.5rem;
+	}
 
-  .column-title {
-    user-select: none;
-  }
+	.column-title {
+		margin-left: 0.5rem;
+		user-select: none;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
 
-  .column-body {
-    height: 82vh;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    align-items: center;
-  }
+	.column-buttons {
+		display: flex;
+		flex-wrap: nowrap;
+	}
 
-  .tasks {
-    overflow-y: auto;
-    display: flex;
-    gap: 0.5rem;
-    flex: 1 1 95%;
-    flex-direction: column;
-    justify-content: flex-start;
-    border-radius: 2px;
-    width: 100%;
+	.column-body {
+		height: 76vh;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		padding-bottom: 0.5rem;
+		align-items: center;
+	}
 
+	.tasks {
+		overflow-y: auto;
+		display: flex;
+		gap: 0.5rem;
+		flex: 1 1 95%;
+		flex-direction: column;
+		justify-content: flex-start;
+		border-radius: 2px;
+		width: 100%;
+		overflow-x: hidden;
 
-    &.cdk-drop-list-dragging .task:not(.cdk-drag-placeholder) {
-      transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-    }
-  }
+		&.cdk-drop-list-dragging .task:not(.cdk-drag-placeholder) {
+			transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+		}
+	}
 
-  .task {
-    display: flex;
-    cursor: move;
-  }
+	.task {
+		display: flex;
+	}
 
-  .column-buttons {
-    margin-left: auto;
-  }
+	.handle-wrapper {
+		position: absolute;
+		inset: 0;
+		cursor: move;
+	}
+
+	.column-buttons {
+		margin-left: auto;
+	}
+
+	.create-task-button {
+		width: 2rem;
+		padding: 0;
+	}
+
+	.dialog-form {
+		&__input {
+			margin-bottom: 1rem;
+			&--description {
+				min-height: 6rem;
+			}
+		}
+		&__error-wrapper {
+			position: relative;
+			bottom: 8px;
+			text-align: left;
+		}
+		&__submit-button {
+			display: block;
+		}
+	}
 }
-
-
