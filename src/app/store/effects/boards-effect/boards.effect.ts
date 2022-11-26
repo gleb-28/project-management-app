@@ -4,12 +4,11 @@ import { ErrorResponse } from '@app/models/error.model';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, of, switchMap } from 'rxjs';
 import * as fromBoards from '@app/store/actions/boards-action/boards.action';
-import { UserService } from '@app/auth/service/user.service';
+import { UserService } from '@app/auth/service/user-service/user.service';
 import { HandleErrorResponseService } from '@app/core/services/handle-error-response/handle-error-response.service';
 import { SignUpResponse } from '@app/models/auth.model';
 import { BoardRequest } from '@app/models/board.model';
-import { ErrorMessageService } from '@app/core/services/error-message/error-message.service';
-
+import { TranslateUiService } from '@app/core/services/translate-ui/translate-ui.service';
 
 @Injectable()
 export class BoardsEffect {
@@ -18,7 +17,7 @@ export class BoardsEffect {
 		private boardsService: BoardsService,
 		private userService: UserService,
 		private errorService: HandleErrorResponseService,
-		private errorMessageService: ErrorMessageService,
+		private errorMessageService: TranslateUiService,
 	) {}
 
 	public getBoards$ = createEffect(() => {

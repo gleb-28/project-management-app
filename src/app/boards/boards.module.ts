@@ -39,10 +39,10 @@ import { ColumnDragDropService } from './services/column-drag-drop/column-drag-d
 import { ColumnsService } from './services/columns/columns.service';
 import { FilesService } from './services/files/files.service';
 import { PointsService } from './services/points/points.service';
-import { SocketService } from './services/socketio/socket.service';
+import { SocketService } from './services/socket/socket.service';
 import { TaskDragDropService } from './services/task-drag-drop/task-drag-drop.service';
 import { TasksService } from './services/tasks/tasks.service';
-import { MultiSelectModule } from 'primeng/multiselect';
+import { TranslateModule } from '@ngx-translate/core';
 
 const PrimeNgModules = [
 	ButtonModule,
@@ -66,6 +66,7 @@ const Components = [BoardComponent, ColumnComponent, TaskComponent];
 		BoardsRoutingModule,
 		ReactiveFormsModule,
 		DragDropModule,
+		TranslateModule,
 		ReactiveFormsModule,
 		FormsModule,
 		...PrimeNgModules,
@@ -86,7 +87,6 @@ const Components = [BoardComponent, ColumnComponent, TaskComponent];
 			TasksEffect,
 			FilesEffect,
 		]),
-		MultiSelectModule,
 	],
 	providers: [
 		BoardsService,

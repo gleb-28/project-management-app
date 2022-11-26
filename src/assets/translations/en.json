@@ -11,9 +11,13 @@
   },
   "ERROR_INPUTS": {
     "NAME_REQUIRED": "Please enter a name",
-    "MIN_LENGTH": "At least 3 characters",
+    "BOARD_REQUIRED": "Please enter board title",
     "LOGIN_REQUIRED": "Please enter a login",
     "PASSWORD_REQUIRED": "Please enter a password",
+    "COLUMN_REQUIRED": "Please enter column title",
+    "TASK_REQUIRED": "Please enter task title",
+    "MIN_LENGTH": "At least 3 characters",
+    "MAX_LENGTH": "Maximum length is 30 characters",
     "PASSWORD_LENGTH": "At least 8 characters",
     "PASSWORD_REGISTER": "At least one lowercase or at least one uppercase",
     "PASSWORD_NUMBER": "At least one numeric or one letters",
@@ -52,5 +56,41 @@
       "UPDATE": "Update ",
       "DELETE": "Delete profile"
     }
+  },
+  "COMMON":{
+    "DELETE": "Delete",
+    "RENAME": "Rename",
+    "CONFIRMATION": "Confirmation",
+    "ADD": "Add",
+    "CREATE": "Create",
+    "NOT_FOUND": "Not Found..."
+
+  },
+  "BOARD":{
+    "RENAME": "Rename board title",
+    "MEMBERS": "Members",
+    "ADD_MEMBER": "Add new member",
+    "LOGIN_MEMBER": "Login member",
+    "SEARCH": "Search by board title",
+    "CREATE": "Create new board"
+
+
+  },
+  "COLUMN": {
+    "TITLE": "Column title",
+    "RENAME": "Rename column",
+    "DELETE": "Delete column",
+    "CREATE": "Create column"
+
+  },
+  "TASK": {
+    "SEARCH": "Search by task title",
+    "CREATE": "Create task",
+    "TITLE": "Task title",
+    "DESCRIPTION": "Task description",
+    "EDIT": "Edit task",
+    "DELETE": "Delete task",
+    "ASSIGN": "Assign member"
   }
+
 }

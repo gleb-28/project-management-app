@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { TranslateUiService } from '@app/core/services/translate-ui/translate-ui.service';
 import { SignUpResponse } from '@app/models/auth.model';
 import { TaskResponse } from '@app/models/task.model';
 import { updateTask, deleteTask } from '@app/store/actions/active-board-action/active-board.action';
@@ -15,7 +16,6 @@ import { selectUser } from '@app/store/selectors/user-selector/user.selector';
 	styleUrls: ['./task.component.scss'],
 })
 export class TaskComponent implements OnInit {
-
 	@Input() task!: TaskResponse;
 	private user!: SignUpResponse;
 	private userSubscription!: Subscription;
@@ -29,7 +29,12 @@ export class TaskComponent implements OnInit {
 
 	@Output() taskDelete: EventEmitter<number> = new EventEmitter();
 
-	constructor(private store: Store, private confirmationService: ConfirmationService, private cdr: ChangeDetectorRef) {}
+	constructor(
+		private store: Store,
+		private confirmationService: ConfirmationService,
+		private cdr: ChangeDetectorRef,
+		private errorMessage: TranslateUiService,
+	) {}
 
 	public ngOnInit(): void {
 		this.editTaskForm = new FormGroup({
@@ -137,7 +142,7 @@ export class TaskComponent implements OnInit {
 
 	public deleteTask(): void {
 		this.confirmationService.confirm({
-			message: `Are you sure that you want to delete "${this.task.title}" task?`,
+			message: this.errorMessage.getConfirmMessage(this.task.title),
 			accept: () => {
 				this.store.dispatch(
 					deleteTask({
