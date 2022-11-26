@@ -1,5 +1,5 @@
 ### Hi everyone 👋,
-We'd like to represent our project management app - [Pure Kanban](https://kanban-back.onrender.com) &nbsp; [![Render Badge](https://img.shields.io/badge/-blue?style=flat&logo=Render&logoColor=white)](https://kanban-back.onrender.com), 
+We'd like to represent our project management app - [Pure Kanban](https://project-management-app.onrender.com/) [![Render Badge](https://img.shields.io/badge/-blue?style=flat&logo=Render&logoColor=white)](https://project-management-app.onrender.com/), 
 as a final task on Angular course by <a href="https://rs.school/"> the Rolling Scopes School</a>.
 
 With a team of four developers and a mentor we have created a prototype of the application with an ability to manage a developing process by creating boards, columns and tasks with an appointment of responsible executors, like it's done in <a href="https://www.atlassian.com/ru/software/jira">Jira</a>, <a href="https://trello.com/">Trello</a> and many others.
