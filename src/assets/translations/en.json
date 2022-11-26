@@ -89,7 +89,8 @@
     "TITLE": "Task title",
     "DESCRIPTION": "Task description",
     "EDIT": "Edit task",
-    "DELETE": "Delete task"
+    "DELETE": "Delete task",
+    "ASSIGN": "Assign member"
   }
 
 }

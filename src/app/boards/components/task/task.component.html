@@ -67,18 +67,18 @@
 	</form>
 	<div>
 		<form class="dialog-form dialog-form--add-member" [formGroup]="assignMemberForm" (submit)="assignMember()">
-			<h3 class="dialog-form__title">Assign member</h3>
+			<h3 class="dialog-form__title">{{'TASK.ASSIGN'| translate}}</h3>
 			<input class="dialog-form__input" id="add-member" formControlName="login" type="text" pInputText />
 
 			<div class="dialog-form__error-wrapper">
 				<small *ngIf="assignMemberForm.controls['login'].hasError('required')" class="p-error block"
-					>Please enter login</small
+					>{{'ERROR_INPUTS.LOGIN_REQUIRED'| translate}}</small
 				>
 				<small *ngIf="assignMemberForm.controls['login'].hasError('minlength')" class="p-error block"
-					>Minimum length is 3 characters</small
+					>{{'ERROR_INPUTS.MIN_LENGTH'| translate}}</small
 				>
 			</div>
-			<button pButton class="p-button-outlined" type="submit" label="Add"></button>
+			<button pButton class="p-button-outlined" type="submit" label="{{'COMMON.ADD'| translate}}"></button>
 		</form>
 	</div>
 </p-dialog>
