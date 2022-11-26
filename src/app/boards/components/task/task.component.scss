@@ -22,6 +22,10 @@
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
+
+		&__buttons {
+			display: flex;
+		}
 	}
 
 	::ng-deep .p-card {
