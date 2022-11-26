@@ -48,13 +48,46 @@
 		z-index: 2;
 	}
 
+	.members {
+		margin-bottom: 1rem;
+		display: flex;
+		gap: 0.3rem;
+
+		&__member {
+			position: relative;
+			display: inline-block;
+		}
+
+		&__delete-button {
+			position: absolute;
+			right: 0;
+			top: 0;
+			padding: 0;
+			width: 15px;
+			height: 15px;
+		}
+	}
+
+	.p-button-rounded {
+	}
+
+	.p-button-text {
+	}
+
 	.dialog-form {
+		&__title {
+			margin-bottom: 1rem;
+		}
 		&__input {
 			margin-bottom: 1rem;
 			&--description {
 				min-height: 6rem;
 			}
 		}
+		&--add-member {
+			margin-top: 1rem;
+		}
+
 		&__error-wrapper {
 			position: relative;
 			bottom: 8px;

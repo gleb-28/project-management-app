@@ -8,7 +8,31 @@
 		}
 	}
 
+	.members {
+		margin-bottom: 2rem;
+		&__item {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 1rem;
+			flex-wrap: wrap;
+			color: var(--text);
+			margin-bottom: 1rem;
+		}
+
+		&__member {
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			gap: 0.5rem;
+		}
+	}
+
 	.dialog-form {
+		&__title {
+			margin-bottom: 1rem;
+		}
+
 		&__input {
 			margin-bottom: 1rem;
 		}
@@ -19,15 +43,4 @@
 			text-align: left;
 		}
 	}
-}
-
-.member{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-
-.addForm{
-  padding: 2rem ;
 }

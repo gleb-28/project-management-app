@@ -19,18 +19,31 @@
 				class="p-button-rounded p-button-text"></button>
 		</div>
 	</div>
-	<ng-container *ngIf="assignedUsers.length">
+	<ng-container>
 		<p-avatarGroup>
 			<p-avatar
-				*ngFor="let user of assignedUsers"
-				label="{{ user.name | slice: 0:1 }}"
-				title="{{ user.name }}({{ user.login }})"></p-avatar>
+				*ngFor="let assignedMember of assignedMembers"
+				label="{{ assignedMember.name | slice: 0:1 }}"
+				title="{{ assignedMember.name }}({{ assignedMember.login }})"></p-avatar>
 		</p-avatarGroup>
 	</ng-container>
 </p-card>
 
 <!--Edit task modal-->
-<p-dialog header="Edit task" [(visible)]="editTaskModalIsOpen" [draggable]="false">
+<p-dialog header="Edit task" [(visible)]="editTaskModalIsOpen" [breakpoints]="{ '500px': '90vw' }" [draggable]="false">
+	<div class="members">
+		<div class="members__member" *ngFor="let assignedMember of assignedMembers">
+			<p-avatar
+				label="{{ assignedMember.name | slice: 0:1 }}"
+				title="{{ assignedMember.name }}({{ assignedMember.login }})"></p-avatar>
+			<button
+				pButton
+				class="members__delete-button p-button-rounded p-button-text"
+				type="button"
+				icon="pi pi-times"
+				(click)="deleteMember(assignedMember._id)"></button>
+		</div>
+	</div>
 	<form [formGroup]="editTaskForm" (submit)="editTaskSubmit()">
 		<input class="dialog-form__input" placeholder="Task title" formControlName="taskTitle" type="text" pInputText />
 		<div class="dialog-form__error-wrapper">
@@ -52,6 +65,22 @@
 			[autoResize]="true"></textarea>
 		<button pButton class="dialog-form__submit-button" type="submit" label="Edit task"></button>
 	</form>
+	<div>
+		<form class="dialog-form dialog-form--add-member" [formGroup]="assignMemberForm" (submit)="assignMember()">
+			<h3 class="dialog-form__title">Assign member</h3>
+			<input class="dialog-form__input" id="add-member" formControlName="login" type="text" pInputText />
+
+			<div class="dialog-form__error-wrapper">
+				<small *ngIf="assignMemberForm.controls['login'].hasError('required')" class="p-error block"
+					>Please enter login</small
+				>
+				<small *ngIf="assignMemberForm.controls['login'].hasError('minlength')" class="p-error block"
+					>Minimum length is 3 characters</small
+				>
+			</div>
+			<button pButton class="p-button-outlined" type="submit" label="Add"></button>
+		</form>
+	</div>
 </p-dialog>
 
 <!--Delete task confirm modal-->
