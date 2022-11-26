@@ -267,6 +267,7 @@ body {
 ::ng-deep .p-avatar {
 	background-color: var(--dark-gray);
 	border-radius: var(--b-radius);
+	cursor: default;
 }
 
 .cdk-drag-preview {
