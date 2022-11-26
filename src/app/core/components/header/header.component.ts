@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { CustomTranslationService } from '@app/core/services/custom-translation.service';
+import { ValidTokenService } from '@app/core/services/valid-token.service';
 import { Lang } from '@app/models/lang.model';
 import { createBoard } from '@app/store/actions/boards-action/boards.action';
 import { logout } from '@app/store/actions/user-action/user.action';
@@ -38,11 +39,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
 		this.windowWidth = event.innerWidth;
 	}
 
-	constructor(private store: Store, private customTranslate: CustomTranslationService) {}
+	constructor(private store: Store, private customTranslate: CustomTranslationService, private validTokenService: ValidTokenService) {}
 
 	ngOnInit() {
 		this.createBoardForm = new FormGroup({
 			boardTitle: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
+		});
+		this.validTokenService.validToken.subscribe(response => {
+			if ( response === 403) {
+				this.logout();
+			}
 		});
 	}
 
