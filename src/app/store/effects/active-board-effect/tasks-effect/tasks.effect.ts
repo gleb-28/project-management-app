@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
+import { TasksService } from '@app/boards/services/tasks/tasks.service';
+import { ErrorResponse } from '@app/models/error.model';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { TasksService } from '../../../../boards/services/tasks/tasks.service';
 import { catchError, map, mergeMap, of, switchMap } from 'rxjs';
-import { ErrorResponse } from '../../../../models/error.model';
-import * as fromBoard from '../../../actions/active-board-action/active-board.action';
+import * as fromBoard from '@app/store/actions/active-board-action/active-board.action';
 
 @Injectable()
 export class TasksEffect {
 	constructor(private actions$: Actions, private tasksService: TasksService) {}
 
-	loadTasks$ = createEffect(() => {
+	public loadTasks$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(fromBoard.loadTasks),
 			switchMap(({ boardId }) => {
@@ -22,7 +22,7 @@ export class TasksEffect {
 		);
 	});
 
-	createTask$ = createEffect(() => {
+	public createTask$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(fromBoard.createTask),
 			mergeMap(({ boardId, columnId, taskData }) => {
@@ -35,7 +35,7 @@ export class TasksEffect {
 		);
 	});
 
-	updateTask$ = createEffect(() => {
+	public updateTask$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(fromBoard.updateTask),
 			mergeMap(({ boardId, columnId, taskId, taskData }) => {
@@ -48,7 +48,7 @@ export class TasksEffect {
 		);
 	});
 
-	deleteTask$ = createEffect(() => {
+	public deleteTask$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(fromBoard.deleteTask),
 			mergeMap(({ boardId, columnId, taskId }) => {

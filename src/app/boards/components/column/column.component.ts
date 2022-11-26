@@ -1,21 +1,22 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { TaskResponse } from '../../../models/task.model';
-import { Store } from '@ngrx/store';
-import { selectTasksByColumnId } from '../../../store/selectors/active-board-selector/tasks-selector/tasks.selector';
-import { map, Observable, Subscription, take } from 'rxjs';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {
-	createTask,
-	deleteColumn,
-	updateColumn,
-	updateTask,
-} from '../../../store/actions/active-board-action/active-board.action';
-import { ColumnResponse } from '../../../models/column.model';
-import { selectUserId } from '../../../store/selectors/user-selector/user.selector';
-import { TaskDragDropService } from '../../services/task-drag-drop/task-drag-drop.service';
-import { ColumnId } from '../../../models/ids.model';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { Component, ChangeDetectionStrategy, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { TaskDragDropService } from '@app/boards/services/task-drag-drop/task-drag-drop.service';
+import { TranslateUiService } from '@app/core/services/translate-ui/translate-ui.service';
+import { ColumnResponse } from '@app/models/column.model';
+import { ColumnId } from '@app/models/ids.model';
+import { TaskResponse } from '@app/models/task.model';
+import {
+	updateColumn,
+	deleteColumn,
+	createTask,
+	updateTask,
+} from '@app/store/actions/active-board-action/active-board.action';
+import { selectTasksByColumnId } from '@app/store/selectors/active-board-selector/tasks.selector';
+import { selectUserId } from '@app/store/selectors/user-selector/user.selector';
+import { Store } from '@ngrx/store';
 import { ConfirmationService } from 'primeng/api';
+import { Observable, Subscription, take, map } from 'rxjs';
 
 @Component({
 	selector: 'app-column',
@@ -25,6 +26,7 @@ import { ConfirmationService } from 'primeng/api';
 })
 export class ColumnComponent implements OnInit, OnDestroy {
 	@Input() column!: ColumnResponse;
+	@Input() tasksFilter!: string;
 
 	private userId = '';
 	private userIdSubscription = this.store.select(selectUserId).subscribe((userId) => (this.userId = userId));
@@ -44,9 +46,10 @@ export class ColumnComponent implements OnInit, OnDestroy {
 		private store: Store,
 		private taskDragDropService: TaskDragDropService,
 		private confirmationService: ConfirmationService,
+		private translateUiService: TranslateUiService,
 	) {}
 
-	ngOnInit() {
+	public ngOnInit(): void {
 		this.tasks$ = this.store.select(selectTasksByColumnId(this.column._id));
 		this.tasksAmountSubscription = this.tasks$.subscribe((tasks) => (this.tasksAmount = tasks.length));
 
@@ -91,7 +94,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
 	public deleteColumn(): void {
 		this.confirmationService.confirm({
-			message: `Are you sure that you want to delete "${this.column.title}" column?`,
+			message: this.translateUiService.getConfirmMessage(this.column.title),
 			accept: () => {
 				this.store.dispatch(deleteColumn({ boardId: this.column.boardId, columnId: this.column._id }));
 				this.columnDelete.emit(this.column.order);
@@ -160,7 +163,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
 			});
 	}
 
-	ngOnDestroy() {
+	public ngOnDestroy(): void {
 		this.tasksAmountSubscription.unsubscribe();
 		this.userIdSubscription.unsubscribe();
 	}

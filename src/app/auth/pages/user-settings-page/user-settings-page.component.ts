@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CustomValidator } from '@app/auth/validator';
+import { editUser, deleteUser } from '@app/store/actions/user-action/user.action';
+import { User } from '@app/store/models/user.state';
+import { selectUser } from '@app/store/selectors/user-selector/user.selector';
 import { Store } from '@ngrx/store';
-import { deleteUser, editUser } from 'src/app/store/actions/user-action/user.action';
-import { User } from 'src/app/store/models/user.state';
-import { selectUser } from 'src/app/store/selectors/user-selector/user.selector';
-import { CustomValidator } from '../../validator';
 
 @Component({
 	selector: 'app-user-settings-page',
@@ -12,7 +12,7 @@ import { CustomValidator } from '../../validator';
 	styleUrls: ['./user-settings-page.component.scss'],
 })
 export class UserSettingsPageComponent implements OnInit {
-	user!: User;
+	public user!: User;
 
 	public updateForm!: FormGroup;
 
@@ -33,17 +33,17 @@ export class UserSettingsPageComponent implements OnInit {
 		});
 	}
 
-	public onSubmit() {
+	public onSubmit():void {
 		if (this.updateForm.valid) {
 			this.store.dispatch(editUser({ request: this.updateForm.value }));
 		}
 	}
 
-	public deleteUser() {
+	public deleteUser(): void {
 		this.store.dispatch(deleteUser());
 	}
 
-	public isValid(type: string, error: string) {
+	public isValid(type: string, error: string): boolean {
 		return this.updateForm.controls[type].errors?.[error] && this.updateForm.controls[type].touched;
 	}
 }

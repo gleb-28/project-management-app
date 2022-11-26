@@ -1,10 +1,11 @@
+import { SignUpResponse } from '@app/models/auth.model';
+import { BoardResponse } from '@app/models/board.model';
+import { ColumnResponse, ColumnRequest } from '@app/models/column.model';
+import { ErrorResponse } from '@app/models/error.model';
+import { FileResponse } from '@app/models/file.model';
+import { BoardId, ColumnId, TaskId, FileId } from '@app/models/ids.model';
+import { TaskResponse, TaskRequest } from '@app/models/task.model';
 import { createAction, props } from '@ngrx/store';
-import { ErrorResponse } from '../../../models/error.model';
-import { BoardResponse } from '../../../models/board.model';
-import { ColumnRequest, ColumnResponse } from '../../../models/column.model';
-import { TaskRequest, TaskResponse } from '../../../models/task.model';
-import { FileResponse } from '../../../models/file.model';
-import { BoardId, ColumnId, FileId, TaskId } from '../../../models/ids.model';
 
 // Board
 export const openBoard = createAction('[Board] Open board', props<{ boardId: BoardId }>());
@@ -12,6 +13,11 @@ export const openBoard = createAction('[Board] Open board', props<{ boardId: Boa
 export const loadBoard = createAction('[Board] Load board', props<{ boardId: BoardId }>());
 export const loadBoardSuccess = createAction('[Board] Load board success', props<{ board: BoardResponse }>());
 export const loadBoardError = createAction('[Board] Load board error-toast', props<{ error: ErrorResponse }>());
+
+// Members
+export const loadMembers = createAction('[Board] Load members', props<{ boardId: BoardId }>());
+export const loadMembersSuccess = createAction('[Board] Load members success', props<{ members: SignUpResponse[] }>());
+export const loadMembersError = createAction('[Board] Load members error-toast', props<{ error: ErrorResponse }>());
 
 // Columns
 export const loadColumns = createAction('[Board] Load columns', props<{ boardId: BoardId }>());

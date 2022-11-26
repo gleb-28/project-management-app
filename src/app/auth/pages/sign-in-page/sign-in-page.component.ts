@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CustomValidator } from '@app/auth/validator';
+import { login } from '@app/store/actions/user-action/user.action';
 import { Store } from '@ngrx/store';
-import { login } from 'src/app/store/actions/user-action/user.action';
-import { CustomValidator } from '../../validator';
 
 @Component({
 	selector: 'app-sign-in-page',
@@ -12,7 +12,7 @@ import { CustomValidator } from '../../validator';
 export class SignInPageComponent {
 	constructor(private store: Store) {}
 
-	loginForm: FormGroup = new FormGroup({
+	public loginForm: FormGroup = new FormGroup({
 		login: new FormControl('', [Validators.required, Validators.minLength(3)]),
 		password: new FormControl('', [
 			Validators.required,
@@ -23,13 +23,13 @@ export class SignInPageComponent {
 		]),
 	});
 
-	public login() {
+	public login(): void {
 		if (this.loginForm.valid) {
 			this.store.dispatch(login({ request: this.loginForm.value }));
 		}
 	}
 
-	public isValid(type: string, error: string) {
+	public isValid(type: string, error: string): boolean {
 		return this.loginForm.controls[type].errors?.[error] && this.loginForm.controls[type].touched;
 	}
 }

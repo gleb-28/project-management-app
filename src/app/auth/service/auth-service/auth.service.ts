@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import { SignInRequest, SignInResponse, SignUpRequest, SignUpResponse } from 'src/app/models/auth.model';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { LocalStorageService } from '@app/core/services/local-storage/local-storage.service';
+import { SignUpRequest, SignUpResponse, SignInRequest, SignInResponse } from '@app/models/auth.model';
 import { Observable } from 'rxjs';
-import { LocalStorageService } from 'src/app/core/services/local-storage.service';
 
 
 interface DecoderToken {
@@ -26,12 +26,6 @@ export class AuthService {
 	public login(userData: SignInRequest): Observable<SignInResponse> {
 		return this.http.post<SignInResponse>('/auth/signin', userData);
 	}
-
-	logout() {
-		this.LocalStorage.remove('token');
-		//this.router.navigateByUrl('/welcom')
-	}
-
 
 	// get idea from  https://stackoverflow.com/questions/38552003/how-to-decode-jwt-token-in-javascript-without-using-a-library
 	getIdFromToken(): string  {

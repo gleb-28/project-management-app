@@ -1,7 +1,7 @@
+import { SignUpResponse, SignInRequest, SignUpRequest } from '@app/models/auth.model';
+import { ErrorResponse } from '@app/models/error.model';
+import { UserRequest, UserResponse } from '@app/models/user.model';
 import { createAction, props } from '@ngrx/store';
-import { SignInRequest, SignUpRequest, SignUpResponse } from 'src/app/models/auth.model';
-import { ErrorResponse } from 'src/app/models/error.model';
-import { UserRequest, UserResponse } from 'src/app/models/user.model';
 
 export const getUser = createAction('[User] Get User');
 export const getUserSuccess = createAction('[User] Get User Success', props<{ response: SignUpResponse }>());
@@ -22,3 +22,6 @@ export const editUserError = createAction('[User] Edit User Error', props<{ erro
 export const deleteUser = createAction('[User] Delete User');
 export const deleteUserSuccess = createAction('[User] Delete User Success');
 export const deleteUserError = createAction('[User] Delete User Error', props<{ error: ErrorResponse }>());
+
+export const logout = createAction('[User] Logout User');
+

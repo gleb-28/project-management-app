@@ -1,9 +1,9 @@
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
-import { ColumnResponse } from '../../../../models/column.model';
-import { ColumnsState } from '../../../models/active-board.state';
-import { ReqStatus } from '../../../enums/req-status';
 import { createReducer, on } from '@ngrx/store';
-import * as fromBoard from '../../../actions/active-board-action/active-board.action';
+import * as fromBoard from '@app/store/actions/active-board-action/active-board.action';
+import { ColumnResponse } from '@app/models/column.model';
+import { ReqStatus } from '@app/store/enums/req-status';
+import { ColumnsState } from '@app/store/models/active-board.state';
 
 export const columnsAdapter: EntityAdapter<ColumnResponse> = createEntityAdapter<ColumnResponse>({
 	selectId: (column) => column._id,

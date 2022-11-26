@@ -1,13 +1,16 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { selectColumns } from '../../../store/selectors/active-board-selector/columns-selector/columns.selector';
-import { createColumn, openBoard, updateColumn } from '../../../store/actions/active-board-action/active-board.action';
-import { ActivatedRoute } from '@angular/router';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ColumnResponse } from '../../../models/column.model';
-import { ColumnDragDropService } from '../../services/column-drag-drop/column-drag-drop.service';
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { map, take } from 'rxjs';
+import { Component, ChangeDetectionStrategy, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { ColumnDragDropService } from '@app/boards/services/column-drag-drop/column-drag-drop.service';
+import { ColumnResponse } from '@app/models/column.model';
+import { openBoard, createColumn, updateColumn } from '@app/store/actions/active-board-action/active-board.action';
+import { selectBoard } from '@app/store/selectors/active-board-selector/board.selector';
+import { selectColumns } from '@app/store/selectors/active-board-selector/columns.selector';
+import { selectMembers } from '@app/store/selectors/active-board-selector/members.selector';
+import { selectUser } from '@app/store/selectors/user-selector/user.selector';
+import { Store } from '@ngrx/store';
+import { take, map } from 'rxjs';
 
 @Component({
 	selector: 'app-board-page',
@@ -16,13 +19,18 @@ import { map, take } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BoardPageComponent implements OnInit, OnDestroy {
-	boardId = this.route.snapshot.params['boardId'];
-	columns$ = this.store.select(selectColumns);
-	columnsAmountSubscription = this.columns$.subscribe((columns) => (this.columnsAmount = columns.length));
-	columnsAmount = 0;
+	public user$ = this.store.select(selectUser);
+	private boardId = this.route.snapshot.params['boardId'];
+	public board$ = this.store.select(selectBoard);
+	public members$ = this.store.select(selectMembers);
+	public columns$ = this.store.select(selectColumns);
+	private columnsAmountSubscription = this.columns$.subscribe((columns) => (this.columnsAmount = columns.length));
+	private columnsAmount = 0;
 
 	public createColumnModalIsOpen = false;
 	public createColumnForm!: FormGroup;
+
+	public tasksFilter = '';
 
 	constructor(
 		private store: Store,
@@ -30,7 +38,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 		private columnDragDropService: ColumnDragDropService,
 	) {}
 
-	ngOnInit() {
+	public ngOnInit(): void {
 		this.store.dispatch(openBoard({ boardId: this.boardId }));
 
 		this.createColumnForm = new FormGroup({
@@ -66,7 +74,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 		this.columnDragDropService.changeColumnsOrder(event.currentIndex);
 	}
 
-	public updateColumnsOrder(deletedColumnOrder: number) {
+	public updateColumnsOrder(deletedColumnOrder: number): void {
 		this.columns$
 			.pipe(
 				take(1),
@@ -90,7 +98,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 			});
 	}
 
-	ngOnDestroy() {
+	public ngOnDestroy(): void {
 		this.columnsAmountSubscription.unsubscribe();
 	}
 }

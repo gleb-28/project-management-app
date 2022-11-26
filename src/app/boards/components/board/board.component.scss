@@ -1,21 +1,46 @@
-.card-wrapper {
-	width: 280px;
-	height: 120px;
-	margin: 10px auto;
-}
+:host {
+	width: 100%;
 
-.card-header {
-	display: flex;
-	justify-content: center;
-
-	p {
-		margin-left: 5px;
+	::ng-deep .p-splitbutton.p-button-raised {
+		width: 50%;
+		@media (max-width: 800px) {
+			width: 100%;
+		}
 	}
-}
 
-.boardsContent {
-	display: flex;
-	justify-content: space-around;
-	align-items: flex-end;
-	padding: 0;
+	.members {
+		margin-bottom: 2rem;
+		&__item {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 1rem;
+			flex-wrap: wrap;
+			color: var(--text);
+			margin-bottom: 1rem;
+		}
+
+		&__member {
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			gap: 0.5rem;
+		}
+	}
+
+	.dialog-form {
+		&__title {
+			margin-bottom: 1rem;
+		}
+
+		&__input {
+			margin-bottom: 1rem;
+		}
+
+		&__error-wrapper {
+			position: relative;
+			bottom: 8px;
+			text-align: left;
+		}
+	}
 }

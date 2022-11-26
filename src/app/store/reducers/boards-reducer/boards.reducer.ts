@@ -1,9 +1,9 @@
-import { BoardResponse } from '../../../models/board.model';
 import { createEntityAdapter, EntityAdapter } from '@ngrx/entity';
-import { BoardsState } from '../../models/boards.state';
-import { ReqStatus } from '../../enums/req-status';
 import { createReducer, on } from '@ngrx/store';
-import * as fromBoards from '../../actions/boards-action/boards.action';
+import * as fromBoards from '@app/store/actions/boards-action/boards.action';
+import { BoardResponse } from '@app/models/board.model';
+import { ReqStatus } from '@app/store/enums/req-status';
+import { BoardsState } from '@app/store/models/boards.state';
 
 export const boardsAdapter: EntityAdapter<BoardResponse> = createEntityAdapter<BoardResponse>({
 	selectId: (board) => board._id,
@@ -19,6 +19,8 @@ export const boardsReducer = createReducer(
 	boardsInitialState,
 
 	on(
+		fromBoards.deleteBoardMember,
+		fromBoards.addBoardMember,
 		fromBoards.getUserBoards,
 		fromBoards.createBoard,
 		fromBoards.updateBoard,
@@ -44,8 +46,15 @@ export const boardsReducer = createReducer(
 	on(fromBoards.deleteBoardSuccess, (state, { boardId }): BoardsState => {
 		return boardsAdapter.removeOne(boardId, { ...state, status: ReqStatus.Success, error: null });
 	}),
+	on(
+		fromBoards.addBoardMemberSuccess,
+		fromBoards.deleteBoardMemberSuccess,
+		(state): BoardsState => ({ ...state, status: ReqStatus.Success, error: null }),
+	),
 
 	on(
+		fromBoards.deleteBoardMemberError,
+		fromBoards.addBoardMemberError,
 		fromBoards.getUserBoardsError,
 		fromBoards.createBoardError,
 		fromBoards.updateBoardError,

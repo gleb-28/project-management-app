@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { getUserBoards } from '@app/store/actions/boards-action/boards.action';
+import { selectBoards } from '@app/store/selectors/boards-selector/boards.selector';
+import { selectUserId } from '@app/store/selectors/user-selector/user.selector';
 import { Store } from '@ngrx/store';
-import { selectBoards } from '../../../store/selectors/boards-selector/boards.selector';
-import { getUserBoards } from '../../../store/actions/boards-action/boards.action';
-import { selectUserId } from '../../../store/selectors/user-selector/user.selector';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -11,17 +11,20 @@ import { Subscription } from 'rxjs';
 	styleUrls: ['./main-page.component.scss'],
 })
 export class MainPageComponent implements OnInit, OnDestroy {
-	boards$ = this.store.select(selectBoards);
-	userIdSubscription!: Subscription;
+	public boards$ = this.store.select(selectBoards);
+	public userIdSubscription!: Subscription;
+
+	public boardsFilter = '';
+
 	constructor(private store: Store) {}
 
-	ngOnInit(): void {
+	public ngOnInit(): void {
 		this.userIdSubscription = this.store
 			.select(selectUserId)
 			.subscribe((userId) => this.store.dispatch(getUserBoards({ userId })));
 	}
 
-	ngOnDestroy(): void {
+	public ngOnDestroy(): void {
 		this.userIdSubscription.unsubscribe();
 	}
 }

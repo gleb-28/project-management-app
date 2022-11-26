@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { BoardRequest, BoardResponse } from 'src/app/models/board.model';
+import { BoardResponse, BoardRequest } from '@app/models/board.model';
+import { UserService } from '@app/auth/service/user-service/user.service';
+import { SignUpResponse } from '@app/models/auth.model';
+import { BoardId } from '@app/models/ids.model';
+import { concatMap, from, map, Observable, toArray } from 'rxjs';
 
 @Injectable()
 export class BoardsService {
-	constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient, private userService: UserService) {}
 
 	public getAllBoards(): Observable<BoardResponse[]> {
 		return this.http.get<BoardResponse[]>('/boards');
@@ -34,5 +37,16 @@ export class BoardsService {
 
 	public getBoardsByUserId(userId: string): Observable<BoardResponse[]> {
 		return this.http.get<BoardResponse[]>(`/boardsSet/${userId}`);
+	}
+
+	public getBoardMembersByBoardId(boardId: BoardId): Observable<SignUpResponse[]> {
+		const boardUsers$ = this.getBoardById(boardId).pipe(map((board) => board.users));
+
+		return boardUsers$.pipe(
+			map((users) => from(users)),
+			concatMap((user) => user),
+			concatMap((userId) => this.userService.getUser(userId)),
+			toArray(),
+		);
 	}
 }

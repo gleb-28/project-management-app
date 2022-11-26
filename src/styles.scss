@@ -1,4 +1,17 @@
-/* You can add global styles to this file, and also import other style files */
+// Vars
+:root {
+	--font-main: 'Noto Sans', sans-serif;
+	--primary: #111111;
+	--secondary: #ffffff;
+	--extra: var(--surface-600);
+	--text: var(--gray-800);
+	--gray: var(--surface-100);
+	--dark-gray: var(--surface-300);
+	--error: var(--red-700);
+	--b-radius: 2px;
+}
+
+// Reset
 *,
 *::before,
 *::after {
@@ -9,19 +22,16 @@
 
 html,
 body {
+	margin: 0;
 	height: 100%;
 	min-width: 320px;
 }
 
+// Main
 body {
-	margin: 0;
 	font-family: var(--font-main);
 	font-size: 16px;
 	line-height: 1.1;
-}
-
-:root {
-	--font-main: 'Lato', sans-serif;
 }
 
 .container {
@@ -29,41 +39,246 @@ body {
 	padding: 0 1rem;
 }
 
+.logo {
+	width: 2.5rem;
+	height: 2.5rem;
+}
+
+.link {
+	font-family: var(--main-font);
+	color: var(--primary);
+	text-decoration: underline;
+	@media (hover: hover) {
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
+
+// Utils
 .visually-hidden {
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: auto;
-  margin: 0;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-  white-space: nowrap;
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: auto;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	white-space: nowrap;
 }
 
 %place-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 1rem 0;
 }
 
-.logo {
-  width: 3rem;
-  height: 3rem;
+// PrimeNg
+::ng-deep .p-component {
+	font-family: var(--main-font);
+}
+::ng-deep .p-button {
+	font-family: var(--font-main);
+	border-radius: var(--b-radius);
+	color: var(--primary);
+	background-color: var(--secondary);
+	border: 1px solid var(--primary);
+	padding: 0.5rem 1rem;
+
+	&.p-button-outlined {
+		color: var(--primary);
+		border: 1px solid var(--primary);
+	}
+
+	&.p-button-text {
+		color: var(--primary);
+	}
+
+	&.p-button-outlined.p-button-danger {
+		color: var(--error);
+		border: 1px solid var(--error);
+		&:focus {
+			box-shadow: none;
+		}
+	}
+
+	&:focus {
+		box-shadow: none;
+	}
+
+	@media (hover: hover) {
+		&:enabled:hover {
+			background-color: var(--primary);
+			color: var(--secondary);
+			border: 1px solid var(--primary);
+		}
+
+		&.p-button-outlined.p-button-danger:enabled:hover {
+			color: var(--secondary);
+			border: 1px solid var(--error);
+			background-color: var(--error);
+		}
+
+		&.p-button-outlined:enabled:hover {
+			background-color: var(--primary);
+			color: var(--secondary);
+		}
+		&.p-button-text:enabled:hover {
+			color: inherit;
+			background-color: var(--gray);
+		}
+	}
+	&:enabled:active {
+		color: var(--primary);
+		background-color: var(--secondary);
+	}
+	&.p-button-text:enabled:active {
+		color: inherit;
+		background: var(--dark-gray);
+	}
+	&.p-button-outlined:enabled:active {
+		background: none;
+		color: var(--primary);
+		border: 1px solid;
+	}
+	&.p-button-outlined.p-button-danger:enabled:active {
+		color: var(--error);
+		background-color: var(--secondary);
+		border: 1px solid var(--error);
+	}
+}
+::ng-deep .p-button.p-button-secondary {
+	&.p-button-text {
+		color: var(--extra);
+	}
+	&:enabled:focus {
+		box-shadow: none;
+	}
+	@media (hover: hover) {
+		&.p-button-text:enabled:hover {
+			color: var(--primary);
+			background-color: var(--gray);
+		}
+	}
+	&.p-button-text:enabled:active {
+		color: var(--primary);
+		background-color: var(--dark-gray);
+	}
+}
+::ng-deep .p-button.p-button-icon-only.p-button-rounded {
+	border-radius: inherit;
+	height: 2rem;
+	width: 2rem;
+}
+
+::ng-deep .p-splitbutton.p-button-text > .p-button {
+	color: var(--primary);
+
+	@media (hover: hover) {
+		&:enabled:hover,
+		&:not(button):not(a):not(.p-disabled):hover {
+			color: var(--primary);
+			background-color: var(--gray);
+		}
+	}
+
+	&:enabled:active,
+	&:not(button):not(a):not(.p-disabled):active {
+		color: inherit;
+		background-color: var(--dark-gray);
+	}
+}
+
+::ng-deep .p-tieredmenu {
+	left: unset !important;
+	right: 0 !important;
+
+	& .p-menuitem.p-menuitem-active > .p-menuitem-link {
+		background-color: var(--gray);
+		color: var(--text);
+		& .p-menuitem-text,
+		& .p-menuitem-icon,
+		& .p-submenu-icon {
+			color: var(--primary);
+		}
+		&:focus {
+			box-shadow: none;
+		}
+		&:active {
+			background-color: var(--dark-gray);
+		}
+	}
+}
+::ng-deep.p-dialog {
+	border-radius: var(--b-radius);
+	& .p-dialog-header .p-dialog-header-icon {
+		color: var(--extra);
+		@media (hover: hover) {
+			&:enabled:hover {
+				background: none;
+				color: var(--primary);
+			}
+		}
+		&:active {
+			opacity: 0.9;
+		}
+		&:enabled:focus {
+			box-shadow: none;
+		}
+	}
+}
+
+::ng-deep .p-inputtext {
+	@media (hover: hover) {
+		&:enabled:hover {
+			border: 1px solid var(--primary);
+		}
+	}
+	&:enabled:active {
+		border: 1px solid var(--primary);
+	}
+	&:enabled:focus {
+		box-shadow: none;
+		border-color: inherit;
+	}
+	&.ng-dirty.ng-invalid {
+		border-color: var(--error);
+	}
+}
+
+::ng-deep .p-float-label > .ng-invalid.ng-dirty + label {
+	color: #6c757d;
+}
+
+::ng-deep .p-error {
+	color: var(--error);
+}
+
+::ng-deep .p-accordion .p-accordion-header:not(.p-disabled) .p-accordion-header-link:focus {
+	box-shadow: none;
+}
+
+::ng-deep .p-dialog .p-dialog-header {
+	color: var(--primary);
+}
+
+::ng-deep .p-avatar {
+	background-color: var(--dark-gray);
+	border-radius: var(--b-radius);
+	cursor: default;
 }
 
 .cdk-drag-preview {
-  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-  0 8px 10px 1px rgba(0, 0, 0, 0.14),
-  0 3px 14px 2px rgba(0, 0, 0, 0.12);
+	box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 }
 .cdk-drag-placeholder {
-  opacity: 0;
+	opacity: 0;
 }
 .cdk-drag-animating {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+	transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 .cdk-drop-dragging .cdk-drag {
-  transition: transform 500ms cubic-bezier(0, 0, 0.2, 1);
+	transition: transform 500ms cubic-bezier(0, 0, 0.2, 1);
 }
