@@ -11,20 +11,20 @@ import { Subscription } from 'rxjs';
 	styleUrls: ['./main-page.component.scss'],
 })
 export class MainPageComponent implements OnInit, OnDestroy {
-	boards$ = this.store.select(selectBoards);
-	userIdSubscription!: Subscription;
+	public boards$ = this.store.select(selectBoards);
+	public userIdSubscription!: Subscription;
 
-	boardsFilter = '';
+	public boardsFilter = '';
 
 	constructor(private store: Store) {}
 
-	ngOnInit(): void {
+	public ngOnInit(): void {
 		this.userIdSubscription = this.store
 			.select(selectUserId)
 			.subscribe((userId) => this.store.dispatch(getUserBoards({ userId })));
 	}
 
-	ngOnDestroy(): void {
+	public ngOnDestroy(): void {
 		this.userIdSubscription.unsubscribe();
 	}
 }

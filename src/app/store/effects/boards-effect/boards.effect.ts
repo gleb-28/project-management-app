@@ -5,7 +5,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, of, switchMap } from 'rxjs';
 import * as fromBoards from '@app/store/actions/boards-action/boards.action';
 import { UserService } from '@app/auth/service/user.service';
-import { HandleErrorResponseService } from '@app/core/services/handle-error-response.service';
+import { HandleErrorResponseService } from '@app/core/services/handle-error-response/handle-error-response.service';
 import { SignUpResponse } from '@app/models/auth.model';
 import { BoardRequest } from '@app/models/board.model';
 import { ErrorMessageService } from '@app/core/services/error-message/error-message.service';
@@ -21,7 +21,7 @@ export class BoardsEffect {
 		private errorMessageService: ErrorMessageService,
 	) {}
 
-	getBoards$ = createEffect(() => {
+	public getBoards$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(fromBoards.getUserBoards),
 			switchMap(({ userId }) => {
@@ -47,7 +47,7 @@ export class BoardsEffect {
 		);
 	});
 
-	updateBoard$ = createEffect(() => {
+	public updateBoard$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(fromBoards.updateBoard),
 			concatMap(({ boardId, boardData }) => {
@@ -60,7 +60,7 @@ export class BoardsEffect {
 		);
 	});
 
-	deleteBoard$ = createEffect(() => {
+	public deleteBoard$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(fromBoards.deleteBoard),
 			concatMap(({ boardId }) => {
@@ -73,7 +73,7 @@ export class BoardsEffect {
 		);
 	});
 
-	addMember$ = createEffect(() => {
+	public addMember$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(fromBoards.addBoardMember),
 			concatMap(({ login, boardId, boardData }) => {
@@ -105,7 +105,7 @@ export class BoardsEffect {
 		);
 	});
 
-	deleteMember$ = createEffect(() => {
+	public deleteMember$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(fromBoards.deleteBoardMember),
 			map(({ members, boardId, boardData }) => {

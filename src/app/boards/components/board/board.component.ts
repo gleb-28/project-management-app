@@ -19,9 +19,9 @@ import { ConfirmationService } from 'primeng/api';
 	styleUrls: ['./board.component.scss'],
 })
 export class BoardComponent implements OnInit {
-	@Input() board!: BoardResponse;
+	@Input() public board!: BoardResponse;
 
-	members!: SignUpResponse[];
+	public members!: SignUpResponse[];
 
 	public boardActions = [
 		{
@@ -60,7 +60,7 @@ export class BoardComponent implements OnInit {
 		private boardsService: BoardsService,
 	) {}
 
-	ngOnInit() {
+	public ngOnInit(): void {
 		this.renameBoardForm = new FormGroup({
 			boardTitle: new FormControl(this.board.title, [
 				Validators.required,
@@ -76,7 +76,7 @@ export class BoardComponent implements OnInit {
 		this.boardsService.getBoardMembersByBoardId(this.board._id).subscribe((members) => (this.members = members));
 	}
 
-	public showMembersModal() {
+	public showMembersModal(): void {
 		this.membersModalIsOpen = true;
 	}
 	public showRenameBoardModal(): void {
@@ -113,7 +113,7 @@ export class BoardComponent implements OnInit {
 		});
 	}
 
-	public addMember() {
+	public addMember(): void {
 		if (this.addMemberForm.valid) {
 			this.store.dispatch(
 				addBoardMember({
@@ -131,7 +131,7 @@ export class BoardComponent implements OnInit {
 		}
 	}
 
-	deleteMember(id: string) {
+	public deleteMember(id: string):void {
 		let newMembers = [...this.board.users].filter((idMember) => idMember !== id);
 		this.store.dispatch(
 			deleteBoardMember({

@@ -5,7 +5,7 @@ import { environment } from '@env/environment';
 
 @Injectable()
 export class ApiBaseUrlInterceptor implements HttpInterceptor {
-	intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+	public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 		request = request.clone({
 			url: environment.API_BASE_URL + request.url,
 		});

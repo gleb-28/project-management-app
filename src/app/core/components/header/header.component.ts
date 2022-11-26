@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { CustomTranslationService } from '@app/core/services/custom-translation.service';
+import { CustomTranslationService } from '@app/core/services/custom-translation/custom-translation.service';
 import { Lang } from '@app/models/lang.model';
 import { createBoard } from '@app/store/actions/boards-action/boards.action';
 import { logout } from '@app/store/actions/user-action/user.action';
@@ -40,13 +40,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 	constructor(private store: Store, private customTranslate: CustomTranslationService) {}
 
-	ngOnInit() {
+	public ngOnInit():void {
 		this.createBoardForm = new FormGroup({
 			boardTitle: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
 		});
 	}
 
-	public changeLanguage(lang: Lang) {
+	public changeLanguage(lang: Lang): void {
 		this.customTranslate.changeLanguage(lang);
 	}
 
@@ -76,7 +76,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 		this.store.dispatch(logout());
 	}
 
-	ngOnDestroy() {
+	public ngOnDestroy(): void {
 		this.userSubscription.unsubscribe();
 	}
 }

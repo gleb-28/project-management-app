@@ -9,15 +9,15 @@ import { Observable, filter, map } from 'rxjs';
 	providedIn: 'root',
 })
 export class AuthGuard implements CanLoad, CanActivate {
-	userState$ = this.store.select(selectUserState);
+	public userState$ = this.store.select(selectUserState);
 
 	constructor(private router: Router, private store: Store) {}
 
-	canActivate(): Observable<boolean | UrlTree> {
+	public canActivate(): Observable<boolean | UrlTree> {
 		return this.checkAuth();
 	}
 
-	canLoad(): Observable<boolean | UrlTree> {
+	public canLoad(): Observable<boolean | UrlTree> {
 		return this.checkAuth();
 	}
 

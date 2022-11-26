@@ -9,7 +9,7 @@ import * as fromBoard from '../../../actions/active-board-action/active-board.ac
 export class MembersEffect {
 	constructor(private actions$: Actions, private boardsService: BoardsService) {}
 
-	loadMembers$ = createEffect(() =>
+	public loadMembers$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(fromBoard.loadMembers),
 			switchMap(({ boardId }) => {
