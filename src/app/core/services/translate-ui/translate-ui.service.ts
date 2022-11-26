@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { LocalStorageService } from '../local-storage.service';
 import { ERROR_MESSAGES_EN, ERROR_MESSAGES_RU } from '@app/constants/constants';
+import { LocalStorageService } from '@app/core/services/local-storage/local-storage.service';
 import { UI_TRANSLATION } from '../../../../assets/translations/ui-translations';
 
 @Injectable({

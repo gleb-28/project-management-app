@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BoardResponse, BoardRequest } from '@app/models/board.model';
-import { UserService } from '@app/auth/service/user.service';
+import { UserService } from '@app/auth/service/user-service/user.service';
 import { SignUpResponse } from '@app/models/auth.model';
 import { BoardId } from '@app/models/ids.model';
 import { concatMap, from, map, Observable, toArray } from 'rxjs';

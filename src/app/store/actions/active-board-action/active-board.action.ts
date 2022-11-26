@@ -7,8 +7,6 @@ import { BoardId, ColumnId, TaskId, FileId } from '@app/models/ids.model';
 import { TaskResponse, TaskRequest } from '@app/models/task.model';
 import { createAction, props } from '@ngrx/store';
 
-
-
 // Board
 export const openBoard = createAction('[Board] Open board', props<{ boardId: BoardId }>());
 

@@ -2,7 +2,7 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, ChangeDetectionStrategy, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TaskDragDropService } from '@app/boards/services/task-drag-drop/task-drag-drop.service';
-import { TranslateUiService } from '@app/core/services/error-message/translate-ui.service';
+import { TranslateUiService } from '@app/core/services/translate-ui/translate-ui.service';
 import { ColumnResponse } from '@app/models/column.model';
 import { ColumnId } from '@app/models/ids.model';
 import { TaskResponse } from '@app/models/task.model';
@@ -46,7 +46,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
 		private store: Store,
 		private taskDragDropService: TaskDragDropService,
 		private confirmationService: ConfirmationService,
-		private errorMessage: TranslateUiService,
+		private translateUiService: TranslateUiService,
 	) {}
 
 	public ngOnInit(): void {
@@ -94,7 +94,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
 	public deleteColumn(): void {
 		this.confirmationService.confirm({
-			message: this.errorMessage.getConfirmMessage(this.column.title),
+			message: this.translateUiService.getConfirmMessage(this.column.title),
 			accept: () => {
 				this.store.dispatch(deleteColumn({ boardId: this.column.boardId, columnId: this.column._id }));
 				this.columnDelete.emit(this.column.order);

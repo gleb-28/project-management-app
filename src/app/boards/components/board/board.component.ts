@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BoardsService } from '@app/boards/services/boards/boards.service';
-import { TranslateUiService } from '@app/core/services/error-message/translate-ui.service';
+import { TranslateUiService } from '@app/core/services/translate-ui/translate-ui.service';
 import { SignUpResponse } from '@app/models/auth.model';
 import { BoardResponse } from '@app/models/board.model';
 import {
@@ -26,14 +26,14 @@ export class BoardComponent implements OnInit {
 
 	public boardActions = [
 		{
-			label: this.errorMessage.getUiTranslate('Rename'),
+			label: this.translateUiService.getUiTranslate('Rename'),
 			icon: 'pi pi-eraser',
 			command: () => {
 				this.showRenameBoardModal();
 			},
 		},
 		{
-			label: this.errorMessage.getUiTranslate('Members'),
+			label: this.translateUiService.getUiTranslate('Members'),
 			icon: 'pi pi-users',
 			command: () => {
 				this.showMembersModal();
@@ -41,7 +41,7 @@ export class BoardComponent implements OnInit {
 		},
 		{ separator: true },
 		{
-			label: this.errorMessage.getUiTranslate('Delete'),
+			label: this.translateUiService.getUiTranslate('Delete'),
 			icon: 'pi pi-times',
 			command: () => {
 				this.deleteBoard();
@@ -59,7 +59,7 @@ export class BoardComponent implements OnInit {
 		private router: Router,
 		private confirmationService: ConfirmationService,
 		private boardsService: BoardsService,
-		private errorMessage: TranslateUiService,
+		private translateUiService: TranslateUiService,
 	) {}
 
 	public ngOnInit(): void {
@@ -104,7 +104,7 @@ export class BoardComponent implements OnInit {
 
 	private deleteBoard(): void {
 		this.confirmationService.confirm({
-			message: this.errorMessage.getConfirmMessage(this.board.title),
+			message: this.translateUiService.getConfirmMessage(this.board.title),
 			accept: () => {
 				this.store.dispatch(deleteBoard({ boardId: this.board._id }));
 				this.confirmationService.close();
@@ -133,7 +133,7 @@ export class BoardComponent implements OnInit {
 		}
 	}
 
-	public deleteMember(id: string):void {
+	public deleteMember(id: string): void {
 		let newMembers = [...this.board.users].filter((idMember) => idMember !== id);
 		this.store.dispatch(
 			deleteBoardMember({

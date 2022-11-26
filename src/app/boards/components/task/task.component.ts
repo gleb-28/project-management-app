@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TranslateUiService } from '@app/core/services/error-message/translate-ui.service';
+import { TranslateUiService } from '@app/core/services/translate-ui/translate-ui.service';
 import { SignUpResponse } from '@app/models/auth.model';
 import { TaskResponse } from '@app/models/task.model';
 import { updateTask, deleteTask } from '@app/store/actions/active-board-action/active-board.action';
@@ -16,7 +16,6 @@ import { selectUser } from '@app/store/selectors/user-selector/user.selector';
 	styleUrls: ['./task.component.scss'],
 })
 export class TaskComponent implements OnInit {
-
 	@Input() task!: TaskResponse;
 	private user!: SignUpResponse;
 	private userSubscription!: Subscription;
