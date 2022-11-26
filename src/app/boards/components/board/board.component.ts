@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BoardsService } from '@app/boards/services/boards/boards.service';
+import { ErrorMessageService } from '@app/core/services/error-message/error-message.service';
 import { SignUpResponse } from '@app/models/auth.model';
 import { BoardResponse } from '@app/models/board.model';
 import { updateBoard, deleteBoard, addBoardMember, deleteBoardMember } from '@app/store/actions/boards-action/boards.action';
@@ -21,14 +22,14 @@ export class BoardComponent implements OnInit {
 
 	public boardActions = [
 		{
-			label: 'Rename',
+			label: this.errorMessage.getSplitButton('Rename'),
 			icon: 'pi pi-refresh',
 			command: () => {
 				this.showRenameBoardModal();
 			},
 		},
 		{
-			label: 'Members',
+			label: this.errorMessage.getSplitButton('Members'),
 			icon: ' ',
 			command: () => {
 				this.showMembersModal();
@@ -36,7 +37,7 @@ export class BoardComponent implements OnInit {
 		},
 		{ separator: true },
 		{
-			label: 'Delete',
+			label: this.errorMessage.getSplitButton('Delete'),
 			icon: 'pi pi-times',
 			command: () => {
 				this.deleteBoard();
@@ -54,6 +55,7 @@ export class BoardComponent implements OnInit {
 		private router: Router,
 		private confirmationService: ConfirmationService,
 		private boardsService: BoardsService,
+		private errorMessage: ErrorMessageService,
 	) {}
 
 	ngOnInit() {
@@ -98,7 +100,7 @@ export class BoardComponent implements OnInit {
 
 	private deleteBoard(): void {
 		this.confirmationService.confirm({
-			message: `Are you sure that you want to delete "${this.board.title}" board?`,
+			message: this.errorMessage.getConfirmMessage(this.board.title),
 			accept: () => {
 				this.store.dispatch(deleteBoard({ boardId: this.board._id }));
 				this.confirmationService.close();

@@ -13,7 +13,7 @@
 	<input
 		class="board-bar__filter-input"
 		type="text"
-		placeholder="Search by task title"
+		placeholder="{{'TASK.SEARCH'| translate}}"
 		pInputText
 		[(ngModel)]="tasksFilter" />
 </div>
@@ -37,29 +37,29 @@
 	<button
 		(click)="showCreateColumnModal()"
 		pButton
-		title="Create column"
+		title="{{'COLUMN.CREATE' | translate}}"
 		type="button"
 		icon="pi pi-plus"
 		class="p-button-rounded add-column-button"></button>
 </div>
 
 <!--Create column modal-->
-<p-dialog header="Column title" [(visible)]="createColumnModalIsOpen">
+<p-dialog header="{{'COLUMN.TITLE'| translate}}" [(visible)]="createColumnModalIsOpen">
 	<form [formGroup]="createColumnForm" (submit)="createColumnSubmit()">
 		<input class="dialog-form__input" formControlName="columnTitle" type="text" pInputText />
 
 		<div class="dialog-form__error-wrapper">
 			<small *ngIf="createColumnForm.controls['columnTitle'].hasError('required')" class="p-error block"
-				>Please enter column title</small
+				>{{'ERROR_INPUTS.COLUMN_REQUIRED'| translate}}</small
 			>
 			<small *ngIf="createColumnForm.controls['columnTitle'].hasError('minlength')" class="p-error block"
-				>Minimum length is 3 characters</small
+				>{{'ERROR_INPUTS.MIN_LENGTH'| translate}}</small
 			>
 			<small *ngIf="createColumnForm.controls['columnTitle'].hasError('maxlength')" class="p-error block"
-				>Maximum length is 30 characters</small
+				>{{'ERROR_INPUTS.MAX_LENGTH'| translate}}</small
 			>
 		</div>
 
-		<button pButton class="p-button-outlined" type="submit" label="Create"></button>
+		<button pButton class="p-button-outlined" type="submit" label="{{'COMMON.CREATE'| translate}}"></button>
 	</form>
 </p-dialog>

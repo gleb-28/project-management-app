@@ -1,5 +1,6 @@
 import { Component, ChangeDetectionStrategy, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ErrorMessageService } from '@app/core/services/error-message/error-message.service';
 import { SignUpResponse } from '@app/models/auth.model';
 import { TaskResponse } from '@app/models/task.model';
 import { updateTask, deleteTask } from '@app/store/actions/active-board-action/active-board.action';
@@ -24,7 +25,8 @@ export class TaskComponent implements OnInit {
 
 	@Output() taskDelete: EventEmitter<number> = new EventEmitter();
 
-	constructor(private store: Store, private confirmationService: ConfirmationService) {}
+	constructor(private store: Store, private confirmationService: ConfirmationService,
+		private errorMessage: ErrorMessageService) {}
 
 	ngOnInit() {
 		this.editTaskForm = new FormGroup({
@@ -70,7 +72,7 @@ export class TaskComponent implements OnInit {
 
 	public deleteTask(): void {
 		this.confirmationService.confirm({
-			message: `Are you sure that you want to delete "${this.task.title}" task?`,
+			message: this.errorMessage.getConfirmMessage(this.task.title),
 			accept: () => {
 				this.store.dispatch(
 					deleteTask({

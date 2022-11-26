@@ -107,23 +107,23 @@
 	</p-sidebar>
 
 	<!--Create new board modal-->
-	<p-dialog header="Create new board" [(visible)]="createBoardModalIsOpen">
+	<p-dialog header="{{ 'BOARD.CREATE' | translate }}" [(visible)]="createBoardModalIsOpen">
 		<form class="dialog-form" [formGroup]="createBoardForm" (submit)="createBoardSubmit()">
 			<input class="dialog-form__input" id="board-title" formControlName="boardTitle" type="text" pInputText />
 
 			<div class="dialog-form__error-wrapper">
 				<small *ngIf="createBoardForm.controls['boardTitle'].hasError('required')" class="p-error block"
-					>Please enter board title</small
+					>{{'ERROR_INPUTS.BOARD_REQUIRED'| translate}}</small
 				>
 				<small *ngIf="createBoardForm.controls['boardTitle'].hasError('minlength')" class="p-error block"
-					>Minimum length is 3 characters</small
+					>{{'ERROR_INPUTS.MIN_LENGTH'| translate}}</small
 				>
 				<small *ngIf="createBoardForm.controls['boardTitle'].hasError('maxlength')" class="p-error block"
-					>Maximum length is 30 characters</small
+					>{{'ERROR_INPUTS.MAX_LENGTH'| translate}}</small
 				>
 			</div>
 
-			<button pButton class="p-button-outlined" type="submit" label="Create"></button>
+			<button pButton class="p-button-outlined" type="submit" label="{{'COMMON.CREATE'| translate}}"></button>
 		</form>
 	</p-dialog>
 </div>

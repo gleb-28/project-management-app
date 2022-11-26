@@ -42,6 +42,7 @@ import { PointsService } from './services/points/points.service';
 import { SocketService } from './services/socketio/socket.service';
 import { TaskDragDropService } from './services/task-drag-drop/task-drag-drop.service';
 import { TasksService } from './services/tasks/tasks.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 const PrimeNgModules = [
@@ -66,6 +67,7 @@ const Components = [BoardComponent, ColumnComponent, TaskComponent];
 		BoardsRoutingModule,
 		ReactiveFormsModule,
 		DragDropModule,
+		TranslateModule,
 		ReactiveFormsModule,
 		FormsModule,
 		...PrimeNgModules,

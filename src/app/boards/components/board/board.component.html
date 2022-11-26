@@ -5,29 +5,29 @@
 	styleClass="p-button-raised p-button-text"></p-splitButton>
 
 <!--Rename board modal-->
-<p-dialog header="Rename board title" [(visible)]="renameBoardModalIsOpen">
-	<form class="dialog-form" [formGroup]="renameBoardForm" (submit)="renameBoardSubmit()">
+<p-dialog header="{{'BOARD.RENAME'| translate}}"  [(visible)]="renameBoardModalIsOpen">
+	<form class="dialog-form" [formGroup]="renameBoardForm"  (submit)="renameBoardSubmit()">
 		<input class="dialog-form__input" id="board-title" formControlName="boardTitle" type="text" pInputText />
 		<div class="dialog-form__error-wrapper">
 			<small *ngIf="renameBoardForm.controls['boardTitle'].hasError('required')" class="p-error block"
-				>Please enter board title</small
+				>{{'ERROR_INPUTS.BOARD_REQUIRED'| translate}}</small
 			>
 			<small *ngIf="renameBoardForm.controls['boardTitle'].hasError('minlength')" class="p-error block"
-				>Minimum length is 3 characters</small
+				>{{'ERROR_INPUTS.MIN_LENGTH'| translate}}</small
 			>
 			<small *ngIf="renameBoardForm.controls['boardTitle'].hasError('maxlength')" class="p-error block"
-				>Maximum length is 30 characters</small
+				>{{'ERROR_INPUTS.MAX_LENGTH'| translate}}</small
 			>
 		</div>
-		<button pButton class="p-button-outlined" type="submit" label="Rename"></button>
+		<button pButton class="p-button-outlined" type="submit" label="{{'COMMON.RENAME'| translate}}"></button>
 	</form>
 </p-dialog>
 
 <!--Delete board confirm modal-->
-<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-confirmDialog header="{{'COMMON.CONFIRMATION'| translate}}" icon="pi pi-exclamation-triangle"></p-confirmDialog>
 
 <!-- Members Modal -->
-<p-dialog header="Members" [(visible)]="membersModalIsOpen">
+<p-dialog header="{{'BOARD.MEMBERS' | translate}}" [(visible)]="membersModalIsOpen">
 	<p class="member" *ngFor="let member of members">
 		<span>{{ member.login }}</span
 		><button
@@ -38,19 +38,19 @@
 			(click)="deleteMember(member._id)"></button>
 	</p>
 	<div>
-		<h2>Add new member</h2>
+		<h2>{{'BOARD.ADD_MEMBER' | translate}}</h2>
 		<form class="addForm" [formGroup]="addMemberForm" (submit)="addMember()">
 			<span class="p-float-label">
 				<input id="add-member" formControlName="login" type="text" pInputText />
-				<label for="add-member">Login member</label>
+				<label for="add-member">{{'BOARD.LOGIN_MEMBER' | translate}}</label>
 			</span>
 			<small *ngIf="addMemberForm.controls['login'].hasError('required')" class="p-error block"
-				>Please enter login</small
+				>{{'ERROR_INPUTS.LOGIN_REQUIRED'| translate}}</small
 			>
 			<small *ngIf="addMemberForm.controls['login'].hasError('minlength')" class="p-error block"
-				>Minimum length is 3 characters</small
+				>{{'ERROR_INPUTS.MIN_LENGTH'| translate}}</small
 			>
-			<button pButton type="submit" label="Add"></button>
+			<button pButton type="submit" label="{{'COMMON.ADD'| translate}}"></button>
 		</form>
 	</div>
 </p-dialog>
