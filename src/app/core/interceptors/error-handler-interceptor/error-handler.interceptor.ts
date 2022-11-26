@@ -7,9 +7,7 @@ import { ERROR_MESSAGE } from '../../../constants/constants';
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
 	constructor(private errorService: HandleErrorResponseService) {}
-
 	public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    
 		return next.handle(request).pipe(
 			tap({
 				next: () => null,
