@@ -9,6 +9,7 @@ import { TranslateUiService } from '@app/core/services/translate-ui/translate-ui
 
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
+
 	constructor(
 		private errorService: HandleErrorResponseService,
 		private store: Store,
