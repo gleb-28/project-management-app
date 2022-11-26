@@ -2,12 +2,11 @@
 2. Screenshot: ![image](../assets/img/main-screen.jpg)
 3. Deploy: [kanban-back.onrender.com](https://kanban-back.onrender.com/)
 4. Score 620/620
-5. Done / 27.11.2022 22:59
+5. Done 26.11.2022 / 27.11.2022
 
 **Welcome route +70**
    * [x] The welcome page should contain general information about the developer, project, and course. (10)
    * [x] In the upper right corner there are 2 buttons: login and sign up. (10) 
-   <!-- !(We have 'Registration' and 'Login', maybe, it's better to change names) -->
    * [x] If there is an unexpired token, the user should be redirected to the "Main route" of the application automatically. (20)  
    * [x] When the token expires - the user should be redirected to the "Welcome page" automatically. (20)    
    * [x] Pressing the Login / Sign up button redirects a user to the route with the Login / Sign up form. (10)
@@ -24,7 +23,6 @@
    * [x] When trying to delete the board, we should receive a confirmation modal. The confirmation modal must be a generic component (one for the entire application). (10)
    * [x] Global search (optional): we implemented boars search and task search in boards. (20)
    * [x] The user profile editing functionality is implemented. (30)
-   <!-- !Ок but it's also diplayed by click on LogOut button-->
 
 **Board route +260**
    * [x] Button for column creation is displayed. (10)
@@ -43,7 +41,6 @@
 **General requirements +80**
    * [x] Backend error handling - (Not found, unhandled rejection, etc) should be performed in a user-friendly way (toast, pop-up or anything else you implement). (50)
    * [x] Localization. (20)
-   <!-- !Maybe we can also translate error messages to Russian -->
    * [x] Backend is deployed and publicly available. (10)
 
 **Additional functionality +30**
