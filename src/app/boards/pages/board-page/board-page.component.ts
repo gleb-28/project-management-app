@@ -12,7 +12,6 @@ import { selectUser } from '@app/store/selectors/user-selector/user.selector';
 import { Store } from '@ngrx/store';
 import { take, map } from 'rxjs';
 
-
 @Component({
 	selector: 'app-board-page',
 	templateUrl: './board-page.component.html',

@@ -42,7 +42,7 @@ import { PointsService } from './services/points/points.service';
 import { SocketService } from './services/socketio/socket.service';
 import { TaskDragDropService } from './services/task-drag-drop/task-drag-drop.service';
 import { TasksService } from './services/tasks/tasks.service';
-
+import { MultiSelectModule } from 'primeng/multiselect';
 
 const PrimeNgModules = [
 	ButtonModule,
@@ -86,6 +86,7 @@ const Components = [BoardComponent, ColumnComponent, TaskComponent];
 			TasksEffect,
 			FilesEffect,
 		]),
+		MultiSelectModule,
 	],
 	providers: [
 		BoardsService,

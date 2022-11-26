@@ -3,12 +3,12 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse
 import { Observable, tap } from 'rxjs';
 import { HandleErrorResponseService } from '@app/core/services/handle-error-response/handle-error-response.service';
 import { ErrorMessageService } from '@app/core/services/error-message/error-message.service';
-import { Router } from '@angular/router';
-import { ValidTokenService } from '@app/core/services/valid-token/valid-token.service';
+import { Store } from '@ngrx/store';
+import { logout } from '@app/store/actions/user-action/user.action';
 
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
-	constructor(private errorService: HandleErrorResponseService, private errorMessageService: ErrorMessageService, private router: Router, private validTokenService: ValidTokenService) {}
+	constructor(private errorService: HandleErrorResponseService, private errorMessageService: ErrorMessageService, private store: Store) {}
 
 	public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		return next.handle(request).pipe(
@@ -16,8 +16,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 				next: () => null,
 				error: (error: HttpErrorResponse) => {
 					if (error.status === 403) {
-						this.validTokenService.validToken.next(error.status);
-						this.router.navigateByUrl('/welcome');
+						this.store.dispatch(logout());
 					}
 					this.errorService.sendData(this.errorMessageService.getError(error.status));
 				},

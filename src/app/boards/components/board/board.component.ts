@@ -4,10 +4,14 @@ import { Router } from '@angular/router';
 import { BoardsService } from '@app/boards/services/boards/boards.service';
 import { SignUpResponse } from '@app/models/auth.model';
 import { BoardResponse } from '@app/models/board.model';
-import { updateBoard, deleteBoard, addBoardMember, deleteBoardMember } from '@app/store/actions/boards-action/boards.action';
+import {
+	updateBoard,
+	deleteBoard,
+	addBoardMember,
+	deleteBoardMember,
+} from '@app/store/actions/boards-action/boards.action';
 import { Store } from '@ngrx/store';
 import { ConfirmationService } from 'primeng/api';
-
 
 @Component({
 	selector: 'app-board',
@@ -22,14 +26,14 @@ export class BoardComponent implements OnInit {
 	public boardActions = [
 		{
 			label: 'Rename',
-			icon: 'pi pi-refresh',
+			icon: 'pi pi-eraser',
 			command: () => {
 				this.showRenameBoardModal();
 			},
 		},
 		{
 			label: 'Members',
-			icon: ' ',
+			icon: 'pi pi-users',
 			command: () => {
 				this.showMembersModal();
 			},
