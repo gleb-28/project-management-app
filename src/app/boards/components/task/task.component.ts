@@ -16,6 +16,7 @@ import { selectUser } from '@app/store/selectors/user-selector/user.selector';
 	styleUrls: ['./task.component.scss'],
 })
 export class TaskComponent implements OnInit {
+
 	@Input() task!: TaskResponse;
 	private user!: SignUpResponse;
 	private userSubscription!: Subscription;
@@ -36,7 +37,7 @@ export class TaskComponent implements OnInit {
 		private errorMessage: TranslateUiService,
 	) {}
 
-	ngOnInit() {
+	public ngOnInit(): void {
 		this.editTaskForm = new FormGroup({
 			taskTitle: new FormControl(this.task.title, [
 				Validators.required,

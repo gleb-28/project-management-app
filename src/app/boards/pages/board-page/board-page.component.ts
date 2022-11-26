@@ -38,7 +38,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 		private columnDragDropService: ColumnDragDropService,
 	) {}
 
-	ngOnInit() {
+	public ngOnInit(): void {
 		this.store.dispatch(openBoard({ boardId: this.boardId }));
 
 		this.createColumnForm = new FormGroup({
@@ -74,7 +74,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 		this.columnDragDropService.changeColumnsOrder(event.currentIndex);
 	}
 
-	public updateColumnsOrder(deletedColumnOrder: number) {
+	public updateColumnsOrder(deletedColumnOrder: number): void {
 		this.columns$
 			.pipe(
 				take(1),
@@ -98,7 +98,7 @@ export class BoardPageComponent implements OnInit, OnDestroy {
 			});
 	}
 
-	ngOnDestroy() {
+	public ngOnDestroy(): void {
 		this.columnsAmountSubscription.unsubscribe();
 	}
 }

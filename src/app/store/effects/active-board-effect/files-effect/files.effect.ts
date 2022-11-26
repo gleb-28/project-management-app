@@ -9,7 +9,7 @@ import * as fromBoard from '@app/store/actions/active-board-action/active-board.
 export class FilesEffect {
 	constructor(private actions$: Actions, private filesService: FilesService) {}
 
-	loadFiles$ = createEffect(() => {
+	public loadFiles$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(fromBoard.loadFiles),
 			switchMap(({ boardId }) => {
@@ -22,7 +22,7 @@ export class FilesEffect {
 		);
 	});
 
-	uploadFile$ = createEffect(() => {
+	public uploadFile$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(fromBoard.uploadFile),
 			mergeMap(({ formData }) => {
@@ -35,7 +35,7 @@ export class FilesEffect {
 		);
 	});
 
-	deleteFile$ = createEffect(() => {
+	public deleteFile$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(fromBoard.deleteFile),
 			mergeMap(({ fileId }) => {

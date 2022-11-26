@@ -7,7 +7,7 @@ import * as fromBoard from '@app/store/actions/active-board-action/active-board.
 export class ActiveBoardEffect {
 	constructor(private actions$: Actions) {}
 
-	openBoard$ = createEffect(() =>
+	public openBoard$ = createEffect(() =>
 		this.actions$.pipe(
 			ofType(fromBoard.openBoard),
 			switchMap(({ boardId }) => [

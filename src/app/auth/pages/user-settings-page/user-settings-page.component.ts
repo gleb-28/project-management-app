@@ -12,7 +12,7 @@ import { Store } from '@ngrx/store';
 	styleUrls: ['./user-settings-page.component.scss'],
 })
 export class UserSettingsPageComponent implements OnInit {
-	user!: User;
+	public user!: User;
 
 	public updateForm!: FormGroup;
 
@@ -33,17 +33,17 @@ export class UserSettingsPageComponent implements OnInit {
 		});
 	}
 
-	public onSubmit() {
+	public onSubmit():void {
 		if (this.updateForm.valid) {
 			this.store.dispatch(editUser({ request: this.updateForm.value }));
 		}
 	}
 
-	public deleteUser() {
+	public deleteUser(): void {
 		this.store.dispatch(deleteUser());
 	}
 
-	public isValid(type: string, error: string) {
+	public isValid(type: string, error: string): boolean {
 		return this.updateForm.controls[type].errors?.[error] && this.updateForm.controls[type].touched;
 	}
 }

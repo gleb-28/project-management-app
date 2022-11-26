@@ -49,7 +49,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
 		private errorMessage: TranslateUiService,
 	) {}
 
-	ngOnInit() {
+	public ngOnInit(): void {
 		this.tasks$ = this.store.select(selectTasksByColumnId(this.column._id));
 		this.tasksAmountSubscription = this.tasks$.subscribe((tasks) => (this.tasksAmount = tasks.length));
 
@@ -163,7 +163,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
 			});
 	}
 
-	ngOnDestroy() {
+	public ngOnDestroy(): void {
 		this.tasksAmountSubscription.unsubscribe();
 		this.userIdSubscription.unsubscribe();
 	}
