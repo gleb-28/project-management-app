@@ -2,13 +2,17 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BoardsService } from '@app/boards/services/boards/boards.service';
-import { ErrorMessageService } from '@app/core/services/error-message/error-message.service';
+import { TranslateUiService } from '@app/core/services/error-message/translate-ui.service';
 import { SignUpResponse } from '@app/models/auth.model';
 import { BoardResponse } from '@app/models/board.model';
-import { updateBoard, deleteBoard, addBoardMember, deleteBoardMember } from '@app/store/actions/boards-action/boards.action';
+import {
+	updateBoard,
+	deleteBoard,
+	addBoardMember,
+	deleteBoardMember,
+} from '@app/store/actions/boards-action/boards.action';
 import { Store } from '@ngrx/store';
 import { ConfirmationService } from 'primeng/api';
-
 
 @Component({
 	selector: 'app-board',
@@ -22,22 +26,22 @@ export class BoardComponent implements OnInit {
 
 	public boardActions = [
 		{
-			label: this.errorMessage.getSplitButton('Rename'),
-			icon: 'pi pi-refresh',
+			label: this.errorMessage.getUiTranslate('Rename'),
+			icon: 'pi pi-eraser',
 			command: () => {
 				this.showRenameBoardModal();
 			},
 		},
 		{
-			label: this.errorMessage.getSplitButton('Members'),
-			icon: ' ',
+			label: this.errorMessage.getUiTranslate('Members'),
+			icon: 'pi pi-users',
 			command: () => {
 				this.showMembersModal();
 			},
 		},
 		{ separator: true },
 		{
-			label: this.errorMessage.getSplitButton('Delete'),
+			label: this.errorMessage.getUiTranslate('Delete'),
 			icon: 'pi pi-times',
 			command: () => {
 				this.deleteBoard();
@@ -55,7 +59,7 @@ export class BoardComponent implements OnInit {
 		private router: Router,
 		private confirmationService: ConfirmationService,
 		private boardsService: BoardsService,
-		private errorMessage: ErrorMessageService,
+		private errorMessage: TranslateUiService,
 	) {}
 
 	ngOnInit() {

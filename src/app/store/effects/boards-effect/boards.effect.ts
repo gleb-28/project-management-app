@@ -8,8 +8,7 @@ import { UserService } from '@app/auth/service/user.service';
 import { HandleErrorResponseService } from '@app/core/services/handle-error-response.service';
 import { SignUpResponse } from '@app/models/auth.model';
 import { BoardRequest } from '@app/models/board.model';
-import { ErrorMessageService } from '@app/core/services/error-message/error-message.service';
-
+import { TranslateUiService } from '@app/core/services/error-message/translate-ui.service';
 
 @Injectable()
 export class BoardsEffect {
@@ -18,7 +17,7 @@ export class BoardsEffect {
 		private boardsService: BoardsService,
 		private userService: UserService,
 		private errorService: HandleErrorResponseService,
-		private errorMessageService: ErrorMessageService,
+		private errorMessageService: TranslateUiService,
 	) {}
 
 	getBoards$ = createEffect(() => {

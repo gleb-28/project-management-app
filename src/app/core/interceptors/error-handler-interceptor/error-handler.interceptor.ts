@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { HandleErrorResponseService } from '@app/core/services/handle-error-response.service';
-import { ErrorMessageService } from '@app/core/services/error-message/error-message.service';
+import { TranslateUiService } from '@app/core/services/error-message/translate-ui.service';
 
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {
-	constructor(private errorService: HandleErrorResponseService, private errorMessageService: ErrorMessageService) {}
+	constructor(private errorService: HandleErrorResponseService, private errorMessageService: TranslateUiService) {}
 
 	public intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		return next.handle(request).pipe(

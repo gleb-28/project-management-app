@@ -2,11 +2,16 @@ import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, ChangeDetectionStrategy, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TaskDragDropService } from '@app/boards/services/task-drag-drop/task-drag-drop.service';
-import { ErrorMessageService } from '@app/core/services/error-message/error-message.service';
+import { TranslateUiService } from '@app/core/services/error-message/translate-ui.service';
 import { ColumnResponse } from '@app/models/column.model';
 import { ColumnId } from '@app/models/ids.model';
 import { TaskResponse } from '@app/models/task.model';
-import { updateColumn, deleteColumn, createTask, updateTask } from '@app/store/actions/active-board-action/active-board.action';
+import {
+	updateColumn,
+	deleteColumn,
+	createTask,
+	updateTask,
+} from '@app/store/actions/active-board-action/active-board.action';
 import { selectTasksByColumnId } from '@app/store/selectors/active-board-selector/tasks.selector';
 import { selectUserId } from '@app/store/selectors/user-selector/user.selector';
 import { Store } from '@ngrx/store';
@@ -21,6 +26,7 @@ import { Observable, Subscription, take, map } from 'rxjs';
 })
 export class ColumnComponent implements OnInit, OnDestroy {
 	@Input() column!: ColumnResponse;
+	@Input() tasksFilter!: string;
 
 	private userId = '';
 	private userIdSubscription = this.store.select(selectUserId).subscribe((userId) => (this.userId = userId));
@@ -40,7 +46,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
 		private store: Store,
 		private taskDragDropService: TaskDragDropService,
 		private confirmationService: ConfirmationService,
-		private errorMessage: ErrorMessageService,
+		private errorMessage: TranslateUiService,
 	) {}
 
 	ngOnInit() {

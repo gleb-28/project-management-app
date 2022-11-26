@@ -22,7 +22,7 @@
 	<div class="tasks" cdkDropList="task" (cdkDropListDropped)="taskDrop(column._id, $event)">
 		<app-task
 			class="task"
-			*ngFor="let task of tasks$ | async"
+			*ngFor="let task of tasks$ | async  | filterBy : 'title' : tasksFilter"
 			[task]="task"
 			(taskDelete)="updateTasksOrder($event)"
 			cdkDrag="task"

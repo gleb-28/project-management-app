@@ -27,6 +27,7 @@
 	<app-column
 		*ngFor="let column of columns$ | async"
 		[column]="column"
+		[tasksFilter]="tasksFilter"
 		(columnDelete)="updateColumnsOrder($event)"
 		class="column"
 		cdkDrag="column"

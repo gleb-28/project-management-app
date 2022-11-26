@@ -8,5 +8,5 @@
 </div>
 
 <div class="boards-wrapper">
-	<app-board *ngFor="let board of boards$ | async" [board]="board"></app-board>
+	<app-board *ngFor="let board of boards$ | async | filterBy : 'title' : boardsFilter" [board]="board"></app-board>
 </div>
