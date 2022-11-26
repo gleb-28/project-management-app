@@ -20,6 +20,7 @@ import { Observable, Subscription, take, map } from 'rxjs';
 })
 export class ColumnComponent implements OnInit, OnDestroy {
 	@Input() column!: ColumnResponse;
+	@Input() tasksFilter!: string;
 
 	private userId = '';
 	private userIdSubscription = this.store.select(selectUserId).subscribe((userId) => (this.userId = userId));
