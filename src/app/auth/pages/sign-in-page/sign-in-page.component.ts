@@ -12,7 +12,7 @@ import { Store } from '@ngrx/store';
 export class SignInPageComponent {
 	constructor(private store: Store) {}
 
-	loginForm: FormGroup = new FormGroup({
+	public loginForm: FormGroup = new FormGroup({
 		login: new FormControl('', [Validators.required, Validators.minLength(3)]),
 		password: new FormControl('', [
 			Validators.required,
@@ -23,13 +23,13 @@ export class SignInPageComponent {
 		]),
 	});
 
-	public login() {
+	public login(): void {
 		if (this.loginForm.valid) {
 			this.store.dispatch(login({ request: this.loginForm.value }));
 		}
 	}
 
-	public isValid(type: string, error: string) {
+	public isValid(type: string, error: string): boolean {
 		return this.loginForm.controls[type].errors?.[error] && this.loginForm.controls[type].touched;
 	}
 }

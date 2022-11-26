@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HandleErrorResponseService } from '@app/core/services/handle-error-response.service';
+import { HandleErrorResponseService } from '@app/core/services/handle-error-response/handle-error-response.service';
 import { MessageService } from 'primeng/api';
 
 @Component({

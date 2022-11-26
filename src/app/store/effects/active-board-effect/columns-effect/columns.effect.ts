@@ -9,7 +9,7 @@ import * as fromBoard from '@app/store/actions/active-board-action/active-board.
 export class ColumnsEffect {
 	constructor(private actions$: Actions, private columnsService: ColumnsService) {}
 
-	loadColumns$ = createEffect(() => {
+	public loadColumns$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(fromBoard.loadColumns),
 			switchMap(({ boardId }) => {
@@ -22,7 +22,7 @@ export class ColumnsEffect {
 		);
 	});
 
-	createColumn$ = createEffect(() => {
+	public createColumn$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(fromBoard.createColumn),
 			concatMap(({ boardId, columnData }) => {
@@ -35,7 +35,7 @@ export class ColumnsEffect {
 		);
 	});
 
-	updateColumn$ = createEffect(() => {
+	public updateColumn$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(fromBoard.updateColumn),
 			concatMap(({ boardId, columnId, columnData }) => {
@@ -48,7 +48,7 @@ export class ColumnsEffect {
 		);
 	});
 
-	deleteColumn$ = createEffect(() => {
+	public deleteColumn$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(fromBoard.deleteColumn),
 			concatMap(({ boardId, columnId }) => {

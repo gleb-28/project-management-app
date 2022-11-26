@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { HandleErrorResponseService } from '@app/core/services/handle-error-response.service';
+import { HandleErrorResponseService } from '@app/core/services/handle-error-response/handle-error-response.service';
 import { ErrorMessageService } from '@app/core/services/error-message/error-message.service';
 import { Router } from '@angular/router';
-import { ValidTokenService } from '@app/core/services/valid-token.service';
+import { ValidTokenService } from '@app/core/services/valid-token/valid-token.service';
 
 @Injectable()
 export class ErrorHandlerInterceptor implements HttpInterceptor {

@@ -7,7 +7,7 @@ import * as userAction from '@app/store/actions/user-action/user.action';
 import { ErrorResponse } from '@app/models/error.model';
 import { AuthService } from '@app/auth/service/auth.service';
 import { UserService } from '@app/auth/service/user.service';
-import { LocalStorageService } from '@app/core/services/local-storage.service';
+import { LocalStorageService } from '@app/core/services/local-storage/local-storage.service';
 import { SignInRequest } from '@app/models/auth.model';
 import { selectUserId } from '@app/store/selectors/user-selector/user.selector';
 
@@ -22,7 +22,7 @@ export default class UserEffect {
 		private router: Router,
 	) {}
 
-	getUser$ = createEffect(() => {
+	public getUser$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(ROOT_EFFECTS_INIT, userAction.getUser),
 			exhaustMap(() => {
@@ -39,7 +39,7 @@ export default class UserEffect {
 		);
 	});
 
-	login$ = createEffect(() => {
+	public login$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(userAction.login),
 			exhaustMap(({ request }) => {
@@ -55,7 +55,7 @@ export default class UserEffect {
 		);
 	});
 
-	signUp$ = createEffect(() => {
+	public signUp$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(userAction.signUp),
 			exhaustMap(({ request }) => {
@@ -74,7 +74,7 @@ export default class UserEffect {
 		);
 	});
 
-	updateUser$ = createEffect(() => {
+	public updateUser$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(userAction.editUser),
 			concatLatestFrom(() => this.store.select(selectUserId)),
@@ -88,7 +88,7 @@ export default class UserEffect {
 		);
 	});
 
-	deleteUser$ = createEffect(() => {
+	public deleteUser$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(userAction.deleteUser),
 			concatLatestFrom(() => this.store.select(selectUserId)),
@@ -106,7 +106,7 @@ export default class UserEffect {
 		);
 	});
 
-	logoutUser$ = createEffect(
+	public logoutUser$ = createEffect(
 		() => {
 			return this.actions$.pipe(
 				ofType(userAction.logout),

@@ -15,7 +15,7 @@ import { ConfirmationService } from 'primeng/api';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskComponent implements OnInit {
-	@Input() task!: TaskResponse;
+	@Input() public task!: TaskResponse;
 	private members$ = this.store.select(selectMembers);
 	public assignedUsers: SignUpResponse[] = [];
 
@@ -26,7 +26,7 @@ export class TaskComponent implements OnInit {
 
 	constructor(private store: Store, private confirmationService: ConfirmationService) {}
 
-	ngOnInit() {
+	public ngOnInit(): void {
 		this.editTaskForm = new FormGroup({
 			taskTitle: new FormControl(this.task.title, [
 				Validators.required,

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LANGUAGES } from '@app/constants/constants';
 import { TranslateService } from '@ngx-translate/core';
-import { LocalStorageService } from './local-storage.service';
+import { LocalStorageService } from '../local-storage/local-storage.service';
 
 @Injectable({
 	providedIn: 'root',
@@ -11,7 +11,7 @@ export class CustomTranslationService {
 		this.translate.use(this.getUserLang());
 	}
 
-	public getUserLang() {
+	public getUserLang(): string {
 		return this.getLangLocalStorage() || this.getBrowserLang();
 	}
 
@@ -27,7 +27,7 @@ export class CustomTranslationService {
 		return this.localStorage.get('lang');
 	}
 
-	changeLanguage(lang: string) {
+	public changeLanguage(lang: string): void {
 		this.translate.use(lang);
 		this.localStorage.set('lang', lang);
 	}
