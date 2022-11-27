@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TranslateUiService } from '@app/core/services/translate-ui/translate-ui.service';
 import { SignUpResponse } from '@app/models/auth.model';
@@ -15,7 +15,7 @@ import { selectUser } from '@app/store/selectors/user-selector/user.selector';
 	templateUrl: './task.component.html',
 	styleUrls: ['./task.component.scss'],
 })
-export class TaskComponent implements OnInit {
+export class TaskComponent implements OnInit, OnDestroy {
 	@Input() task!: TaskResponse;
 	private user!: SignUpResponse;
 	private userSubscription!: Subscription;
@@ -158,5 +158,10 @@ export class TaskComponent implements OnInit {
 				this.confirmationService.close();
 			},
 		});
+	}
+
+	public ngOnDestroy(): void {
+		this.userSubscription.unsubscribe();
+		this.membersSubscription.unsubscribe();
 	}
 }

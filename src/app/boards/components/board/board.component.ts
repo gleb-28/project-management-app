@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BoardsService } from '@app/boards/services/boards/boards.service';
@@ -13,16 +13,18 @@ import {
 } from '@app/store/actions/boards-action/boards.action';
 import { Store } from '@ngrx/store';
 import { ConfirmationService } from 'primeng/api';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-board',
 	templateUrl: './board.component.html',
 	styleUrls: ['./board.component.scss'],
 })
-export class BoardComponent implements OnInit {
+export class BoardComponent implements OnInit, OnDestroy {
 	@Input() public board!: BoardResponse;
 
 	public members!: SignUpResponse[];
+	private membersSubscription!: Subscription;
 
 	public boardActions = [
 		{
@@ -75,7 +77,9 @@ export class BoardComponent implements OnInit {
 			login: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
 		});
 
-		this.boardsService.getBoardMembersByBoardId(this.board._id).subscribe((members) => (this.members = members));
+		this.membersSubscription = this.boardsService
+			.getBoardMembersByBoardId(this.board._id)
+			.subscribe((members) => (this.members = members));
 	}
 
 	public showMembersModal(): void {
@@ -151,5 +155,9 @@ export class BoardComponent implements OnInit {
 
 	public openBoard(): void {
 		this.router.navigateByUrl(`boards/board/${this.board._id}`);
+	}
+
+	public ngOnDestroy(): void {
+		this.membersSubscription.unsubscribe();
 	}
 }
