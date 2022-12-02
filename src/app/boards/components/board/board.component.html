@@ -5,33 +5,30 @@
 	styleClass="p-button-raised p-button-text"></p-splitButton>
 
 <!--Rename board modal-->
-<p-dialog header="{{'BOARD.RENAME'| translate}}"  [(visible)]="renameBoardModalIsOpen">
-	<form class="dialog-form" [formGroup]="renameBoardForm"  (submit)="renameBoardSubmit()">
+<p-dialog header="{{ 'BOARD.RENAME' | translate }}" [(visible)]="renameBoardModalIsOpen">
+	<form class="dialog-form" [formGroup]="renameBoardForm" (submit)="renameBoardSubmit()">
 		<input class="dialog-form__input" id="board-title" formControlName="boardTitle" type="text" pInputText />
 		<div class="dialog-form__error-wrapper">
-			<small *ngIf="renameBoardForm.controls['boardTitle'].hasError('required')" class="p-error block"
-				>{{'ERROR_INPUTS.BOARD_REQUIRED'| translate}}</small
-			>
-			<small *ngIf="renameBoardForm.controls['boardTitle'].hasError('minlength')" class="p-error block"
-				>{{'ERROR_INPUTS.MIN_LENGTH'| translate}}</small
-			>
-			<small *ngIf="renameBoardForm.controls['boardTitle'].hasError('maxlength')" class="p-error block"
-				>{{'ERROR_INPUTS.MAX_LENGTH'| translate}}</small
-			>
+			<small *ngIf="renameBoardForm.controls['boardTitle'].hasError('required')" class="p-error block">{{
+				'ERROR_INPUTS.BOARD_REQUIRED' | translate
+			}}</small>
+			<small *ngIf="renameBoardForm.controls['boardTitle'].hasError('minlength')" class="p-error block">{{
+				'ERROR_INPUTS.MIN_LENGTH' | translate
+			}}</small>
+			<small *ngIf="renameBoardForm.controls['boardTitle'].hasError('maxlength')" class="p-error block">{{
+				'ERROR_INPUTS.MAX_LENGTH' | translate
+			}}</small>
 		</div>
-		<button pButton class="p-button-outlined" type="submit" label="{{'COMMON.RENAME'| translate}}"></button>
+		<button pButton class="p-button-outlined" type="submit" label="{{ 'COMMON.RENAME' | translate }}"></button>
 	</form>
 </p-dialog>
 
 <!-- Members Modal -->
-<p-dialog header="{{'BOARD.MEMBERS' | translate}}" [(visible)]="membersModalIsOpen" [breakpoints]="{ '500px': '90vw' }">
+<p-dialog
+	header="{{ 'BOARD.MEMBERS' | translate }}"
+	[(visible)]="membersModalIsOpen"
+	[breakpoints]="{ '500px': '90vw' }">
 	<div class="members">
-		<div class="members__item">
-			<div class="members__member">
-				<p-avatar icon="pi pi-user"></p-avatar>
-				<p>Me</p>
-			</div>
-		</div>
 		<div class="members__item" *ngFor="let member of members">
 			<div class="members__member">
 				<p-avatar label="{{ member.name | slice: 0:1 }}" title="{{ member.name }}({{ member.login }})"></p-avatar>
@@ -47,20 +44,20 @@
 	</div>
 	<div>
 		<form class="dialog-form" [formGroup]="addMemberForm" (submit)="addMember()">
-			<h3 class="dialog-form__title">{{'BOARD.ADD_MEMBER' | translate}}</h3>
+			<h3 class="dialog-form__title">{{ 'BOARD.ADD_MEMBER' | translate }}</h3>
 			<input class="dialog-form__input" id="add-member" formControlName="login" type="text" pInputText />
 			<div class="dialog-form__error-wrapper">
-				<small *ngIf="addMemberForm.controls['login'].hasError('required')" class="p-error block"
-					>{{'ERROR_INPUTS.LOGIN_REQUIRED'| translate}}</small
-				>
-				<small *ngIf="addMemberForm.controls['login'].hasError('minlength')" class="p-error block"
-					>{{'ERROR_INPUTS.MIN_LENGTH'| translate}}</small
-				>
+				<small *ngIf="addMemberForm.controls['login'].hasError('required')" class="p-error block">{{
+					'ERROR_INPUTS.LOGIN_REQUIRED' | translate
+				}}</small>
+				<small *ngIf="addMemberForm.controls['login'].hasError('minlength')" class="p-error block">{{
+					'ERROR_INPUTS.MIN_LENGTH' | translate
+				}}</small>
 			</div>
-			<button pButton class="p-button-outlined" type="submit" label="{{'COMMON.ADD'| translate}}"></button>
+			<button pButton class="p-button-outlined" type="submit" label="{{ 'COMMON.ADD' | translate }}"></button>
 		</form>
 	</div>
 </p-dialog>
 
 <!--Delete board confirm modal-->
-<p-confirmDialog header="{{'COMMON.CONFIRMATION'| translate}}" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-confirmDialog header="{{ 'COMMON.CONFIRMATION' | translate }}" icon="pi pi-exclamation-triangle"></p-confirmDialog>

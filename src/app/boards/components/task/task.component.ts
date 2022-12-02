@@ -8,7 +8,7 @@ import { selectMembers } from '@app/store/selectors/active-board-selector/member
 import { Store } from '@ngrx/store';
 import { ConfirmationService } from 'primeng/api';
 import { Subscription } from 'rxjs';
-import { selectUser } from '@app/store/selectors/user-selector/user.selector';
+import { HandleErrorResponseService } from '@app/core/services/handle-error-response/handle-error-response.service';
 
 @Component({
 	selector: 'app-task',
@@ -17,8 +17,6 @@ import { selectUser } from '@app/store/selectors/user-selector/user.selector';
 })
 export class TaskComponent implements OnInit, OnDestroy {
 	@Input() task!: TaskResponse;
-	private user!: SignUpResponse;
-	private userSubscription!: Subscription;
 	private membersSubscription!: Subscription;
 	public members: SignUpResponse[] = [];
 	public assignedMembers: SignUpResponse[] = [];
@@ -33,7 +31,8 @@ export class TaskComponent implements OnInit, OnDestroy {
 		private store: Store,
 		private confirmationService: ConfirmationService,
 		private cdr: ChangeDetectorRef,
-		private errorMessage: TranslateUiService,
+		private translateUiService: TranslateUiService,
+		private errorService: HandleErrorResponseService,
 	) {}
 
 	public ngOnInit(): void {
@@ -46,14 +45,9 @@ export class TaskComponent implements OnInit, OnDestroy {
 			taskDescription: new FormControl(this.task.description),
 		});
 
-		this.userSubscription = this.store.select(selectUser).subscribe((user) => {
-			this.user = user;
-		});
-
 		this.membersSubscription = this.store.select(selectMembers).subscribe((members) => {
 			this.members = members;
 			this.assignedMembers = members.filter((member) => this.task.users.includes(member._id));
-			if (this.task.users.includes(this.user._id)) this.assignedMembers = [...this.assignedMembers, this.user];
 			this.cdr.markForCheck();
 		});
 
@@ -90,13 +84,7 @@ export class TaskComponent implements OnInit, OnDestroy {
 
 	public assignMember(): void {
 		if (this.assignMemberForm.valid) {
-			if (this.assignedMembers.find((member) => member.login === this.assignMemberForm.value.login)) {
-				this.assignMemberForm.reset();
-				this.editTaskModalIsOpen = false;
-			}
-
 			let memberToAssign = this.members.find((member) => member.login === this.assignMemberForm.value.login);
-			if (!memberToAssign && this.user.login === this.assignMemberForm.value.login) memberToAssign = this.user;
 			if (memberToAssign) {
 				this.store.dispatch(
 					updateTask({
@@ -113,9 +101,11 @@ export class TaskComponent implements OnInit, OnDestroy {
 						},
 					}),
 				);
+				this.assignMemberForm.reset();
+				this.editTaskModalIsOpen = false;
+			} else {
+				this.errorService.sendData(this.translateUiService.getError('LOGIN_DOES_NOT_EXIST'));
 			}
-			this.assignMemberForm.reset();
-			this.editTaskModalIsOpen = false;
 		}
 	}
 
@@ -142,7 +132,7 @@ export class TaskComponent implements OnInit, OnDestroy {
 
 	public deleteTask(): void {
 		this.confirmationService.confirm({
-			message: this.errorMessage.getConfirmMessage(this.task.title),
+			message: this.translateUiService.getConfirmMessage(this.task.title),
 			accept: () => {
 				this.store.dispatch(
 					deleteTask({
@@ -161,7 +151,6 @@ export class TaskComponent implements OnInit, OnDestroy {
 	}
 
 	public ngOnDestroy(): void {
-		this.userSubscription.unsubscribe();
 		this.membersSubscription.unsubscribe();
 	}
 }
