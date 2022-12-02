@@ -12,18 +12,19 @@ export class CustomTranslationService {
 	}
 
 	public getUserLang(): string {
-		return this.getLangLocalStorage() || this.getBrowserLang();
-	}
+		const userLang = this.getLocalStorageLang() || this.getBrowserLang();
 
-	private getBrowserLang(): string {
-		const browserLang = this.translate.getBrowserLang();
-		if (browserLang) {
-			return LANGUAGES.includes(browserLang) ? browserLang : 'en';
+		if (userLang) {
+			return LANGUAGES.includes(userLang) ? userLang : 'en';
 		}
 		return 'en';
 	}
 
-	private getLangLocalStorage(): string | null {
+	private getBrowserLang(): string | undefined {
+		return this.translate.getBrowserLang();
+	}
+
+	private getLocalStorageLang(): string | null {
 		return this.localStorage.get('lang');
 	}
 

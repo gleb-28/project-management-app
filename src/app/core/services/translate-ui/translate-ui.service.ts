@@ -1,40 +1,31 @@
 import { Injectable } from '@angular/core';
-import { ERROR_MESSAGES_EN, ERROR_MESSAGES_RU } from '@app/constants/constants';
+import { ERROR_MESSAGES } from '@app/constants/constants';
 import { LocalStorageService } from '@app/core/services/local-storage/local-storage.service';
 import { UI_TRANSLATION } from '../../../../assets/translations/ui-translations';
+import { CustomTranslationService } from '@app/core/services/custom-translation/custom-translation.service';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class TranslateUiService {
-	constructor(private localStorageService: LocalStorageService) {}
-
+	get lang() {
+		return this.customTranslationService.getUserLang();
+	}
+	constructor(
+		private localStorageService: LocalStorageService,
+		private customTranslationService: CustomTranslationService,
+	) {}
 	getError(key: number | string) {
-		if (this.isRuLang()) {
-			return ERROR_MESSAGES_RU[key] || ERROR_MESSAGES_RU[400];
-		} else {
-			return ERROR_MESSAGES_EN[key] || ERROR_MESSAGES_EN[400];
-		}
+		return ERROR_MESSAGES[this.lang][key] || ERROR_MESSAGES[this.lang][400];
 	}
 
 	public getConfirmMessage(title: string): string {
-		if (this.isRuLang()) {
-			return `${UI_TRANSLATION['ARE_YOU_SURE_DELETE']['RU']} "${title}"?`;
-		} else {
-			return `${UI_TRANSLATION['ARE_YOU_SURE_DELETE']['EN']} "${title}"?`;
-		}
+		return `${UI_TRANSLATION['ARE_YOU_SURE_DELETE'][this.lang]} "${title}"?`;
 	}
 
 	getUiTranslate(text: string): string {
 		const key = text.toUpperCase();
-		if (this.isRuLang()) {
-			return UI_TRANSLATION[key]['RU'];
-		} else {
-			return UI_TRANSLATION[key]['EN'];
-		}
-	}
 
-	private isRuLang(): boolean {
-		return this.localStorageService.get('lang') === 'ru';
+		return UI_TRANSLATION[key][this.lang];
 	}
 }
