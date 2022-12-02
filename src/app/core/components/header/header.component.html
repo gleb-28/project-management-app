@@ -1,0 +1,129 @@
+<div class="header-left">
+	<a routerLink=""><img class="logo" src="/assets/img/logo.svg" alt="logo" /></a>
+
+	<!--    board control buttons-->
+	<ng-container *ngIf="windowWidth < 680; else boardControlButtons"></ng-container>
+	<ng-template #boardControlButtons>
+		<ng-container *ngIf="isLogged$ | async">
+			<div class="board-controls-header">
+				<button
+					routerLink="boards"
+					pButton
+					class="p-button-text"
+					type="button"
+					(click)="sideBarIsOpen = false"
+					label="{{ 'HEADER.BUTTONS.BOARDS' | translate }}"></button>
+				<button
+					(click)="showCreateBoardModal()"
+					pButton
+					class="p-button-secondary p-button-text"
+					type="button"
+					label="{{ 'HEADER.BUTTONS.CREATE' | translate }}"></button>
+			</div>
+		</ng-container>
+	</ng-template>
+</div>
+
+<div class="header-right">
+	<!--  user controls -->
+	<ng-container *ngIf="windowWidth < 440; else userControls"></ng-container>
+	<ng-template #userControls>
+		<ng-template #loginButtons>
+			<button
+				routerLink="sign-up"
+				pButton
+				class="header-right__item p-button-secondary p-button-text"
+				type="button"
+				(click)="sideBarIsOpen = false"
+				label="{{ 'HEADER.BUTTONS.SIGN-UP' | translate }}"></button>
+			<button
+				routerLink="sign-in"
+				pButton
+				class="header-right__item p-button-text"
+				type="button"
+				(click)="sideBarIsOpen = false"
+				label="{{ 'HEADER.BUTTONS.LOGIN' | translate }}"></button>
+		</ng-template>
+
+		<ng-template [ngIf]="isLogged$ | async" [ngIfElse]="loginButtons">
+			<div routerLink="user-settings" class="user-controls-header">
+				<button
+					routerLink="user-settings"
+					pButton
+					icon="pi pi-user"
+					(click)="sideBarIsOpen = false"
+					class="header-right__item p-button-rounded p-button-text"
+					type="button"></button>
+
+				<button
+					(click)="logout()"
+					pButton
+					class="header-right__item p-button-secondary p-button-text"
+					type="button"
+					label="{{ 'HEADER.BUTTONS.LOGOUT' | translate }}"></button>
+			</div>
+		</ng-template>
+	</ng-template>
+
+	<!--  lang select-->
+	<ng-container *ngIf="windowWidth < 768; else langSelectButtons"></ng-container>
+	<ng-template #langSelectButtons>
+		<p-selectButton
+			[options]="langSelect"
+			class="header-right__item header-right__item--lang-select"
+			[(ngModel)]="selectedLang"
+			(onOptionClick)="changeLanguage(selectedLang)"
+			optionLabel="label"
+			optionValue="lang"></p-selectButton>
+	</ng-template>
+
+	<!--      side bar button-->
+	<ng-container *ngIf="windowWidth < 768">
+		<button
+			pButton
+			icon="pi pi-bars"
+			class="header-right__item header-right__item--burger-btn p-button-rounded p-button-text"
+			type="button"
+			(click)="sideBarIsOpen = true"></button>
+	</ng-container>
+
+	<!--      side bar-->
+	<p-sidebar
+		class="sidebar"
+		[(visible)]="sideBarIsOpen"
+		[transitionOptions]="'200ms'"
+		styleClass="p-sidebar-sm"
+		position="right">
+		<div class="sidebar-body">
+			<!--  lang select-->
+			<ng-container *ngIf="windowWidth > 768; else langSelectButtons"></ng-container>
+
+			<!--    board control buttons-->
+			<ng-container *ngIf="windowWidth > 680; else boardControlButtons"></ng-container>
+
+			<!--  user controls -->
+			<ng-container *ngIf="windowWidth > 440; else userControls"></ng-container>
+		</div>
+	</p-sidebar>
+
+	<!--Create new board modal-->
+	<p-dialog header="{{ 'BOARD.CREATE' | translate }}" [(visible)]="createBoardModalIsOpen">
+		<form class="dialog-form" [formGroup]="createBoardForm" (submit)="createBoardSubmit()">
+			<input class="dialog-form__input" id="board-title" formControlName="boardTitle" type="text" pInputText />
+
+			<div class="dialog-form__error-wrapper">
+				<small *ngIf="createBoardForm.controls['boardTitle'].hasError('required')" class="p-error block"
+					>{{'ERROR_INPUTS.BOARD_REQUIRED'| translate}}</small
+				>
+				<small *ngIf="createBoardForm.controls['boardTitle'].hasError('minlength')" class="p-error block"
+					>{{'ERROR_INPUTS.MIN_LENGTH'| translate}}</small
+				>
+				<small *ngIf="createBoardForm.controls['boardTitle'].hasError('maxlength')" class="p-error block"
+					>{{'ERROR_INPUTS.MAX_LENGTH'| translate}}</small
+				>
+			</div>
+
+			<button pButton class="p-button-outlined" type="submit" label="{{'COMMON.CREATE'| translate}}"></button>
+		</form>
+	</p-dialog>
+</div>

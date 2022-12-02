@@ -1,0 +1,104 @@
+:host {
+	padding: 0;
+
+	.card {
+		width: 98%;
+		height: 100%;
+		margin: 0 auto;
+
+		& .p-card-body {
+			padding: 0;
+		}
+		&__body {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			height: 100%;
+		}
+		&__title {
+			color: var(--primary);
+			font-size: 1.1rem;
+			max-width: 200px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		&__buttons {
+			display: flex;
+		}
+	}
+
+	::ng-deep .p-card {
+		color: var(--text);
+		border-radius: var(--b-radius);
+		position: relative;
+
+		&.drag-disabled {
+			pointer-events: inherit;
+		}
+
+		& .p-card-body {
+			padding: 0.7rem;
+		}
+		& .p-card-content {
+			padding: 0;
+		}
+	}
+
+	.avatar {
+		position: relative;
+		cursor: default;
+		pointer-events: none;
+		z-index: 2;
+	}
+
+	.members {
+		margin-bottom: 1rem;
+		display: flex;
+		gap: 0.3rem;
+
+		&__member {
+			position: relative;
+			display: inline-block;
+		}
+
+		&__delete-button {
+			position: absolute;
+			right: 0;
+			top: 0;
+			padding: 0;
+			width: 15px;
+			height: 15px;
+		}
+	}
+
+	.p-button-rounded {
+	}
+
+	.p-button-text {
+	}
+
+	.dialog-form {
+		&__title {
+			margin-bottom: 1rem;
+		}
+		&__input {
+			margin-bottom: 1rem;
+			&--description {
+				min-height: 6rem;
+			}
+		}
+		&--add-member {
+			margin-top: 1rem;
+		}
+
+		&__error-wrapper {
+			position: relative;
+			bottom: 8px;
+			text-align: left;
+		}
+		&__submit-button {
+			display: block;
+		}
+	}
+}

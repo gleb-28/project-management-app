@@ -1,0 +1,65 @@
+<div class="board-bar" *ngIf="board$ | async as board">
+	<h2 class="board-bar__title">{{ board.title }}</h2>
+	<p-avatarGroup class="board-bar__members">
+		<ng-container *ngIf="members$ | async as members">
+			<p-avatar
+				*ngFor="let member of members"
+				label="{{ member.name | slice: 0:1 }}"
+				title="{{ member.name }}({{ member.login }})"
+				size="large"></p-avatar>
+		</ng-container>
+	</p-avatarGroup>
+	<input
+		class="board-bar__filter-input"
+		type="text"
+		placeholder="{{ 'TASK.SEARCH' | translate }}"
+		pInputText
+		[(ngModel)]="tasksFilter" />
+</div>
+
+<div
+	class="columns-wrapper"
+	cdkDropListGroup="task"
+	cdkDropList="column"
+	cdkDropListOrientation="horizontal"
+	(cdkDropListDropped)="columnDrop($event)">
+	<app-column
+		*ngFor="let column of columns$ | async"
+		[column]="column"
+		[tasksFilter]="tasksFilter"
+		(columnDelete)="updateColumnsOrder($event)"
+		class="column"
+		cdkDrag="column"
+		cdkDragLockAxis="x"
+		(cdkDragStarted)="columnDragStart(column)"
+		><i cdkDragHandle="column" class="pi pi-arrow-right-arrow-left column-handle"></i>
+	</app-column>
+	<button
+		(click)="showCreateColumnModal()"
+		pButton
+		title="{{ 'COLUMN.CREATE' | translate }}"
+		type="button"
+		icon="pi pi-plus"
+		class="p-button-rounded add-column-button"></button>
+</div>
+
+<!--Create column modal-->
+<p-dialog header="{{ 'COLUMN.TITLE' | translate }}" [(visible)]="createColumnModalIsOpen">
+	<form [formGroup]="createColumnForm" (submit)="createColumnSubmit()">
+		<input class="dialog-form__input" formControlName="columnTitle" type="text" pInputText />
+
+		<div class="dialog-form__error-wrapper">
+			<small *ngIf="createColumnForm.controls['columnTitle'].hasError('required')" class="p-error block">{{
+				'ERROR_INPUTS.COLUMN_REQUIRED' | translate
+			}}</small>
+			<small *ngIf="createColumnForm.controls['columnTitle'].hasError('minlength')" class="p-error block">{{
+				'ERROR_INPUTS.MIN_LENGTH' | translate
+			}}</small>
+			<small *ngIf="createColumnForm.controls['columnTitle'].hasError('maxlength')" class="p-error block">{{
+				'ERROR_INPUTS.MAX_LENGTH' | translate
+			}}</small>
+		</div>
+
+		<button pButton class="p-button-outlined" type="submit" label="{{ 'COMMON.CREATE' | translate }}"></button>
+	</form>
+</p-dialog>

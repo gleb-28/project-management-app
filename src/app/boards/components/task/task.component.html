@@ -1,0 +1,87 @@
+<p-card class="card">
+	<ng-content></ng-content>
+	<div class="card__body">
+		<h3 class="card__title">{{ task.title }}</h3>
+		<div class="card__buttons">
+			<button
+				pButton
+				(click)="showEditTaskModal()"
+				type="button"
+				title="{{'TASK.EDIT'| translate}}"
+				icon="pi pi-pencil"
+				class="p-button-rounded p-button-text"></button>
+			<button
+				pButton
+				(click)="deleteTask()"
+				title="{{'TASK.DELETE'| translate}}"
+				type="button"
+				icon="pi pi-times"
+				class="p-button-rounded p-button-text"></button>
+		</div>
+	</div>
+	<ng-container>
+		<p-avatarGroup>
+			<p-avatar
+				*ngFor="let assignedMember of assignedMembers"
+				label="{{ assignedMember.name | slice: 0:1 }}"
+				title="{{ assignedMember.name }}({{ assignedMember.login }})"></p-avatar>
+		</p-avatarGroup>
+	</ng-container>
+</p-card>
+
+<!--Edit task modal-->
+<p-dialog header="{{'TASK.EDIT'| translate}}" [(visible)]="editTaskModalIsOpen" [breakpoints]="{ '500px': '90vw' }" [draggable]="false">
+	<div class="members">
+		<div class="members__member" *ngFor="let assignedMember of assignedMembers">
+			<p-avatar
+				label="{{ assignedMember.name | slice: 0:1 }}"
+				title="{{ assignedMember.name }}({{ assignedMember.login }})"></p-avatar>
+			<button
+				pButton
+				class="members__delete-button p-button-rounded p-button-text"
+				type="button"
+				icon="pi pi-times"
+				(click)="deleteMember(assignedMember._id)"></button>
+		</div>
+	</div>
+	<form [formGroup]="editTaskForm" (submit)="editTaskSubmit()">
+		<input class="dialog-form__input" placeholder="{{'TASK.TITLE'| translate}}" formControlName="taskTitle" type="text" pInputText />
+		<div class="dialog-form__error-wrapper">
+			<small *ngIf="editTaskForm.controls['taskTitle'].hasError('required')" class="p-error block"
+				>{{'ERROR_INPUTS.TASK_REQUIRED'| translate}}</small
+			>
+			<small *ngIf="editTaskForm.controls['taskTitle'].hasError('minlength')" class="p-error block"
+				>{{'ERROR_INPUTS.MIN_LENGTH'| translate}}</small
+			>
+			<small *ngIf="editTaskForm.controls['taskTitle'].hasError('maxlength')" class="p-error block"
+				>{{'ERROR_INPUTS.MAX_LENGTH'| translate}}</small
+			>
+		</div>
+		<textarea
+			class="dialog-form__input dialog-form__input--description"
+			placeholder="{{'TASK.DESCRIPTION'| translate}}"
+			pInputTextarea
+			formControlName="taskDescription"
+			[autoResize]="true"></textarea>
+		<button pButton class="dialog-form__submit-button" type="submit" label="{{'TASK.EDIT'| translate}}"></button>
+	</form>
+	<div>
+		<form class="dialog-form dialog-form--add-member" [formGroup]="assignMemberForm" (submit)="assignMember()">
+			<h3 class="dialog-form__title">{{'TASK.ASSIGN'| translate}}</h3>
+			<input class="dialog-form__input" id="add-member" formControlName="login" type="text" pInputText />
+
+			<div class="dialog-form__error-wrapper">
+				<small *ngIf="assignMemberForm.controls['login'].hasError('required')" class="p-error block"
+					>{{'ERROR_INPUTS.LOGIN_REQUIRED'| translate}}</small
+				>
+				<small *ngIf="assignMemberForm.controls['login'].hasError('minlength')" class="p-error block"
+					>{{'ERROR_INPUTS.MIN_LENGTH'| translate}}</small
+				>
+			</div>
+			<button pButton class="p-button-outlined" type="submit" label="{{'COMMON.ADD'| translate}}"></button>
+		</form>
+	</div>
+</p-dialog>
+
+<!--Delete task confirm modal-->
+<p-confirmDialog header="{{'COMMON.CONFIRMATION'| translate}}" icon="pi pi-exclamation-triangle"></p-confirmDialog>

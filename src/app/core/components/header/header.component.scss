@@ -1,0 +1,113 @@
+:host {
+	padding: 0.5rem 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+
+	.header-left {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.logo {
+		margin-right: 1rem;
+	}
+
+	.board-controls-header {
+		text-align: center;
+	}
+
+	.header-right {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+
+		&__item {
+			&--lang-select {
+				margin-left: 1rem;
+			}
+		}
+	}
+
+	.p-button.p-button-icon-only.p-button-rounded {
+		width: 3rem;
+		height: 2.6rem;
+	}
+
+	::ng-deep .p-sidebar .p-sidebar-header .p-sidebar-close,
+	.p-sidebar .p-sidebar-header .p-sidebar-icon {
+		color: var(--extra);
+	}
+
+	::ng-deep .p-sidebar .p-sidebar-header .p-sidebar-close:enabled:hover,
+	.p-sidebar .p-sidebar-header .p-sidebar-icon:enabled:hover {
+		color: var(--primary);
+		background-color: var(--gray);
+	}
+
+	::ng-deep .p-sidebar .p-sidebar-header .p-sidebar-close:enabled:active,
+	.p-sidebar .p-sidebar-header .p-sidebar-icon:enabled:active {
+		background: var(--dark-gray);
+	}
+
+	::ng-deep .p-sidebar .p-sidebar-header .p-sidebar-close:focus,
+	.p-sidebar .p-sidebar-header .p-sidebar-icon:focus {
+		box-shadow: none;
+	}
+
+	p-selectbutton {
+		margin: auto;
+		@media (max-width: 768px) {
+			margin: 0;
+		}
+	}
+
+	::ng-deep .p-selectbutton {
+		text-align: center;
+
+		& .p-button {
+			color: var(--primary);
+
+			&.p-highlight {
+				background-color: var(--primary);
+				color: var(--secondary);
+				border-color: var(--primary);
+			}
+		}
+
+		& .p-button:not(.p-disabled):not(.p-highlight):hover {
+			background-color: var(--gray);
+			border-color: var(--primary);
+			color: inherit;
+		}
+	}
+
+	.sidebar > .p-sidebar > .p-sidebar-content {
+		height: 100%;
+	}
+
+	.sidebar-body {
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.dialog-form {
+		text-align: center;
+		&__input {
+			margin-bottom: 1rem;
+		}
+
+		&__error-wrapper {
+			position: relative;
+			bottom: 8px;
+			text-align: left;
+		}
+	}
+}

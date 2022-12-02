@@ -1,0 +1,53 @@
+<div class="wrapper">
+	<div class="form-card">
+		<h2 class="form-card__title">{{ 'USER_SETTINGS_PAGE.TITLE' | translate }}</h2>
+		<p class="form-card__inform">{{ 'USER_SETTINGS_PAGE.INFORM' | translate }}</p>
+
+		<form class="form-card__form" [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+			<span class="p-float-label">
+				<input pInputText class="form-card__field" type="text" formControlName="name" />
+				<label for="float-input">{{ 'INPUTS_AUTH.NAME' | translate }}</label>
+				<small class="form-card__error" *ngIf="isValid('name', 'required')">
+					{{ 'ERROR_INPUTS.NAME_REQUIRED' | translate }}
+				</small>
+				<small class="form-card__error" *ngIf="isValid('name', 'minlength')">
+					{{ 'ERROR_INPUTS.MIN_LENGTH' | translate }}
+				</small>
+			</span>
+
+			<span class="p-float-label">
+				<input pInputText class="form-card__field" type="text" formControlName="login" />
+				<label for="float-input">{{ 'INPUTS_AUTH.LOGIN' | translate }}</label>
+				<small class="form-card__error" *ngIf="isValid('login', 'required')">{{
+					'ERROR_INPUTS.LOGIN_REQUIRED' | translate
+				}}</small>
+				<small class="form-card__error" *ngIf="isValid('login', 'minlength')">{{
+					'ERROR_INPUTS.MIN_LENGTH' | translate
+				}}</small>
+			</span>
+
+			<span class="p-float-label p-float-label--pass">
+				<input id="float-input" pInputText type="password" formControlName="password" />
+				<label for="float-input">{{ 'INPUTS_AUTH.PASSWORD' | translate }}</label>
+			</span>
+			<div class="form-card__error-area">
+				<small *ngIf="isValid('password', 'required')">{{ 'ERROR_INPUTS.PASSWORD_REQUIRED' | translate }}</small>
+				<small *ngIf="isValid('password', 'minlength')">{{ 'ERROR_INPUTS.PASSWORD_LENGTH' | translate }}</small>
+				<small *ngIf="isValid('password', 'isValidRegister')">{{ 'ERROR_INPUTS.PASSWORD_REGISTER' | translate }}</small>
+				<small *ngIf="isValid('password', 'isValidNumber')">{{ 'ERROR_INPUTS.PASSWORD_NUMBER' | translate }}</small>
+				<small *ngIf="isValid('password', 'isValidSymbol')">{{ 'ERROR_INPUTS.PASSWORD_SYMBOL' | translate }}</small>
+			</div>
+			<button
+				pButton
+				class="form-card__submit-button"
+				type="submit"
+				label="{{ 'USER_SETTINGS_PAGE.BUTTONS.UPDATE' | translate }}"></button>
+		</form>
+		<button
+			pButton
+			class="form-card__delete-button p-button-danger p-button-outlined"
+			label="{{ 'USER_SETTINGS_PAGE.BUTTONS.DELETE' | translate }}"
+			icon="pi pi-trash"
+			(click)="deleteUser()"></button>
+	</div>
+</div>

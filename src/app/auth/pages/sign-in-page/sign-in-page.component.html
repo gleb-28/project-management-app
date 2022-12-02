@@ -1,0 +1,36 @@
+<div class="wrapper">
+	<form class="form-card" [formGroup]="loginForm" (ngSubmit)="login()">
+		<h2 class="form-card__title">{{ 'LOGIN-PAGE.TITLE' | translate }}</h2>
+
+		<span class="p-float-label p-float-label--login">
+			<input pInputText class="form-card__field" type="text" formControlName="login" />
+			<label for="float-input">{{ 'INPUTS_AUTH.LOGIN' | translate }}</label>
+		</span>
+		<div class="form-card__error-name">
+			<p *ngIf="isValid('login', 'required')">{{ 'ERROR_INPUTS.LOGIN_REQUIRED' | translate }}</p>
+			<p *ngIf="isValid('login', 'minlength')">{{ 'ERROR_INPUTS.MIN_LENGTH' | translate }}</p>
+		</div>
+
+		<span class="p-float-label">
+			<input id="float-input" pInputText type="password" formControlName="password" />
+			<label for="float-input">{{ 'INPUTS_AUTH.PASSWORD' | translate }}</label>
+		</span>
+		<ul class="form-card__error-pass">
+			<li *ngIf="isValid('password', 'required')">{{ 'ERROR_INPUTS.PASSWORD_REQUIRED' | translate }}</li>
+			<li *ngIf="isValid('password', 'minlength')">{{ 'ERROR_INPUTS.PASSWORD_LENGTH' | translate }}</li>
+			<li *ngIf="isValid('password', 'isValidRegister')">{{ 'ERROR_INPUTS.PASSWORD_REGISTER' | translate }}</li>
+			<li *ngIf="isValid('password', 'isValidNumber')">{{ 'ERROR_INPUTS.PASSWORD_NUMBER' | translate }}</li>
+			<li *ngIf="isValid('password', 'isValidSymbol')">{{ 'ERROR_INPUTS.PASSWORD_SYMBOL' | translate }}</li>
+		</ul>
+
+		<button
+			pButton
+			class="form-card__submit-button"
+			type="submit"
+			label="{{ 'LOGIN-PAGE.TITLE' | translate }}"></button>
+		<div class="form-card__info">
+			{{ 'LOGIN-PAGE.ACCOUNT' | translate }}
+			<a routerLink="/sign-up" class="form-card__signup-link link">{{ 'LOGIN-PAGE.BUTTONS.SIGN-UP' | translate }}</a>
+		</div>
+	</form>
+</div>

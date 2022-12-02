@@ -1,0 +1,86 @@
+@forward 'src/styles';
+
+:host {
+	@extend %place-center;
+	min-height: 80vh;
+	height: 100%;
+
+	.wrapper {
+		padding: 2rem 0;
+	}
+
+	.form-card {
+		display: flex;
+		flex-direction: column;
+		padding: 1.5rem;
+		border: 1px solid var(--primary);
+		border-radius: var(--b-radius);
+
+		&__title {
+			margin-bottom: 0.5rem;
+		}
+
+		&__inform {
+			font-size: 0.7rem;
+			margin-bottom: 3rem;
+			font-style: oblique;
+		}
+
+		&__form {
+			text-align: center;
+			border-bottom: 1px solid var(--primary);
+		}
+
+		.p-inputtext {
+			width: 320px;
+			@media (max-width: 440px) {
+				width: 100%;
+			}
+		}
+
+		.p-float-label {
+			position: relative;
+			margin-bottom: 3rem;
+
+			&--pass {
+				margin-bottom: 2rem;
+			}
+
+			& > .p-inputtext {
+				padding: 0.75rem;
+			}
+		}
+
+		&__error {
+			position: absolute;
+			display: block;
+			margin-top: 6px;
+			font-size: 0.8rem;
+			color: var(--error);
+		}
+
+		&__error-area {
+			margin-top: -16px;
+			text-align: left;
+			color: var(--error);
+			font-size: 0.8rem;
+			margin-bottom: 10px;
+
+			& small {
+				display: block;
+			}
+		}
+
+		input.ng-touched.ng-invalid {
+			border: 1px solid var(--error);
+		}
+
+		&__submit-button {
+			margin-bottom: 2rem;
+		}
+
+		&__delete-button {
+			margin-top: 2rem;
+		}
+	}
+}

@@ -1,0 +1,17 @@
+:host {
+	.boards-bar {
+		padding: 0.5rem 0;
+		text-align: right;
+
+		&__filter-input {
+		}
+	}
+
+	.boards-wrapper {
+		padding: 1rem 0;
+		display: flex;
+		flex-direction: column;
+		text-align: center;
+		gap: 1rem;
+	}
+}

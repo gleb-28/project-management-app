@@ -1,0 +1,25 @@
+<div class="body">
+	<h1 class="visually-hidden">Pure Kanban</h1>
+	<img class="welcome-image" src="/assets/img/hero-image.svg" alt="kanban image" />
+
+	<!--  about section-->
+	<section class="about">
+		<p-accordion>
+			<p-accordionTab header="{{ 'WELCOME_PAGE.ABOUT' | translate }}">
+				<p class="text">
+					{{ 'WELCOME_PAGE.PROJECT' | translate }}
+					<a class="link" href="https://rs.school/angular/" target="_blank">RS School.</a>
+				</p>
+				<ul>
+					{{
+						'WELCOME_PAGE.TEAM' | translate
+					}}
+					<li *ngFor="let member of team">
+						{{ member.role | titlecase }}:
+						<a class="link" href="{{ member.gitHubLink }}" target="_blank">{{ member.fullName }}</a>
+					</li>
+				</ul>
+			</p-accordionTab>
+		</p-accordion>
+	</section>
+</div>
