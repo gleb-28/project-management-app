@@ -4,7 +4,7 @@ import { BoardResponse, BoardRequest } from '@app/models/board.model';
 import { UserService } from '@app/auth/service/user-service/user.service';
 import { SignUpResponse } from '@app/models/auth.model';
 import { BoardId } from '@app/models/ids.model';
-import { concatMap, from, map, Observable, toArray } from 'rxjs';
+import { Observable, concat, concatMap, from, map, toArray } from 'rxjs';
 
 @Injectable()
 export class BoardsService {
@@ -40,13 +40,16 @@ export class BoardsService {
 	}
 
 	public getBoardMembersByBoardId(boardId: BoardId): Observable<SignUpResponse[]> {
-		const boardUsers$ = this.getBoardById(boardId).pipe(map((board) => board.users));
+		const boardInvitedUsers$ = this.getBoardById(boardId);
 
-		return boardUsers$.pipe(
-			map((users) => from(users)),
-			concatMap((user) => user),
-			concatMap((userId) => this.userService.getUser(userId)),
-			toArray(),
-		);
+		return concat(
+			boardInvitedUsers$.pipe(concatMap((board) => this.userService.getUser(board.owner))),
+			boardInvitedUsers$.pipe(
+				map((board) => board.users),
+				map((users) => from(users)),
+				concatMap((user) => user),
+				concatMap((userId) => this.userService.getUser(userId)),
+			),
+		).pipe(toArray());
 	}
 }
